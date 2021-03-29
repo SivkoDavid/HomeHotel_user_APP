@@ -10,6 +10,16 @@
     android:paddingEnd="20dp"
     android:gravity="center">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Вход"
+        android:textAlignment="center"
+        android:textSize="32dp" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/loginInput"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
