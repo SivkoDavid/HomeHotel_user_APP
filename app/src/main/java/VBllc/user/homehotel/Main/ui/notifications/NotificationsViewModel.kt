@@ -1,4 +1,4 @@
-package VBllc.user.homehotel.ui.notifications
+package VBllc.user.homehotel.Main.ui.notifications
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -1,8 +1,10 @@
 package VBllc.user.homehotel.Auth
 
 import VBllc.user.homehotel.Auth.Login.LoginFragment
+import VBllc.user.homehotel.Auth.Login.LoginFragmentListener
 import VBllc.user.homehotel.Auth.Registration.RegistrationFragment
 import VBllc.user.homehotel.R
+import VBllc.user.homehotel.Views.AuthView
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,12 +18,13 @@ import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import javax.security.auth.login.LoginException
 
-class AuthActivity : AppCompatActivity() {
+class AuthActivity : AppCompatActivity(), AuthView {
 
     private lateinit var pager: ViewPager
     private lateinit var loginFragment: LoginFragment
     private lateinit var registrationFragment: RegistrationFragment
     private var pAdapter: AuthPagerAdapter? = null
+    private val authPresenter: AuthPresenter = AuthPresenter(this)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +44,16 @@ class AuthActivity : AppCompatActivity() {
     private fun initialFragments(){
         loginFragment = LoginFragment()
         registrationFragment = RegistrationFragment()
+
+        loginFragment.setListener(object : LoginFragmentListener{
+            override fun onLoginClick(login: String, password: String) {
+                authPresenter.login(login, password)
+            }
+
+            override fun onGoToReristrationClick() {
+
+            }
+        })
     }
 
     private class AuthPagerAdapter(val fragments:List<Fragment>, fm: FragmentManager): FragmentPagerAdapter(fm) {
@@ -53,6 +66,22 @@ class AuthActivity : AppCompatActivity() {
             return 2
         }
 
+    }
+
+    override fun showAutorise() {
+        println(">>>>>>>>>>>>>>>>>>>>>> AUTORISE SUCCESS <<<<<<<<<<<<<<<<<<<<<<<")
+    }
+
+    override fun showError(errorMessage: String, errorCode: Int) {
+        println(">>>>>>>>>>>>>>>>>>>>>> <$errorCode $errorMessage> <<<<<<<<<<<<<<<<<<<<<<<")
+    }
+
+    override fun showLoading() {
+        println(">>>>>>>>>>>>>>>>>>>>>> START LOADING <<<<<<<<<<<<<<<<<<<<<<<")
+    }
+
+    override fun showNoNetwork() {
+        println(">>>>>>>>>>>>>>>>>>>>>> NO INTERNET!!! <<<<<<<<<<<<<<<<<<<<<<<")
     }
 
 

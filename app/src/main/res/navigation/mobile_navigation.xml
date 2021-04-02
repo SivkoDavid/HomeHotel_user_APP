@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="VBllc.user.homehotel.ui.home.HomeFragment"
+        android:name="VBllc.user.homehotel.Main.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="VBllc.user.homehotel.ui.dashboard.DashboardFragment"
+        android:name="VBllc.user.homehotel.Main.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="VBllc.user.homehotel.ui.notifications.NotificationsFragment"
+        android:name="VBllc.user.homehotel.Main.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

@@ -1,4 +1,4 @@
-package VBllc.user.homehotel.ui.notifications
+package VBllc.user.homehotel.Main.ui.notifications
 
 import android.os.Bundle
 import android.view.LayoutInflater

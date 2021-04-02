@@ -6,20 +6,49 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import VBllc.user.homehotel.R
+import android.widget.Button
+import com.google.android.material.textfield.TextInputLayout
 
 class LoginFragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+    private lateinit var loginInput: TextInputLayout
+    private lateinit var passInput: TextInputLayout
+    private lateinit var loginButton: Button
+    private lateinit var goToRegButton: Button
+
+    private fun initViews(mainView: View){
+        loginInput = mainView.findViewById(R.id.loginInput)
+        passInput = mainView.findViewById(R.id.passInput)
+        loginButton = mainView.findViewById(R.id.loginBtn)
+        goToRegButton = mainView.findViewById(R.id.toRegBtn)
+
+        loginButton.setOnClickListener{ loginClick() }
+        goToRegButton.setOnClickListener{ listener?.onGoToReristrationClick() }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        val view = inflater.inflate(R.layout.fragment_login, container, false)
+        initViews(view)
+        return view
     }
 
-    fun newInstance() {
+    private var listener: LoginFragmentListener? = null
 
+    fun setListener(listener: LoginFragmentListener){
+        this.listener = listener
+    }
+
+    fun newInstance():LoginFragment {
+        return  this
+    }
+
+
+    private fun loginClick(){
+        val login = loginInput.editText?.text?.toString()?:""
+        val pass = passInput.editText?.text?.toString()?:""
+        listener?.onLoginClick(login, pass)
     }
 }
