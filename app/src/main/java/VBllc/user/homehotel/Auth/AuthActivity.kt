@@ -51,7 +51,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
             }
 
             override fun onGoToReristrationClick() {
-
+                pager.setCurrentItem(1, true)
             }
         })
     }
@@ -84,5 +84,11 @@ class AuthActivity : AppCompatActivity(), AuthView {
         println(">>>>>>>>>>>>>>>>>>>>>> NO INTERNET!!! <<<<<<<<<<<<<<<<<<<<<<<")
     }
 
+    override fun onBackPressed() {
+        if(pager.currentItem == 1 )
+            pager.setCurrentItem(0, true)
+        else
+            super.onBackPressed()
+    }
 
 }
