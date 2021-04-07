@@ -11,12 +11,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.security.auth.login.LoginException
 
 class AuthActivity : AppCompatActivity(), AuthView {
@@ -76,19 +80,40 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     override fun showAutorise() {
-        println(">>>>>>>>>>>>>>>>>>>>>> AUTORISE SUCCESS <<<<<<<<<<<<<<<<<<<<<<<")
+        CoroutineScope(Dispatchers.Main).launch {
+            loginFragment.printError("")
+            registrationFragment.printError("")
+            Toast.makeText(applicationContext, "Вы успешно авторизированы", Toast.LENGTH_SHORT).show()
+        }
     }
 
-    override fun showError(errorMessage: String, errorCode: Int) {
-        println(">>>>>>>>>>>>>>>>>>>>>> <$errorCode $errorMessage> <<<<<<<<<<<<<<<<<<<<<<<")
+    override fun showErrorAutorise(errorMessage: String, errorCode: Int, typeError: Int) {
+        CoroutineScope(Dispatchers.Main).launch {
+            when (typeError) {
+                AuthView.LOGIN_ERROR -> {
+                    loginFragment.printError(errorMessage)
+                }
+                AuthView.REGISTRATION_ERROR -> {
+                    registrationFragment.printError(errorMessage)
+                }
+            }
+        }
     }
+
+    override fun showError(errorMessage: String, errorCode: Int) { }
 
     override fun showLoading() {
-        println(">>>>>>>>>>>>>>>>>>>>>> START LOADING <<<<<<<<<<<<<<<<<<<<<<<")
+        CoroutineScope(Dispatchers.Main).launch {
+            loginFragment.printError("")
+            registrationFragment.printError("")
+        }
     }
 
     override fun showNoNetwork() {
-        println(">>>>>>>>>>>>>>>>>>>>>> NO INTERNET!!! <<<<<<<<<<<<<<<<<<<<<<<")
+        CoroutineScope(Dispatchers.Main).launch {
+            loginFragment.printError("Нет подключения к интернету")
+            registrationFragment.printError("Нет подключения к интернету")
+        }
     }
 
     override fun onBackPressed() {

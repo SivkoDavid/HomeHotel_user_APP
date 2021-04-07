@@ -20,6 +20,15 @@
         android:textAlignment="center"
         android:textSize="32dp" />
 
+    <TextView
+        android:id="@+id/errorLabel"
+        style="@style/ErrorLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Error"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/nameInput"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

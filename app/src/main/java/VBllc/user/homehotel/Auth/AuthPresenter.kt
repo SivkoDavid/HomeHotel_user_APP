@@ -5,6 +5,7 @@ import VBllc.user.homehotel.API.DataResponse.RegistrationResponse
 import VBllc.user.homehotel.DataLayer.Repositories.AuthRepository
 import VBllc.user.homehotel.DataLayer.Repositories.AuthRepositoryListener
 import VBllc.user.homehotel.Views.AuthView
+import kotlinx.coroutines.CoroutineScope
 
 class AuthPresenter(val view: AuthView){
     private val authRepository = AuthRepository(AuthRepositoryObserver())
@@ -39,7 +40,16 @@ class AuthPresenter(val view: AuthView){
                 mess += it+"\n"
             }
             mess = mess.substringBeforeLast('\n')
-            view.showError(mess, errorCode)
+            var typeError = 0
+            when(code){
+                LOGIN_REQEST_CODE->{
+                    typeError = AuthView.LOGIN_ERROR
+                }
+                REGISTRATION_REQEST_CODE->{
+                    typeError = AuthView.REGISTRATION_ERROR
+                }
+            }
+            view.showErrorAutorise(mess, errorCode, typeError)
         }
 
         override fun onLogout(result: Boolean) {

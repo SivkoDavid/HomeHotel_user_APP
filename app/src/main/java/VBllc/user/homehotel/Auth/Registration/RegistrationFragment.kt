@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import VBllc.user.homehotel.R
 import android.widget.Button
+import android.widget.TextView
 import com.google.android.material.textfield.TextInputLayout
 
 
@@ -19,6 +20,7 @@ class RegistrationFragment : Fragment() {
     private lateinit var passInput: TextInputLayout
     private lateinit var secondPassInput: TextInputLayout
     private lateinit var nextButton: Button
+    private lateinit var errorLabel: TextView
 
     fun initViews(mainView: View){
         nameInput = mainView.findViewById(R.id.nameInput)
@@ -27,6 +29,7 @@ class RegistrationFragment : Fragment() {
         passInput = mainView.findViewById(R.id.passInput)
         secondPassInput = mainView.findViewById(R.id.repeatPassInput)
         nextButton = mainView.findViewById(R.id.regNextBtn)
+        errorLabel = mainView.findViewById(R.id.errorLabel)
 
         nextButton.setOnClickListener { nextButtonClick() }
     }
@@ -115,5 +118,14 @@ class RegistrationFragment : Fragment() {
 
 
         return result
+    }
+
+    fun printError(error: String){
+        if(error == "")
+            errorLabel.visibility = View.GONE
+        else {
+            errorLabel.visibility = View.VISIBLE
+            errorLabel.setText(error)
+        }
     }
 }
