@@ -56,18 +56,20 @@ class UserInfoPreference{
         private val FIELD_CREATE = "sovetnik_user_create"
         private val FIELD_UPDATE = "sovetnik_user_update"
 
-        fun saveUserInfo(data: UserInfoResponse.UserInfoData){
-            HomeHotelPreference.get()?.edit()?.
-            putInt(FIELD_ID, data.id)?.
-            putString(FIELD_NAME, data.name)?.
-            putString(FIELD_SEC_NAME, data.second_name)?.
-            putString(FIELD_THIRD_NAME, data.third_name)?.
-            putString(FIELD_AVATAR, data.avatar)?.
-            putString(FIELD_EMAIL, data.email)?.
-            putString(FIELD_CREATE, data.created_at)?.
-            putString(FIELD_UPDATE, data.updated_at)?.
-            apply()
-            this.data = data
+        fun saveUserInfo(data: UserInfoResponse.UserInfoData?){
+            if(data != null){
+                HomeHotelPreference.get()?.edit()?.
+                putInt(FIELD_ID, data.id)?.
+                putString(FIELD_NAME, data.name)?.
+                putString(FIELD_SEC_NAME, data.second_name)?.
+                putString(FIELD_THIRD_NAME, data.third_name)?.
+                putString(FIELD_AVATAR, data.avatar)?.
+                putString(FIELD_EMAIL, data.email)?.
+                putString(FIELD_CREATE, data.created_at)?.
+                putString(FIELD_UPDATE, data.updated_at)?.
+                apply()
+                this.data = data
+            }
         }
 
         fun clearUserInfo(){

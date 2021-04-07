@@ -12,6 +12,11 @@ import VBllc.user.homehotel.R
 import VBllc.user.homehotel.Views.ProfileView
 import android.content.Intent
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment(), ProfileView {
 
@@ -19,6 +24,10 @@ class ProfileFragment : Fragment(), ProfileView {
     private var noLoginLayout: View? = null
     private var loginButton: Button? = null
     private var logoutButton: Button? = null
+    private var menu1: Button? = null
+    private var name: TextView? = null
+    private var email: TextView? = null
+    private var avatar: ImageView? = null
 
     private lateinit var presenter: ProfilePresenter
 
@@ -28,6 +37,8 @@ class ProfileFragment : Fragment(), ProfileView {
         noLoginLayout = root.findViewById(R.id.noLoginLayout)
         loginButton = root.findViewById(R.id.buttonLogin)
         logoutButton = root.findViewById(R.id.buttonLogout)
+        name = root.findViewById(R.id.name)
+        email = root.findViewById(R.id.email)
 
         loginButton?.setOnClickListener { loginClick() }
         logoutButton?.setOnClickListener { presenter.logout() }
@@ -45,30 +56,41 @@ class ProfileFragment : Fragment(), ProfileView {
     }
 
     override fun showLoginView(userInfo: UserInfoResponse.UserInfoData?) {
-        loginLayout?.visibility = View.VISIBLE
-        noLoginLayout?.visibility = View.GONE
+        CoroutineScope(Dispatchers.Main).launch {
+            loginLayout?.visibility = View.VISIBLE
+            noLoginLayout?.visibility = View.GONE
 
-        if(userInfo!=null){
-
+            if(userInfo!=null){
+                name?.text = "${userInfo.second_name?:""} ${userInfo.name} ${userInfo.third_name?:""}"
+                email?.text = userInfo.email
+            }
         }
     }
 
     override fun showNoLoginView() {
-        loginLayout?.visibility = View.GONE
-        noLoginLayout?.visibility = View.VISIBLE
+        CoroutineScope(Dispatchers.Main).launch {
+            loginLayout?.visibility = View.GONE
+            noLoginLayout?.visibility = View.VISIBLE
+        }
     }
 
 
     override fun showError(errorMessage: String, errorCode: Int) {
+        CoroutineScope(Dispatchers.Main).launch {
 
+        }
     }
 
     override fun showLoading() {
+        CoroutineScope(Dispatchers.Main).launch {
 
+        }
     }
 
     override fun showNoNetwork() {
+        CoroutineScope(Dispatchers.Main).launch {
 
+        }
     }
 
     private fun loginClick(){

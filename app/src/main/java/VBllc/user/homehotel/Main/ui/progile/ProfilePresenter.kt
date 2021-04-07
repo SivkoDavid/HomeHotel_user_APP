@@ -31,7 +31,7 @@ class ProfilePresenter(val view: ProfileView) {
 
         override fun onUserInfoResponse(userInfo: UserInfoResponse.UserInfoData?, code: Int) {
             if(userInfo != null){
-                view.showLoginView()
+                view.showLoginView(userInfo)
             }
         }
 

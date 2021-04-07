@@ -27,12 +27,14 @@ class ProfileRepository(val listener: ProfileRepositoryListener) {
             val postReq: API = apiFactory.createAPIwithCoroutines()
 
             try { //Если есть интерент соединение
+                listener.onUserInfoResponse(UserInfoPreference.userInfo.getInfo(), code)
 
                 val response = postReq.getUserInfo(token)
 
                 if (response.isSuccessful()) {
                     if(response.body()!!.success) {
                         listener?.onUserInfoResponse(response.body()!!.user, code)
+                        UserInfoPreference.userInfo.saveUserInfo(response.body()!!.user)
                     }
                     else {
                         val errors = mutableListOf<String>()
