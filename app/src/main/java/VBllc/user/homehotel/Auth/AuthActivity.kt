@@ -113,7 +113,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     override fun showLoading() {
         CoroutineScope(Dispatchers.Main).launch {
-            loadingDialog.show(supportFragmentManager, "1")
+            loadingDialog.open()
             loginFragment.printError("")
             registrationFragment.printError("")
         }

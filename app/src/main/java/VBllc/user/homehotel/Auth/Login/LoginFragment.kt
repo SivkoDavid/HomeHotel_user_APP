@@ -59,8 +59,30 @@ class LoginFragment : Fragment() {
 
 
     private fun loginClick(){
-        val login = loginInput.editText?.text?.toString()?:""
-        val pass = passInput.editText?.text?.toString()?:""
-        listener?.onLoginClick(login, pass)
+        if(fieldIsValid()) {
+            val login = loginInput.editText?.text?.toString() ?: ""
+            val pass = passInput.editText?.text?.toString() ?: ""
+            listener?.onLoginClick(login, pass)
+        }
+    }
+
+    private fun fieldIsValid():Boolean{
+        var result = true
+
+        if(loginInput.editText?.text?.isEmpty()?:true){
+            result = false
+            loginInput.error = "Поле должно быть заполнено"
+        }
+        else
+            loginInput.error = ""
+
+        if(passInput.editText?.text?.isEmpty()?:true){
+            result = false
+            passInput.error = "Поле должно быть заполнено"
+        }
+        else
+            passInput.error = ""
+
+        return result
     }
 }

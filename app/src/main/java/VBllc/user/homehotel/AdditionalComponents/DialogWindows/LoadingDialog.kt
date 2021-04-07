@@ -29,7 +29,6 @@ class LoadingDialog(
         lastInstant = savedInstanceState
         isShowing = savedInstanceState?.getBoolean("dialogIsShow", false) == true
         printResult = savedInstanceState?.getBoolean("printResult", false) == true
-        backSetUnclickable()
         return activity?.let {
             thisOrient = activity?.requestedOrientation!!
             activity?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED)
@@ -42,21 +41,28 @@ class LoadingDialog(
 
     override fun onStart() {
         super.onStart()
-
+        backSetUnclickable()
     }
-
-
 
     private fun backSetUnclickable(){
         dialog!!.setCanceledOnTouchOutside(false)
         dialog!!.setCancelable(false)
     }
 
+    fun open(){
+        if(!isAdded){
+            this.show(_fragmentManager, "")
+        }
+        else
+            dialog?.show()
+    }
+
+
 
     fun close(){
         if (dialog?.isShowing?:false) {
             isShowing = false
-            dialog!!.cancel()
+            dialog!!.hide()
             activity?.setRequestedOrientation(thisOrient)
         }
     }
