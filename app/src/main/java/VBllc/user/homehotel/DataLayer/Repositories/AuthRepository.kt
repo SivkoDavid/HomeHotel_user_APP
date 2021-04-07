@@ -29,7 +29,9 @@ class AuthRepository(val listener: AuthRepositoryListener?) {
                     else {
                         val errors = mutableListOf<String>()
                         response.body()!!.errors?.forEach{
-                            errors.add(it)
+                            it.value.forEach{
+                                errors.add(it)
+                            }
                         }
                         listener?.onErrors(errors, 200,  code)
                     }
