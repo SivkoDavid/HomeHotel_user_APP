@@ -78,11 +78,7 @@ class AuthRepository(val listener: AuthRepositoryListener?) {
         }
     }
 
-    fun logout(){
-        UserInfoPreference.token.removeToken()
-        UserInfoPreference.userInfo.clearUserInfo()
-        listener?.onLogout(true)
-    }
+
 
     private fun saveToken(token:String){
         UserInfoPreference.token.saveToken(token)
