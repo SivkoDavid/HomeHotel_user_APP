@@ -5,9 +5,11 @@ import VBllc.user.homehotel.Auth.Login.LoginFragment
 import VBllc.user.homehotel.Auth.Login.LoginFragmentListener
 import VBllc.user.homehotel.Auth.Registration.RegistrationFragment
 import VBllc.user.homehotel.Auth.Registration.RegistrationFragmentListener
+import VBllc.user.homehotel.Main.MainActivity
 import VBllc.user.homehotel.R
 import VBllc.user.homehotel.Views.AuthView
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.AttributeSet
@@ -92,6 +94,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
             registrationFragment.printError("")
             loadingDialog.close()
             Toast.makeText(applicationContext, "Вы успешно авторизированы", Toast.LENGTH_SHORT).show()
+            goToMainActivity()
         }
     }
 
@@ -134,4 +137,9 @@ class AuthActivity : AppCompatActivity(), AuthView {
             super.onBackPressed()
     }
 
+    private fun goToMainActivity(){
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 }
