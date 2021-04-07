@@ -1,5 +1,6 @@
 package VBllc.user.homehotel.Auth
 
+import VBllc.user.homehotel.AdditionalComponents.DialogWindows.LoadingDialog
 import VBllc.user.homehotel.Auth.Login.LoginFragment
 import VBllc.user.homehotel.Auth.Login.LoginFragmentListener
 import VBllc.user.homehotel.Auth.Registration.RegistrationFragment
@@ -28,6 +29,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
     private lateinit var pager: ViewPager
     private lateinit var loginFragment: LoginFragment
     private lateinit var registrationFragment: RegistrationFragment
+    private lateinit var loadingDialog: LoadingDialog
     private var pAdapter: AuthPagerAdapter? = null
     private val authPresenter: AuthPresenter = AuthPresenter(this)
 
@@ -40,9 +42,14 @@ class AuthActivity : AppCompatActivity(), AuthView {
         initialAllViews()
     }
 
+    override fun onStart() {
+        super.onStart()
+        //loadingDialog.show(supportFragmentManager,"")
+    }
+
     private fun initialAllViews(){
         pager = findViewById(R.id.auth_pager)
-
+        loadingDialog = LoadingDialog(supportFragmentManager)
         pager.adapter  = pAdapter
     }
 
@@ -83,6 +90,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
         CoroutineScope(Dispatchers.Main).launch {
             loginFragment.printError("")
             registrationFragment.printError("")
+            loadingDialog.close()
             Toast.makeText(applicationContext, "Вы успешно авторизированы", Toast.LENGTH_SHORT).show()
         }
     }
@@ -97,6 +105,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
                     registrationFragment.printError(errorMessage)
                 }
             }
+            loadingDialog.close()
         }
     }
 
@@ -104,6 +113,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     override fun showLoading() {
         CoroutineScope(Dispatchers.Main).launch {
+            loadingDialog.show(supportFragmentManager, "1")
             loginFragment.printError("")
             registrationFragment.printError("")
         }
@@ -111,6 +121,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     override fun showNoNetwork() {
         CoroutineScope(Dispatchers.Main).launch {
+            loadingDialog.close()
             loginFragment.printError("Нет подключения к интернету")
             registrationFragment.printError("Нет подключения к интернету")
         }
