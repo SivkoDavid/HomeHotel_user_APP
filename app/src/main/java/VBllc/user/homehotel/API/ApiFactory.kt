@@ -7,6 +7,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
+
 class ApiFactory {
     val API_BASE_URL  = URL_REST
 
@@ -14,6 +15,7 @@ class ApiFactory {
         val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
+
 
         val retrofit = Retrofit.Builder()
             .baseUrl(API_BASE_URL) // Базовый URL

@@ -16,7 +16,7 @@ interface API {
         @Field("password") password: String
     ): Response<LoginResponse>
 
-    @POST("auth/login")
+    @POST("auth/registration")
     @FormUrlEncoded
     suspend fun registration(
         @Field("name") name: String,

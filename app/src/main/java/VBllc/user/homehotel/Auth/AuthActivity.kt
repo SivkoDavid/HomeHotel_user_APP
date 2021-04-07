@@ -3,6 +3,7 @@ package VBllc.user.homehotel.Auth
 import VBllc.user.homehotel.Auth.Login.LoginFragment
 import VBllc.user.homehotel.Auth.Login.LoginFragmentListener
 import VBllc.user.homehotel.Auth.Registration.RegistrationFragment
+import VBllc.user.homehotel.Auth.Registration.RegistrationFragmentListener
 import VBllc.user.homehotel.R
 import VBllc.user.homehotel.Views.AuthView
 import android.content.Context
@@ -52,6 +53,12 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
             override fun onGoToReristrationClick() {
                 pager.setCurrentItem(1, true)
+            }
+        })
+
+        registrationFragment.setListener(object: RegistrationFragmentListener{
+            override fun registrationClick(name: String, surname: String, email: String, pass: String) {
+                authPresenter.registration(name, surname, email, pass)
             }
         })
     }

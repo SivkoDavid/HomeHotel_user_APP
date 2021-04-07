@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ErrorLabel" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/error</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:background">@drawable/error_label</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+</resources>
