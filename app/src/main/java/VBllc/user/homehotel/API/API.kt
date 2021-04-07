@@ -2,10 +2,9 @@ package VBllc.user.homehotel.API
 
 import VBllc.user.homehotel.API.DataResponse.LoginResponse
 import VBllc.user.homehotel.API.DataResponse.RegistrationResponse
+import VBllc.user.homehotel.API.DataResponse.UserInfoResponse
 import retrofit2.Response
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface API {
 
@@ -25,4 +24,9 @@ interface API {
         @Field("password") password: String,
         @Field("password_confirmation") password_confirmation: String = password
     ): Response<RegistrationResponse>
+
+    @GET("user/info")
+    suspend fun getUserInfo(
+            @Query("token") token: String
+    ): Response<UserInfoResponse>
 }

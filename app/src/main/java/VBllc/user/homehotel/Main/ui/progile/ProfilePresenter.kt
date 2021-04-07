@@ -1,5 +1,6 @@
 package VBllc.user.homehotel.Main.ui.progile
 
+import VBllc.user.homehotel.API.DataResponse.UserInfoResponse
 import VBllc.user.homehotel.DataLayer.Preferences.UserInfoPreference
 import VBllc.user.homehotel.DataLayer.Repositories.ProfileRepository
 import VBllc.user.homehotel.DataLayer.Repositories.ProfileRepositoryListener
@@ -7,11 +8,14 @@ import VBllc.user.homehotel.Views.ProfileView
 
 class ProfilePresenter(val view: ProfileView) {
 
+    private val USER_INFO_CODE = 281
     private val repository: ProfileRepository = ProfileRepository(RepositoryObserver())
 
     init {
-        if(repository.userIsAutorise())
+        if(repository.userIsAutorise()) {
             view.showLoginView()
+            repository.getUserInfo(code = USER_INFO_CODE)
+        }
         else
             view.showNoLoginView()
     }
@@ -23,6 +27,12 @@ class ProfilePresenter(val view: ProfileView) {
     inner class RepositoryObserver: ProfileRepositoryListener{
         override fun onLogout(status: Boolean) {
             view.showNoLoginView()
+        }
+
+        override fun onUserInfoResponse(userInfo: UserInfoResponse.UserInfoData?, code: Int) {
+            if(userInfo != null){
+                view.showLoginView()
+            }
         }
 
         override fun startRequest(name: String, code: Int) {

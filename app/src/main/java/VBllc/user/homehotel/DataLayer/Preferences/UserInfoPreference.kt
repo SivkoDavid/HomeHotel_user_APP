@@ -49,8 +49,10 @@ class UserInfoPreference{
         private var data: UserInfoResponse.UserInfoData? = null
         private val FIELD_ID = "sovetnik_user_id"
         private val FIELD_NAME = "sovetnik_user_name"
+        private val FIELD_SEC_NAME = "sovetnik_user_secname"
+        private val FIELD_THIRD_NAME = "sovetnik_user_thirdname"
+        private val FIELD_AVATAR = "sovetnik_user_avatar"
         private val FIELD_EMAIL = "sovetnik_user_email"
-        private val FIELD_PHONE = "sovetnik_user_phone"
         private val FIELD_CREATE = "sovetnik_user_create"
         private val FIELD_UPDATE = "sovetnik_user_update"
 
@@ -58,8 +60,10 @@ class UserInfoPreference{
             HomeHotelPreference.get()?.edit()?.
             putInt(FIELD_ID, data.id)?.
             putString(FIELD_NAME, data.name)?.
+            putString(FIELD_SEC_NAME, data.second_name)?.
+            putString(FIELD_THIRD_NAME, data.third_name)?.
+            putString(FIELD_AVATAR, data.avatar)?.
             putString(FIELD_EMAIL, data.email)?.
-            putString(FIELD_PHONE, data.phone)?.
             putString(FIELD_CREATE, data.created_at)?.
             putString(FIELD_UPDATE, data.updated_at)?.
             apply()
@@ -71,8 +75,10 @@ class UserInfoPreference{
             HomeHotelPreference.get()?.edit()?.
             remove(FIELD_ID)?.
             remove(FIELD_NAME)?.
+            remove(FIELD_SEC_NAME)?.
+            remove(FIELD_THIRD_NAME)?.
+            remove(FIELD_AVATAR)?.
             remove(FIELD_EMAIL)?.
-            remove(FIELD_PHONE)?.
             remove(FIELD_CREATE)?.
             remove(FIELD_UPDATE)?.
             apply()
@@ -87,7 +93,9 @@ class UserInfoPreference{
                 val id = HomeHotelPreference.get()?.getInt(FIELD_ID, 0)?:0
                 val name = HomeHotelPreference.get()?.getString(FIELD_NAME, "")?:""
                 val email = HomeHotelPreference.get()?.getString(FIELD_EMAIL, "")?:""
-                val phone = HomeHotelPreference.get()?.getString(FIELD_PHONE, "")?:""
+                val secName = HomeHotelPreference.get()?.getString(FIELD_SEC_NAME, "")?:""
+                val thName = HomeHotelPreference.get()?.getString(FIELD_THIRD_NAME, "")?:""
+                val avatar = HomeHotelPreference.get()?.getString(FIELD_AVATAR, "")?:""
                 val created_at = HomeHotelPreference.get()?.getString(FIELD_CREATE, "")?:""
                 val updated_at = HomeHotelPreference.get()?.getString(FIELD_UPDATE, "")?:""
 
@@ -95,8 +103,10 @@ class UserInfoPreference{
                 data = UserInfoResponse.UserInfoData(
                         id,
                         name,
+                        secName,
+                        thName,
                         email,
-                        phone,
+                        avatar,
                         created_at,
                         updated_at)
             }

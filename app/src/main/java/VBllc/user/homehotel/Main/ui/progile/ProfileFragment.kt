@@ -1,5 +1,6 @@
 package VBllc.user.homehotel.Main.ui.progile
 
+import VBllc.user.homehotel.API.DataResponse.UserInfoResponse
 import VBllc.user.homehotel.Auth.AuthActivity
 import VBllc.user.homehotel.Main.MainActivity
 import android.os.Bundle
@@ -43,9 +44,13 @@ class ProfileFragment : Fragment(), ProfileView {
         return root
     }
 
-    override fun showLoginView() {
+    override fun showLoginView(userInfo: UserInfoResponse.UserInfoData?) {
         loginLayout?.visibility = View.VISIBLE
         noLoginLayout?.visibility = View.GONE
+
+        if(userInfo!=null){
+
+        }
     }
 
     override fun showNoLoginView() {
