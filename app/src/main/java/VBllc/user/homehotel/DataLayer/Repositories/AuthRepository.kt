@@ -56,8 +56,10 @@ class AuthRepository(val listener: AuthRepositoryListener?) {
                 val response = postReq.registration(name, surname, email, pass)
 
                 if (response.isSuccessful()) {
-                    if(response.body()!!.success)
+                    if(response.body()!!.success) {
                         listener?.onRegistrationResponse(response.body()!!, code)
+                        saveToken(response.body()!!.token?:"")
+                    }
                     else {
                         val errors = mutableListOf<String>()
                         response.body()!!.errors?.forEach{
