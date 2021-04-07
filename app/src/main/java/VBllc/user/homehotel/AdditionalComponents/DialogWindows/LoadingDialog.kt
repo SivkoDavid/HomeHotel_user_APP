@@ -26,9 +26,10 @@ class LoadingDialog(
     var lastInstant: Bundle? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
         lastInstant = savedInstanceState
-        isShowing = savedInstanceState?.getBoolean("dialogIsShow", false) == true
-        printResult = savedInstanceState?.getBoolean("printResult", false) == true
+        isShowing = savedInstanceState?.getBoolean("dialogIsShow", false)?:true
+        printResult = savedInstanceState?.getBoolean("printResult", false)?:true
         return activity?.let {
             thisOrient = activity?.requestedOrientation!!
             activity?.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED)
@@ -42,6 +43,13 @@ class LoadingDialog(
     override fun onStart() {
         super.onStart()
         backSetUnclickable()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(!isShowing){
+            dialog?.hide()
+        }
     }
 
     private fun backSetUnclickable(){
@@ -65,5 +73,11 @@ class LoadingDialog(
             dialog!!.hide()
             activity?.setRequestedOrientation(thisOrient)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean("dialogIsShow", this.isShowing)
+        outState.putBoolean("printResult", this.printResult)
+        super.onSaveInstanceState(outState)
     }
 }
