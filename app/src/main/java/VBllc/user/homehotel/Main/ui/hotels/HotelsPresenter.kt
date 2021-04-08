@@ -14,6 +14,10 @@ class HotelsPresenter(val view: HotelsView) {
         repository.getHotels(GET_HOTELS_CODE)
     }
 
+    fun hotelClick(hotel: HotelsPesponse.HotelData){
+
+    }
+
 
     inner class RepositoryListener: HotelsRepositoryListener{
         override fun onHotelsResponse(hotels: List<HotelsPesponse.HotelData>, code: Int) {
