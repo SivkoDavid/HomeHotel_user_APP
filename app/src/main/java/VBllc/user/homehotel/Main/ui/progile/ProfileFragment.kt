@@ -23,6 +23,7 @@ class ProfileFragment : Fragment(), ProfileView {
     private var loginLayout: View? = null
     private var noLoginLayout: View? = null
     private var loginButton: Button? = null
+    private var regButton: Button? = null
     private var logoutButton: Button? = null
     private var menu1: Button? = null
     private var name: TextView? = null
@@ -37,11 +38,13 @@ class ProfileFragment : Fragment(), ProfileView {
         noLoginLayout = root.findViewById(R.id.noLoginLayout)
         loginButton = root.findViewById(R.id.buttonLogin)
         logoutButton = root.findViewById(R.id.buttonLogout)
+        regButton = root.findViewById(R.id.buttonRegister)
         name = root.findViewById(R.id.name)
         email = root.findViewById(R.id.email)
 
         loginButton?.setOnClickListener { loginClick() }
         logoutButton?.setOnClickListener { presenter.logout() }
+        regButton?.setOnClickListener { registrationClick() }
     }
 
     override fun onCreateView(
@@ -94,6 +97,11 @@ class ProfileFragment : Fragment(), ProfileView {
     }
 
     private fun loginClick(){
+        val intent = Intent(requireContext(), AuthActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun registrationClick(){
         val intent = Intent(requireContext(), AuthActivity::class.java)
         startActivity(intent)
     }

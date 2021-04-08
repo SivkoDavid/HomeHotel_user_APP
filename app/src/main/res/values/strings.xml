@@ -13,4 +13,8 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_in_no_login_profile_1">
+        Вы не авторизированы. Войдите в систему или зарегистрируйтесь.<br /><br />
+        Авторизовавшись вы сможете в полной мере пользоваться всеми функциями нашего приложения.
+    </string>
 </resources>
