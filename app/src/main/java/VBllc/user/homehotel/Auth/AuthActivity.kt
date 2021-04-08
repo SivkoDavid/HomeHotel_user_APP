@@ -27,6 +27,12 @@ import kotlinx.coroutines.launch
 import javax.security.auth.login.LoginException
 
 class AuthActivity : AppCompatActivity(), AuthView {
+    companion object {
+        val INTENT_EXTRA_ACTION_FIELD = "how_load"
+        val INTENT_ACTION_LOGIN = 1
+        val INTENT_ACTION_REGISTRATION = 2
+    }
+    val INSTANCE_PAGE_FIELD = "how_page"
 
     private lateinit var pager: ViewPager
     private lateinit var loginFragment: LoginFragment
@@ -35,6 +41,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
     private var pAdapter: AuthPagerAdapter? = null
     private val authPresenter: AuthPresenter = AuthPresenter(this)
 
+    private var lastInstance:Bundle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,11 +49,23 @@ class AuthActivity : AppCompatActivity(), AuthView {
         initialFragments()
         pAdapter = AuthPagerAdapter(listOf(loginFragment, registrationFragment), supportFragmentManager)
         initialAllViews()
+        if(savedInstanceState != null){
+            lastInstance = savedInstanceState
+            pager.setCurrentItem(savedInstanceState.getInt(INSTANCE_PAGE_FIELD), false)
+        }
     }
 
     override fun onStart() {
         super.onStart()
-        //loadingDialog.show(supportFragmentManager,"")
+
+        when(intent.getIntExtra(INTENT_EXTRA_ACTION_FIELD, INTENT_ACTION_LOGIN)){
+            INTENT_ACTION_LOGIN -> pager.setCurrentItem(0, true)
+            INTENT_ACTION_REGISTRATION -> pager.setCurrentItem(1, true)
+        }
+        intent.putExtra(INTENT_EXTRA_ACTION_FIELD, -1)
+        if(lastInstance != null){
+            pager.setCurrentItem(lastInstance!!.getInt(INSTANCE_PAGE_FIELD), false)
+        }
     }
 
     private fun initialAllViews(){
@@ -141,5 +160,10 @@ class AuthActivity : AppCompatActivity(), AuthView {
         val intent = Intent(applicationContext, MainActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt(INSTANCE_PAGE_FIELD, pager.currentItem)
+        super.onSaveInstanceState(outState)
     }
 }

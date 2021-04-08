@@ -98,11 +98,13 @@ class ProfileFragment : Fragment(), ProfileView {
 
     private fun loginClick(){
         val intent = Intent(requireContext(), AuthActivity::class.java)
+        intent.putExtra(AuthActivity.INTENT_EXTRA_ACTION_FIELD, AuthActivity.INTENT_ACTION_LOGIN)
         startActivity(intent)
     }
 
     private fun registrationClick(){
         val intent = Intent(requireContext(), AuthActivity::class.java)
+        intent.putExtra(AuthActivity.INTENT_EXTRA_ACTION_FIELD, AuthActivity.INTENT_ACTION_REGISTRATION)
         startActivity(intent)
     }
 }
