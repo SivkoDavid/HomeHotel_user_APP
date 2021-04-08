@@ -1,6 +1,8 @@
 package VBllc.user.homehotel.Main.ui.hotels
 
 import VBllc.user.homehotel.API.DataResponse.HotelsPesponse
+import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragment
+import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragmentListener
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +20,7 @@ import kotlinx.coroutines.launch
 
 class HotelsFragment : Fragment(), HotelsView{
     private var hotelAdapter: MyHotelItemRecyclerViewAdapter? = null
+    private var progressFragment: ProgressFragment? = null
 
     private lateinit var presenter: HotelsPresenter
     var data = mutableListOf<HotelsPesponse.HotelData>()
@@ -28,6 +31,14 @@ class HotelsFragment : Fragment(), HotelsView{
         }
 
     private fun initViews(root: View){
+        progressFragment = ProgressFragment(childFragmentManager)
+
+        childFragmentManager.beginTransaction().add(R.id.innerFragment, progressFragment!!, "progress").hide(progressFragment!!).commit()
+        progressFragment?.listener = object : ProgressFragmentListener{
+            override fun buttonReloadClick() {
+                presenter.refreshHotels()
+            }
+        }
     }
 
     override fun onCreateView(
@@ -36,7 +47,7 @@ class HotelsFragment : Fragment(), HotelsView{
             savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_hotels, container, false)
-        initViews(root)
+
         val list = root.findViewById<RecyclerView>(R.id.listHotel)
         hotelAdapter = MyHotelItemRecyclerViewAdapter(data)
         list.layoutManager = LinearLayoutManager(requireContext())
@@ -47,25 +58,33 @@ class HotelsFragment : Fragment(), HotelsView{
                 presenter.hotelClick(hotel)
             }
         })
+        initViews(root)
         return root
     }
 
     override fun showHotelsList(hotels: List<HotelsPesponse.HotelData>) {
         CoroutineScope(Dispatchers.Main).launch {
             data = hotels.toMutableList()
+            progressFragment?.hide()
         }
     }
 
     override fun showError(errorMessage: String, errorCode: Int) {
-        println(">>>>>>>>ERROR!!!>>>>>>>> "+errorMessage)
+        CoroutineScope(Dispatchers.Main).launch {
+            progressFragment?.showStatus(errorMessage, ProgressFragment.ERROR_IMAGE)
+        }
     }
 
     override fun showLoading() {
-        println("--------------LOADING...------------------")
+        CoroutineScope(Dispatchers.Main).launch {
+            progressFragment?.showLoading()
+        }
     }
 
     override fun showNoNetwork() {
-        println("--------------NO NETWORK!------------------")
+        CoroutineScope(Dispatchers.Main).launch {
+            progressFragment?.showStatus("Нет подключения к интернету", ProgressFragment.ERROR_IMAGE)
+        }
     }
 }
 

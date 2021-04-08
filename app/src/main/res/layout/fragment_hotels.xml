@@ -13,4 +13,9 @@
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
         tools:listitem="@layout/hotel_card" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/innerFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </FrameLayout>
