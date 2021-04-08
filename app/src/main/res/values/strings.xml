@@ -14,7 +14,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="text_in_no_login_profile_1">
-        Вы не авторизированы. Войдите в систему или зарегистрируйтесь.<br /><br />
+        Вы не авторизированы. Войдите в систему или зарегистрируйтесь.\n
         Авторизовавшись вы сможете в полной мере пользоваться всеми функциями нашего приложения.
     </string>
 </resources>
