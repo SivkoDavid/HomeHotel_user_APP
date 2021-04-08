@@ -1,5 +1,6 @@
 package VBllc.user.homehotel.API
 
+import VBllc.user.homehotel.API.DataResponse.HotelsPesponse
 import VBllc.user.homehotel.API.DataResponse.LoginResponse
 import VBllc.user.homehotel.API.DataResponse.RegistrationResponse
 import VBllc.user.homehotel.API.DataResponse.UserInfoResponse
@@ -29,4 +30,7 @@ interface API {
     suspend fun getUserInfo(
             @Query("token") token: String
     ): Response<UserInfoResponse>
+
+    @GET("hotels")
+    suspend fun getUserInfo(): Response<HotelsPesponse>
 }
