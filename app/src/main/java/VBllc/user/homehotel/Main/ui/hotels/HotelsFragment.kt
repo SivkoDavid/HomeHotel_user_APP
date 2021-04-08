@@ -14,6 +14,7 @@ import VBllc.user.homehotel.Views.HotelsView
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +24,8 @@ class HotelsFragment : Fragment(), HotelsView{
     private var progressFragment: ProgressFragment? = null
 
     private lateinit var presenter: HotelsPresenter
+    private lateinit var refresher: SwipeRefreshLayout
+
     var data = mutableListOf<HotelsPesponse.HotelData>()
         set(value) {
             field.clear()
@@ -32,12 +35,17 @@ class HotelsFragment : Fragment(), HotelsView{
 
     private fun initViews(root: View){
         progressFragment = ProgressFragment(childFragmentManager)
-
         childFragmentManager.beginTransaction().add(R.id.innerFragment, progressFragment!!, "progress").hide(progressFragment!!).commit()
         progressFragment?.listener = object : ProgressFragmentListener{
             override fun buttonReloadClick() {
                 presenter.refreshHotels()
             }
+        }
+
+        refresher = root.findViewById(R.id.swipeRefresh)
+        refresher.setOnRefreshListener {
+            presenter.refreshHotels()
+            refresher.isRefreshing = false
         }
     }
 
