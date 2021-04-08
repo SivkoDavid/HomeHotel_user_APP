@@ -3,6 +3,7 @@ package VBllc.user.homehotel.Main.ui.hotels
 import VBllc.user.homehotel.API.DataResponse.HotelsPesponse
 import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragment
 import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragmentListener
+import VBllc.user.homehotel.Main.ui.hotels.Full.FullHotelFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import VBllc.user.homehotel.R
 import VBllc.user.homehotel.Views.HotelsView
-import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 class HotelsFragment : Fragment(), HotelsView{
     private var hotelAdapter: MyHotelItemRecyclerViewAdapter? = null
     private var progressFragment: ProgressFragment? = null
+    private var fullHotelFragment: FullHotelFragment? = null
 
     private lateinit var presenter: HotelsPresenter
     private lateinit var refresher: SwipeRefreshLayout
@@ -35,7 +36,13 @@ class HotelsFragment : Fragment(), HotelsView{
 
     private fun initViews(root: View){
         progressFragment = ProgressFragment(childFragmentManager)
-        childFragmentManager.beginTransaction().add(R.id.innerFragment, progressFragment!!, "progress").hide(progressFragment!!).commit()
+        fullHotelFragment = FullHotelFragment()
+        childFragmentManager.beginTransaction()
+            .add(R.id.innerFragment, progressFragment!!, "progress")
+            .hide(progressFragment!!).commit()
+        childFragmentManager?.beginTransaction()
+            ?.add(R.id.innerFragment, fullHotelFragment!!, "progress")
+            ?.hide(fullHotelFragment!!)?.commit()
         progressFragment?.listener = object : ProgressFragmentListener{
             override fun buttonReloadClick() {
                 presenter.refreshHotels()
@@ -47,6 +54,25 @@ class HotelsFragment : Fragment(), HotelsView{
             presenter.refreshHotels()
             refresher.isRefreshing = false
         }
+    }
+
+    private val fragments = mutableListOf<Fragment>()
+
+    private fun openFragment(fragment: Fragment){
+        if(!fragments.contains(fragment)) {
+            fragments.add(fragment)
+        }
+        val tran = childFragmentManager?.beginTransaction()
+
+        fragments.forEach{
+            if(it != fragment){
+                tran?.hide(it)
+            }
+            else
+                tran?.show(it)
+        }
+
+        tran?.addToBackStack(null)?.commit()
     }
 
     override fun onCreateView(
@@ -74,6 +100,13 @@ class HotelsFragment : Fragment(), HotelsView{
         CoroutineScope(Dispatchers.Main).launch {
             data = hotels.toMutableList()
             progressFragment?.hide()
+        }
+    }
+
+    override fun openHotel(hotel: HotelsPesponse.HotelData) {
+        CoroutineScope(Dispatchers.Main).launch {
+            if(fullHotelFragment != null)
+                openFragment(fullHotelFragment!!.newInstance(hotel))
         }
     }
 

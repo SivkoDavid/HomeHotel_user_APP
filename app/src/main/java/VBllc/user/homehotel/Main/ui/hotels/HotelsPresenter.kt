@@ -15,7 +15,7 @@ class HotelsPresenter(val view: HotelsView) {
     }
 
     fun hotelClick(hotel: HotelsPesponse.HotelData){
-
+        view.openHotel(hotel)
     }
 
     fun refreshHotels(){
