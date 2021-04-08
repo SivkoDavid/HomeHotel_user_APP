@@ -1,8 +1,7 @@
-package VBllc.user.homehotel.Main.ui.progile
+package VBllc.user.homehotel.Main.ui.profile
 
 import VBllc.user.homehotel.API.DataResponse.UserInfoResponse
 import VBllc.user.homehotel.Auth.AuthActivity
-import VBllc.user.homehotel.Main.MainActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

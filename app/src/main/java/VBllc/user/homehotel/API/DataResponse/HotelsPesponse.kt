@@ -6,12 +6,12 @@ data class HotelsPesponse(
 ){
     data class HotelData(
             val id: Int,
-            val created_at: String,
-            val updated_at: String,
-            val name: String,
-            val address: String,
-            val main_phone: String,
-            val additional_phone: String,
-            val owner_id: Int
+            val created_at: String?=null,
+            val updated_at: String?=null,
+            val name: String?=null,
+            val address: String?=null,
+            val main_phone: String?=null,
+            val additional_phone: String?=null,
+            val owner_id: Int?=null
     )
 }

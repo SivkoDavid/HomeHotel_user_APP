@@ -2,7 +2,7 @@ package VBllc.user.homehotel.Main
 
 import VBllc.user.homehotel.Main.ui.guest.GuestFragment
 import VBllc.user.homehotel.Main.ui.hotels.HotelsFragment
-import VBllc.user.homehotel.Main.ui.progile.ProfileFragment
+import VBllc.user.homehotel.Main.ui.profile.ProfileFragment
 import VBllc.user.homehotel.R
 import android.content.Intent
 import android.os.Bundle
@@ -10,8 +10,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
 
 class MainActivity : AppCompatActivity() {
 

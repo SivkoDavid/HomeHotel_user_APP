@@ -7,18 +7,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 
-class ProfileRepository(val listener: ProfileRepositoryListener) {
-    fun userIsAutorise():Boolean{
-        return UserInfoPreference.token.getToken().isNotEmpty()
-    }
+class HotelsRepository(val listener: HotelsRepositoryListener) {
 
-    fun logout(){
-        UserInfoPreference.token.removeToken()
-        UserInfoPreference.userInfo.clearUserInfo()
-        listener?.onLogout(true)
-    }
-    
-    fun getUserInfo(token: String = UserInfoPreference.token.toString(), code:Int = 0){
+    fun getHotels(code: Int = 0){
         listener?.startRequest("getUserInfo", code)
         //Запускаем карутину
         CoroutineScope(Dispatchers.Unconfined).async{
@@ -27,23 +18,15 @@ class ProfileRepository(val listener: ProfileRepositoryListener) {
             val postReq: API = apiFactory.createAPIwithCoroutines()
 
             try { //Если есть интерент соединение
-                listener.onUserInfoResponse(UserInfoPreference.userInfo.getInfo(), code)
-
-                val response = postReq.getUserInfo(token)
+                val response = postReq.getHotels()
 
                 if (response.isSuccessful()) {
                     if(response.body()!!.success) {
-                        listener?.onUserInfoResponse(response.body()!!.user, code)
-                        UserInfoPreference.userInfo.saveUserInfo(response.body()!!.user)
+                        listener?.onHotelsResponse(response.body()!!.hotels?: listOf(), code)
                     }
                     else {
-                        val errors = mutableListOf<String>()
-                        response.body()!!.errors?.forEach{
-                            it.value.forEach{
-                                errors.add(it)
-                            }
-                        }
-                        listener?.onErrors(errors, response.body()!!.errors?.keys?.first()?.toInt()?:400,  code)
+                        val errors = listOf("Ошибка")
+                        listener?.onErrors(errors, 400,  code)
                     }
                 } else { //Ошибка сервера
                     listener?.onErrors(listOf("Ошибка "+response.code()), response.code(), code)

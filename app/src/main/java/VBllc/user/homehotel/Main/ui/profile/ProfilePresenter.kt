@@ -1,7 +1,6 @@
-package VBllc.user.homehotel.Main.ui.progile
+package VBllc.user.homehotel.Main.ui.profile
 
 import VBllc.user.homehotel.API.DataResponse.UserInfoResponse
-import VBllc.user.homehotel.DataLayer.Preferences.UserInfoPreference
 import VBllc.user.homehotel.DataLayer.Repositories.ProfileRepository
 import VBllc.user.homehotel.DataLayer.Repositories.ProfileRepositoryListener
 import VBllc.user.homehotel.Views.ProfileView

@@ -32,5 +32,5 @@ interface API {
     ): Response<UserInfoResponse>
 
     @GET("hotels")
-    suspend fun getUserInfo(): Response<HotelsPesponse>
+    suspend fun getHotels(): Response<HotelsPesponse>
 }
