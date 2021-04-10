@@ -1,6 +1,7 @@
 package VBllc.user.homehotel.Main.ui.guest
 
 import VBllc.user.homehotel.API.DataResponse.SettleResponse
+import VBllc.user.homehotel.AdditionalComponents.DialogWindows.InfoDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +24,7 @@ class GuestFragment : Fragment(), GuestView {
     private lateinit var notSettlementLayout: View
     private lateinit var codeInput: TextInputLayout
     private lateinit var sendCodeBtn: Button
+    private lateinit var infoDialog: InfoDialog
 
     private lateinit var presenter: GuestPresenter
 
@@ -43,6 +45,7 @@ class GuestFragment : Fragment(), GuestView {
         val root = inflater.inflate(R.layout.fragment_guest, container, false)
         initViews(root)
         presenter = GuestPresenter(this)
+        infoDialog = InfoDialog(requireActivity().supportFragmentManager, "guest")
         return root
     }
 
@@ -69,32 +72,32 @@ class GuestFragment : Fragment(), GuestView {
 
     override fun showSettlement(data: SettleResponse.SettleData) {
         CoroutineScope(Dispatchers.Main).launch {
-            //openGuestMode()
-            println(">>>>>>>>>>> --SETTLE RESP-- >>>>>"+data)
+            infoDialog.showResultNow("Успешно", false)
+            openGuestMode()
         }
     }
 
     override fun showNoGuestMode() {
         CoroutineScope(Dispatchers.Main).launch {
-            //closeGuestMode()
+            closeGuestMode()
         }
     }
 
     override fun showError(errorMessage: String, errorCode: Int) {
         CoroutineScope(Dispatchers.Main).launch {
-            println(">>>>>>>>>>> --error-- >>>>>"+errorMessage)
+            infoDialog.showResultNow(errorMessage, true)
         }
     }
 
     override fun showLoading() {
         CoroutineScope(Dispatchers.Main).launch {
-            println(">>>>>>>>>>> --Strat load-- >>>>>")
+            infoDialog.showLoadingNow("Проверка кода")
         }
     }
 
     override fun showNoNetwork() {
         CoroutineScope(Dispatchers.Main).launch {
-            println(">>>>>>>>>>> --No internet-- >>>>>")
+            infoDialog.showResultNow("Нет подключения к интернету", true)
         }
     }
 }
