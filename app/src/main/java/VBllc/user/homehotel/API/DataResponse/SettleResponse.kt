@@ -1,8 +1,10 @@
 package VBllc.user.homehotel.API.DataResponse
 
+import com.squareup.moshi.Json
+
 data class SettleResponse(
         val success: Boolean,
-        val data: SettleData? = null,
+        @Json(name="settlement")val data: SettleData? = null,
         val errors: List<String>? = null
 ){
     data class SettleData(

@@ -24,11 +24,15 @@ class GuestFragment : Fragment(), GuestView {
     private lateinit var codeInput: TextInputLayout
     private lateinit var sendCodeBtn: Button
 
+    private lateinit var presenter: GuestPresenter
+
     fun initViews(root: View){
         settlementLayout = root.findViewById(R.id.guest_layout)
         notSettlementLayout = root.findViewById(R.id.not_guest_layout)
         codeInput = root.findViewById(R.id.codeInput)
         sendCodeBtn = root.findViewById(R.id.sendCodeBtn)
+
+        sendCodeBtn.setOnClickListener { sendCodeBtnClick() }
     }
 
     override fun onCreateView(
@@ -38,12 +42,19 @@ class GuestFragment : Fragment(), GuestView {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_guest, container, false)
         initViews(root)
+        presenter = GuestPresenter(this)
         return root
     }
 
     override fun onStart() {
         super.onStart()
         showNoGuestMode()
+    }
+
+    private fun sendCodeBtnClick(){
+        if((codeInput.editText?.text?.length?:0) > 0){
+            presenter.sendSetteleCode(codeInput.editText?.text.toString())
+        }
     }
 
     private fun openGuestMode(){
@@ -58,31 +69,32 @@ class GuestFragment : Fragment(), GuestView {
 
     override fun showSettlement(data: SettleResponse.SettleData) {
         CoroutineScope(Dispatchers.Main).launch {
-            openGuestMode()
+            //openGuestMode()
+            println(">>>>>>>>>>> --SETTLE RESP-- >>>>>"+data)
         }
     }
 
     override fun showNoGuestMode() {
         CoroutineScope(Dispatchers.Main).launch {
-            closeGuestMode()
+            //closeGuestMode()
         }
     }
 
     override fun showError(errorMessage: String, errorCode: Int) {
         CoroutineScope(Dispatchers.Main).launch {
-
+            println(">>>>>>>>>>> --error-- >>>>>"+errorMessage)
         }
     }
 
     override fun showLoading() {
         CoroutineScope(Dispatchers.Main).launch {
-
+            println(">>>>>>>>>>> --Strat load-- >>>>>")
         }
     }
 
     override fun showNoNetwork() {
         CoroutineScope(Dispatchers.Main).launch {
-
+            println(">>>>>>>>>>> --No internet-- >>>>>")
         }
     }
 }

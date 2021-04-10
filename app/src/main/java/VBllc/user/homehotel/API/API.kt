@@ -31,7 +31,7 @@ interface API {
     @GET("hotels")
     suspend fun getHotels(): Response<HotelsPesponse>
 
-    @POST("auth/login")
+    @POST("settlement")
     @FormUrlEncoded
     suspend fun getSettle(
             @Field("uid") code: String
