@@ -5,6 +5,12 @@ data class SettleResponse(
         val data: SettleData
 ){
     data class SettleData(
-            val uid: String
+            val settlement_start: String,
+            val settlement_end: String,
+            val uid: String,
+            val hotel: HotelsPesponse.HotelData,
+            val filial: FilialData,
+            val apartament: ApartamentData,
+            val buyer: UserInfoResponse.UserInfoData
     )
 }
