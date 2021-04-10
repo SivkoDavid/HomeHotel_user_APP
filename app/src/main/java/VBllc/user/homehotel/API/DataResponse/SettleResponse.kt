@@ -2,7 +2,8 @@ package VBllc.user.homehotel.API.DataResponse
 
 data class SettleResponse(
         val success: Boolean,
-        val data: SettleData
+        val data: SettleData? = null,
+        val errors: List<String>? = null
 ){
     data class SettleData(
             val settlement_start: String,

@@ -1,9 +1,6 @@
 package VBllc.user.homehotel.API
 
-import VBllc.user.homehotel.API.DataResponse.HotelsPesponse
-import VBllc.user.homehotel.API.DataResponse.LoginResponse
-import VBllc.user.homehotel.API.DataResponse.RegistrationResponse
-import VBllc.user.homehotel.API.DataResponse.UserInfoResponse
+import VBllc.user.homehotel.API.DataResponse.*
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -33,4 +30,10 @@ interface API {
 
     @GET("hotels")
     suspend fun getHotels(): Response<HotelsPesponse>
+
+    @POST("auth/login")
+    @FormUrlEncoded
+    suspend fun getSettle(
+            @Field("uid") code: String
+    ): Response<SettleResponse>
 }
