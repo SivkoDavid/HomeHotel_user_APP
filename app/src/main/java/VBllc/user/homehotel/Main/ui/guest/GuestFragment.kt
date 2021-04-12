@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import VBllc.user.homehotel.R
+import VBllc.user.homehotel.Tools.DateFormatter
 import VBllc.user.homehotel.Views.GuestView
 import android.widget.Button
 import com.google.android.material.textfield.TextInputLayout
@@ -25,6 +26,13 @@ class GuestFragment : Fragment(), GuestView {
     private lateinit var codeInput: TextInputLayout
     private lateinit var sendCodeBtn: Button
     private lateinit var infoDialog: InfoDialog
+    private lateinit var hotelNameView: TextView
+    private lateinit var addressView: TextView
+    private lateinit var numView: TextView
+    private lateinit var startDateView: TextView
+    private lateinit var startTimeView: TextView
+    private lateinit var endDateView: TextView
+    private lateinit var endTimeView: TextView
 
     private lateinit var presenter: GuestPresenter
 
@@ -33,8 +41,37 @@ class GuestFragment : Fragment(), GuestView {
         notSettlementLayout = root.findViewById(R.id.not_guest_layout)
         codeInput = root.findViewById(R.id.codeInput)
         sendCodeBtn = root.findViewById(R.id.sendCodeBtn)
+        hotelNameView = root.findViewById(R.id.hotelName)
+        addressView = root.findViewById(R.id.addressFilial)
+        numView = root.findViewById(R.id.numberNum)
+        startDateView = root.findViewById(R.id.dateStart)
+        startTimeView = root.findViewById(R.id.timeStart)
+        endDateView = root.findViewById(R.id.dateEnd)
+        endTimeView = root.findViewById(R.id.timeEnd)
 
         sendCodeBtn.setOnClickListener { sendCodeBtnClick() }
+
+        showNoGuestMode()
+    }
+
+    private fun printSettleInfo(data: SettleResponse.SettleData){
+        hotelNameView.text = data.hotel.name
+        addressView.text = data.filial.addres
+        numView.text = data.apartament.name
+
+        val dStart = DateFormatter.formattedDateTime(data.settlement_start)
+        val dEnd = DateFormatter.formattedDateTime(data.settlement_end)
+
+        val dateS = dStart.substringBefore(' ')
+        val timeS = dStart.substringAfter(' ')
+
+        val dateE = dEnd.substringBefore(' ')
+        val timeE = dEnd.substringAfter(' ')
+
+        startDateView.text = dateS
+        startTimeView.text = timeS
+        endDateView.text = dateE
+        endTimeView.text = timeE
     }
 
     override fun onCreateView(
@@ -51,7 +88,6 @@ class GuestFragment : Fragment(), GuestView {
 
     override fun onStart() {
         super.onStart()
-        showNoGuestMode()
     }
 
     private fun sendCodeBtnClick(){
@@ -74,6 +110,7 @@ class GuestFragment : Fragment(), GuestView {
         CoroutineScope(Dispatchers.Main).launch {
             infoDialog.showResultNow("Успешно", false)
             openGuestMode()
+            printSettleInfo(data)
         }
     }
 
