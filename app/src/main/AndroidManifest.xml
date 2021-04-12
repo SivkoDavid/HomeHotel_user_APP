@@ -15,9 +15,15 @@
         android:theme="@style/Theme.HomeHotel"
         android:usesCleartextTraffic="true"
         android:networkSecurityConfig="@xml/network_policy">
-        <activity android:name=".Auth.AuthActivity"/>
+        <activity android:name=".Auth.AuthActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".Main.MainActivity">
+            android:name=".Main.MainActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />

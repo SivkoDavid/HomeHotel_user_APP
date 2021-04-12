@@ -1,19 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="none">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Yes guest"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:background="@color/white"
+        android:minHeight="500dp">
+
+        <TextView
+            android:id="@+id/dateEnd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="04.16.2021"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/endOrenda"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/endOrenda"
+            app:layout_constraintTop_toBottomOf="@+id/endOrenda" />
+
+        <TextView
+            android:id="@+id/timeEnd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="17:00"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="@+id/endOrenda"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/endOrenda"
+            app:layout_constraintTop_toBottomOf="@+id/dateEnd" />
+
+        <TextView
+            android:id="@+id/hotelName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_weight="1"
+            android:text="Имя отеля"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/addressFilial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Адресс, г. Город, ул. Улица, д. 0"
+            app:layout_constraintStart_toStartOf="@+id/hotelName"
+            app:layout_constraintTop_toBottomOf="@+id/hotelName" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Номер:"
+            android:textColor="@color/gray_1"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="@+id/addressFilial"
+            app:layout_constraintTop_toBottomOf="@+id/addressFilial" />
+
+        <TextView
+            android:id="@+id/numberNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif"
+            android:text="234"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView5"
+            app:layout_constraintStart_toEndOf="@+id/textView5"
+            app:layout_constraintTop_toBottomOf="@+id/addressFilial" />
+
+        <TextView
+            android:id="@+id/startOrenda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Начало аренды:"
+            android:textColor="@color/gray_1"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/endOrenda"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <TextView
+            android:id="@+id/endOrenda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Конец аренды:"
+            android:textColor="@color/gray_1"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/startOrenda"
+            app:layout_constraintTop_toTopOf="@+id/startOrenda" />
+
+        <TextView
+            android:id="@+id/dateStart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="04.16.2021"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/startOrenda"
+            app:layout_constraintStart_toStartOf="@+id/startOrenda"
+            app:layout_constraintTop_toBottomOf="@+id/startOrenda" />
+
+
+        <TextView
+            android:id="@+id/timeStart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="17:00"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="@+id/startOrenda"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/startOrenda"
+            app:layout_constraintTop_toBottomOf="@+id/dateStart" />
+
+        <Button
+            android:id="@+id/foodMenu"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_foodmenuicon"
+            android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:gravity="start|center_vertical"
+            android:text="Еда и напитки"
+            android:textAllCaps="false"
+            android:textColor="@color/gray_1"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/timeEnd"
+            app:layout_constraintStart_toStartOf="@+id/timeStart"
+            app:layout_constraintTop_toBottomOf="@+id/timeStart" />
+
+        <Button
+            android:id="@+id/hygieneMenu"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_hygienemenuicon"
+            android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:gravity="start|center_vertical"
+            android:text="Гигиена"
+            android:textAllCaps="false"
+            android:textColor="@color/gray_1"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/timeEnd"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/timeStart"
+            app:layout_constraintTop_toBottomOf="@+id/foodMenu" />
+
+        <Button
+            android:id="@+id/cleaningMenu"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_cleanmenuicon"
+            android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:gravity="start|center_vertical"
+            android:text="Уборка"
+            android:textAllCaps="false"
+            android:textColor="@color/gray_1"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/timeEnd"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/timeStart"
+            app:layout_constraintTop_toBottomOf="@+id/hygieneMenu" />
+
+        <Button
+            android:id="@+id/otherServicesMenu"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_servicemenuicon"
+            android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:gravity="start|center_vertical"
+            android:text="Прочие услуги"
+            android:textAllCaps="false"
+            android:textColor="@color/gray_1"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/timeEnd"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/timeStart"
+            app:layout_constraintTop_toBottomOf="@+id/cleaningMenu" />
+
+        <Button
+            android:id="@+id/partServicesMenu"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_partnerservicemenuicon"
+            android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:gravity="start|center_vertical"
+            android:text="Услуги партнеров"
+            android:textAllCaps="false"
+            android:textColor="@color/gray_1"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/timeEnd"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/timeStart"
+            app:layout_constraintTop_toBottomOf="@+id/otherServicesMenu" />
+
+        <Button
+            android:id="@+id/messagerMenu"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_chatmenuicon"
+            android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:gravity="start|center_vertical"
+            android:text="Чат"
+            android:textAllCaps="false"
+            android:textColor="@color/gray_1"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/timeEnd"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/timeStart"
+            app:layout_constraintTop_toBottomOf="@+id/partServicesMenu" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
