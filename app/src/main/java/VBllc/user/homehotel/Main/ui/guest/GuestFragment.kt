@@ -2,6 +2,7 @@ package VBllc.user.homehotel.Main.ui.guest
 
 import VBllc.user.homehotel.API.DataResponse.SettleResponse
 import VBllc.user.homehotel.AdditionalComponents.DialogWindows.InfoDialog
+import VBllc.user.homehotel.Main.ui.guest.Cleaning.OrderCleaningFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import VBllc.user.homehotel.R
 import VBllc.user.homehotel.Tools.DateFormatter
 import VBllc.user.homehotel.Views.GuestView
 import android.widget.Button
+import androidx.fragment.app.FragmentContainer
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +35,12 @@ class GuestFragment : Fragment(), GuestView {
     private lateinit var startTimeView: TextView
     private lateinit var endDateView: TextView
     private lateinit var endTimeView: TextView
+    private lateinit var foodMenu: Button
+    private lateinit var hygieneMenu: Button
+    private lateinit var cleaningMenu: Button
+    private lateinit var otherServicesMenu: Button
+    private lateinit var partServicesMenu: Button
+    private lateinit var messagerMenu: Button
 
     private lateinit var presenter: GuestPresenter
 
@@ -48,10 +56,28 @@ class GuestFragment : Fragment(), GuestView {
         startTimeView = root.findViewById(R.id.timeStart)
         endDateView = root.findViewById(R.id.dateEnd)
         endTimeView = root.findViewById(R.id.timeEnd)
+        foodMenu = root.findViewById(R.id.foodMenu)
+        hygieneMenu = root.findViewById(R.id.hygieneMenu)
+        cleaningMenu = root.findViewById(R.id.cleaningMenu)
+        otherServicesMenu = root.findViewById(R.id.otherServicesMenu)
+        partServicesMenu = root.findViewById(R.id.partServicesMenu)
+        messagerMenu = root.findViewById(R.id.messagerMenu)
 
         sendCodeBtn.setOnClickListener { sendCodeBtnClick() }
+        cleaningMenu.setOnClickListener { presenter.goToCleaningMenu() }
 
         showNoGuestMode()
+    }
+
+    private lateinit var cleaningFragment: OrderCleaningFragment
+
+    private fun initFragments(){
+        cleaningFragment = OrderCleaningFragment()
+
+        childFragmentManager.beginTransaction()
+            .add(R.id.fragmentContainer, cleaningFragment)
+            .hide(cleaningFragment)
+            .commit()
     }
 
     private fun printSettleInfo(data: SettleResponse.SettleData){
@@ -81,6 +107,7 @@ class GuestFragment : Fragment(), GuestView {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_guest, container, false)
         initViews(root)
+        initFragments()
         presenter = GuestPresenter(this)
         infoDialog = InfoDialog(requireActivity().supportFragmentManager, "guest")
         return root
@@ -120,6 +147,10 @@ class GuestFragment : Fragment(), GuestView {
         }
     }
 
+    override fun showCleaningFragment() {
+        openFragment(cleaningFragment)
+    }
+
     override fun showError(errorMessage: String, errorCode: Int) {
         CoroutineScope(Dispatchers.Main).launch {
             infoDialog.showResultNow(errorMessage, true)
@@ -136,5 +167,24 @@ class GuestFragment : Fragment(), GuestView {
         CoroutineScope(Dispatchers.Main).launch {
             infoDialog.showResultNow("Нет подключения к интернету", true)
         }
+    }
+
+    private val fragments = mutableListOf<Fragment>()
+
+    private fun openFragment(fragment: Fragment){
+        if(!fragments.contains(fragment)) {
+            fragments.add(fragment)
+        }
+        val tran = childFragmentManager.beginTransaction()
+
+        fragments.forEach{
+            if(it != fragment){
+                tran.hide(it)
+            }
+            else
+                tran.show(it)
+        }
+
+        tran.addToBackStack(null).commit()
     }
 }

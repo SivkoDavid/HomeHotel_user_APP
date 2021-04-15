@@ -15,6 +15,10 @@ class GuestPresenter(private val view: GuestView) {
         repository.sendSettleCode(settleCode, SEND_SETTELECODE_CODE)
     }
 
+    fun goToCleaningMenu(){
+        view.showCleaningFragment()
+    }
+
 
     private inner class RepositoryListener: GuestRepositoryListener{
         override fun onSetteleResponse(settle: SettleResponse, code: Int) {

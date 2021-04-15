@@ -6,4 +6,6 @@ interface GuestView: BaseView {
     fun showSettlement(data: SettleResponse.SettleData)
 
     fun showNoGuestMode()
+
+    fun showCleaningFragment()
 }

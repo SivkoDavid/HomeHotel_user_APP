@@ -90,13 +90,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if(getShowedMenuItemId() == R.id.navigation_guest){
-            val startMain = Intent(Intent.ACTION_MAIN)
-            startMain.addCategory(Intent.CATEGORY_HOME)
-            startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(startMain)
+            if(guestFragment.childFragmentManager.backStackEntryCount > 0)
+                guestFragment.childFragmentManager.popBackStack()
+            else {
+                val startMain = Intent(Intent.ACTION_MAIN)
+                startMain.addCategory(Intent.CATEGORY_HOME)
+                startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(startMain)
+            }
         }
         else {
-            if(hotelsFragment.childFragmentManager.backStackEntryCount > 0)
+            if(getShowedMenuItemId() == R.id.navigation_hotels
+                && hotelsFragment.childFragmentManager.backStackEntryCount > 0)
                 hotelsFragment.childFragmentManager.popBackStack()
             else
                 navView.selectedItemId = R.id.navigation_guest
