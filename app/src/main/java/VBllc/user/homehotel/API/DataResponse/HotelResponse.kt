@@ -25,7 +25,7 @@ data class HotelResponse(
             val created_at: String?,
             val publish_time: String?,
             val text: String?,
-            val rating: String?,
+            val rating: Int,
             val user_name: String?,
             val user_avatar: String?,
             val user_email: String?

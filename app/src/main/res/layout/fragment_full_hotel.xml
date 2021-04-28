@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:id="@+id/hotelCard"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -20,26 +20,61 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView"
+            android:text="Название (filial)"
             android:layout_marginTop="24dp"
             android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/orgName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Название (org)"
+            android:textColor="@color/gray_1"
+            android:textSize="20sp"
+            android:textStyle="normal" />
+
+        <TextView
             android:id="@+id/hotelAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
-            android:textSize="18sp" />
+            android:layout_marginTop="4dp"
+            android:text="г. Город, ул. Улица"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/hotelPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="TextView" />
+            android:layout_marginTop="4dp"
+            android:textSize="16sp"
+            android:text="89999999999" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="Отзывы" />
+
+        <TextView
+            android:id="@+id/ratingHotel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_weight="1"
+            android:textColor="@color/gray_1"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/reviewLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
     </LinearLayout>
 
 </ScrollView>
