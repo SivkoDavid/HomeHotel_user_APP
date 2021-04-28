@@ -29,7 +29,12 @@ interface API {
     ): Response<UserInfoResponse>
 
     @GET("hotels")
-    suspend fun getHotels(): Response<HotelsPesponse>
+    suspend fun getHotels(): Response<HotelsResponse>
+
+    @GET("hotel")
+    suspend fun getHotel(
+            @Query("filial_id") hotel_id: Int
+    ): Response<HotelResponse>
 
     @POST("settlement")
     @FormUrlEncoded

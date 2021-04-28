@@ -1,7 +1,7 @@
 package VBllc.user.homehotel.DataLayer.Repositories
 
-import VBllc.user.homehotel.API.DataResponse.HotelsPesponse
+import VBllc.user.homehotel.API.DataResponse.HotelsResponse
 
 interface HotelsRepositoryListener:BaseRepositoryListener {
-    fun onHotelsResponse(hotels: List<HotelsPesponse.HotelData>, code: Int)
+    fun onHotelsResponse(hotels: List<HotelsResponse.HotelData>, code: Int)
 }

@@ -1,6 +1,6 @@
 package VBllc.user.homehotel.Main.ui.hotels
 
-import VBllc.user.homehotel.API.DataResponse.HotelsPesponse
+import VBllc.user.homehotel.API.DataResponse.HotelsResponse
 import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragment
 import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragmentListener
 import VBllc.user.homehotel.Main.ui.hotels.Full.FullHotelFragment
@@ -27,7 +27,7 @@ class HotelsFragment : Fragment(), HotelsView{
     private lateinit var presenter: HotelsPresenter
     private lateinit var refresher: SwipeRefreshLayout
 
-    var data = mutableListOf<HotelsPesponse.HotelData>()
+    var data = mutableListOf<HotelsResponse.HotelData>()
         set(value) {
             field.clear()
             field.addAll(value)
@@ -88,7 +88,7 @@ class HotelsFragment : Fragment(), HotelsView{
         list.adapter = hotelAdapter
         presenter = HotelsPresenter(this)
         hotelAdapter?.setCardListener(object : MyHotelItemRecyclerViewAdapter.HotelAdapterListener {
-            override fun onHotelCardClick(hotel: HotelsPesponse.HotelData) {
+            override fun onHotelCardClick(hotel: HotelsResponse.HotelData) {
                 presenter.hotelClick(hotel)
             }
         })
@@ -96,14 +96,14 @@ class HotelsFragment : Fragment(), HotelsView{
         return root
     }
 
-    override fun showHotelsList(hotels: List<HotelsPesponse.HotelData>) {
+    override fun showHotelsList(hotels: List<HotelsResponse.HotelData>) {
         CoroutineScope(Dispatchers.Main).launch {
             data = hotels.toMutableList()
             progressFragment?.hide()
         }
     }
 
-    override fun openHotel(hotel: HotelsPesponse.HotelData) {
+    override fun openHotel(hotel: HotelsResponse.HotelData) {
         CoroutineScope(Dispatchers.Main).launch {
             if(fullHotelFragment != null)
                 openFragment(fullHotelFragment!!.newInstance(hotel))
@@ -130,7 +130,7 @@ class HotelsFragment : Fragment(), HotelsView{
 }
 
 class MyHotelItemRecyclerViewAdapter(
-        private val values: List<HotelsPesponse.HotelData>
+        private val values: List<HotelsResponse.HotelData>
 ) : RecyclerView.Adapter<MyHotelItemRecyclerViewAdapter.ViewHolder>() {
 
     private var listener: HotelAdapterListener? = null
@@ -149,7 +149,7 @@ class MyHotelItemRecyclerViewAdapter(
         val item = values[position]
         holder.name.setText(item.name)
         holder.address.setText(item.main_phone)
-        holder.description.setText(item.address)
+        holder.description.setText(item.addres)
         holder.card.setOnClickListener{ listener?.onHotelCardClick(item) }
     }
 
@@ -168,6 +168,6 @@ class MyHotelItemRecyclerViewAdapter(
     }
 
     interface HotelAdapterListener{
-        fun onHotelCardClick(hotel: HotelsPesponse.HotelData)
+        fun onHotelCardClick(hotel: HotelsResponse.HotelData)
     }
 }

@@ -1,6 +1,6 @@
 package VBllc.user.homehotel.Main.ui.hotels.Full
 
-import VBllc.user.homehotel.API.DataResponse.HotelsPesponse
+import VBllc.user.homehotel.API.DataResponse.HotelsResponse
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import android.widget.TextView
 
 class FullHotelFragment : Fragment() {
 
-    private var data: HotelsPesponse.HotelData? = null
+    private var data: HotelsResponse.HotelData? = null
 
     private lateinit var name: TextView
     private lateinit var phone: TextView
@@ -34,13 +34,13 @@ class FullHotelFragment : Fragment() {
         return root
     }
 
-    fun printInfo(hotel: HotelsPesponse.HotelData){
+    fun printInfo(hotel: HotelsResponse.HotelData){
         name.text = hotel.name
-        address.text = hotel.address
+        address.text = hotel.addres
         phone.text = hotel.main_phone
     }
 
-    fun newInstance(hotel:HotelsPesponse.HotelData): FullHotelFragment{
+    fun newInstance(hotel:HotelsResponse.HotelData): FullHotelFragment{
         printInfo(hotel)
         return this
     }
