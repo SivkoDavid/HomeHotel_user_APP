@@ -1,5 +1,6 @@
 package VBllc.user.homehotel.Main.ui.hotels
 
+import VBllc.user.homehotel.API.DataResponse.HotelResponse
 import VBllc.user.homehotel.API.DataResponse.HotelsResponse
 import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragment
 import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragmentListener
@@ -103,10 +104,12 @@ class HotelsFragment : Fragment(), HotelsView{
         }
     }
 
-    override fun openHotel(hotel: HotelsResponse.HotelData) {
+    override fun openHotel(hotel: HotelResponse.HotelData) {
         CoroutineScope(Dispatchers.Main).launch {
-            if(fullHotelFragment != null)
+            if(fullHotelFragment != null) {
                 openFragment(fullHotelFragment!!.newInstance(hotel))
+                progressFragment?.hide()
+            }
         }
     }
 

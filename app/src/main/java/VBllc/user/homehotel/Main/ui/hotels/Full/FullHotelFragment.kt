@@ -1,5 +1,6 @@
 package VBllc.user.homehotel.Main.ui.hotels.Full
 
+import VBllc.user.homehotel.API.DataResponse.HotelResponse
 import VBllc.user.homehotel.API.DataResponse.HotelsResponse
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -34,13 +35,13 @@ class FullHotelFragment : Fragment() {
         return root
     }
 
-    fun printInfo(hotel: HotelsResponse.HotelData){
-        name.text = hotel.name
-        address.text = hotel.addres
-        phone.text = hotel.main_phone
+    fun printInfo(hotel: HotelResponse.HotelData){
+        name.text = hotel.hotel.name
+        address.text = hotel.hotel.addres
+        phone.text = hotel.toString()
     }
 
-    fun newInstance(hotel:HotelsResponse.HotelData): FullHotelFragment{
+    fun newInstance(hotel: HotelResponse.HotelData): FullHotelFragment{
         printInfo(hotel)
         return this
     }
