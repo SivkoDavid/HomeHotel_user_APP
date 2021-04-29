@@ -11,13 +11,17 @@ import android.view.View
 import android.view.ViewGroup
 import VBllc.user.homehotel.R
 import VBllc.user.homehotel.Tools.DateFormatter
+import VBllc.user.homehotel.Views.FullHotelView
 import android.view.View.inflate
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
-class FullHotelFragment : Fragment() {
+class FullHotelFragment : Fragment(), FullHotelView {
 
     private var data: HotelsResponse.HotelData? = null
 
@@ -29,6 +33,8 @@ class FullHotelFragment : Fragment() {
     private lateinit var reviewLayout: LinearLayout
     private lateinit var editReviewButton: Button
     private lateinit var editReviewDialog: ReviewEditDialog
+
+    private val presenter = FullHotelPresenter(this)
 
     private fun initViews(root: View){
         name = root.findViewById(R.id.hotelName)
@@ -42,8 +48,7 @@ class FullHotelFragment : Fragment() {
         editReviewDialog = ReviewEditDialog(requireActivity().supportFragmentManager)
         editReviewDialog.listener = object : ReviewEditListener{
             override fun reviewMade(rating: Int, review: String?) {
-                println("rating: $rating, review: $review")
-                editReviewDialog.closeNow()
+                presenter.reviewMade(rating, review)
             }
 
         }
@@ -71,6 +76,7 @@ class FullHotelFragment : Fragment() {
     }
 
     fun newInstance(hotel: HotelResponse.HotelData): FullHotelFragment{
+        presenter.hotel = hotel
         printInfo(hotel)
         return this
     }
@@ -99,5 +105,43 @@ class FullHotelFragment : Fragment() {
             ratingHotel.text = "Рейтинг:" + (((ratingSum.toFloat()/reviews.count())*100).roundToInt().toFloat()/100).toString()
         else
             ratingHotel.text = "Нет отзывов"
+    }
+
+    override fun showLoadingSendReview() {
+        CoroutineScope(Dispatchers.Main).launch {
+            editReviewDialog.showLoadingNow("Отправка отзыва")
+        }
+    }
+
+    override fun showErrorSendReview(errorMessage: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            editReviewDialog.showResultNow(errorMessage, true)
+        }
+    }
+
+    override fun showAllINfo(hotel: HotelResponse.HotelData?) {
+        CoroutineScope(Dispatchers.Main).launch {
+            if(hotel!=null)
+                printInfo(hotel)
+            editReviewDialog.closeNow()
+        }
+    }
+
+    override fun showError(errorMessage: String, errorCode: Int) {
+        CoroutineScope(Dispatchers.Main).launch {
+
+        }
+    }
+
+    override fun showLoading() {
+        CoroutineScope(Dispatchers.Main).launch {
+
+        }
+    }
+
+    override fun showNoNetwork() {
+        CoroutineScope(Dispatchers.Main).launch {
+
+        }
     }
 }

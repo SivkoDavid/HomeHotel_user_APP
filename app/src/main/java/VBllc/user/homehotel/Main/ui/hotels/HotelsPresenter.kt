@@ -39,7 +39,7 @@ class HotelsPresenter(val view: HotelsView) {
             view.showLoading()
         }
 
-        override fun noInternet() {
+        override fun noInternet(code: Int?) {
             view.showNoNetwork()
         }
 

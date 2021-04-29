@@ -37,7 +37,7 @@ class GuestPresenter(private val view: GuestView) {
             view.showError(mess, errorCode)
         }
 
-        override fun noInternet() {
+        override fun noInternet(code: Int?) {
             view.showNoNetwork()
         }
 

@@ -41,4 +41,13 @@ interface API {
     suspend fun getSettle(
             @Field("uid") code: String
     ): Response<SettleResponse>
+
+    @POST("reviews/filial/store")
+    @FormUrlEncoded
+    suspend fun sendHotelReview(
+        @Field("token") token: String,
+        @Field("filial_id") filial_id: Int,
+        @Field("text") text: String,
+        @Field("rating") rating: Int
+    ): Response<SendReviewResponse>
 }

@@ -56,7 +56,7 @@ class AuthPresenter(val view: AuthView){
 
         }
 
-        override fun noInternet() {
+        override fun noInternet(code: Int?) {
             view.showNoNetwork()
         }
 
