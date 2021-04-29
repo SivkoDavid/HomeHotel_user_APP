@@ -4,6 +4,7 @@ import VBllc.user.homehotel.API.DataResponse.HotelResponse
 import VBllc.user.homehotel.API.DataResponse.HotelsResponse
 import VBllc.user.homehotel.AdditionalComponents.DialogWindows.ReviewDialog.ReviewEditDialog
 import VBllc.user.homehotel.AdditionalComponents.DialogWindows.ReviewDialog.ReviewEditListener
+import VBllc.user.homehotel.DataLayer.Preferences.UserInfoPreference
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,14 +17,13 @@ import android.view.View.inflate
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.lifecycle.whenStarted
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 class FullHotelFragment : Fragment(), FullHotelView {
-
-    private var data: HotelsResponse.HotelData? = null
 
     private lateinit var name: TextView
     private lateinit var phone: TextView
@@ -50,7 +50,6 @@ class FullHotelFragment : Fragment(), FullHotelView {
             override fun reviewMade(rating: Int, review: String?) {
                 presenter.reviewMade(rating, review)
             }
-
         }
 
         editReviewButton.setOnClickListener { editReviewDialog.showEditorNow() }
@@ -77,7 +76,6 @@ class FullHotelFragment : Fragment(), FullHotelView {
 
     fun newInstance(hotel: HotelResponse.HotelData): FullHotelFragment{
         presenter.hotel = hotel
-        printInfo(hotel)
         return this
     }
 
@@ -124,6 +122,17 @@ class FullHotelFragment : Fragment(), FullHotelView {
             if(hotel!=null)
                 printInfo(hotel)
             editReviewDialog.closeNow()
+        }
+    }
+
+    override fun showButtonSend(isShow: Boolean) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@FullHotelFragment.whenStarted {
+                if (isShow)
+                    editReviewButton.visibility = View.VISIBLE
+                else
+                    editReviewButton.visibility = View.GONE
+            }
         }
     }
 

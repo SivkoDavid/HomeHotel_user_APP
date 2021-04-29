@@ -6,4 +6,5 @@ interface FullHotelView:BaseView {
     fun showLoadingSendReview()
     fun showErrorSendReview(errorMessage: String)
     fun showAllINfo(hotel: HotelResponse.HotelData?)
+    fun showButtonSend(isShow: Boolean)
 }

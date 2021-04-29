@@ -122,11 +122,15 @@ class ReviewEditDialog(
                 button.visibility = View.VISIBLE
                 button.text = "Отправить"
                 button.setOnClickListener{
-                    this@ReviewEditDialog.sendReview(rating.rating.toInt(), review.editText?.text.toString())
+                    if(rating.rating <= 0)
+                        Toast.makeText(requireContext(), "Необходимо указать оценку", Toast.LENGTH_LONG).show()
+                    else
+                        this@ReviewEditDialog.sendReview(rating.rating.toInt(), review.editText?.text.toString())
                 }
             }
         }
     }
+
 
     fun showLoadingNow(message: String){
         this.message = message
