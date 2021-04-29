@@ -2,6 +2,8 @@ package VBllc.user.homehotel.Main.ui.hotels.Full
 
 import VBllc.user.homehotel.API.DataResponse.HotelResponse
 import VBllc.user.homehotel.API.DataResponse.HotelsResponse
+import VBllc.user.homehotel.AdditionalComponents.DialogWindows.ReviewDialog.ReviewEditDialog
+import VBllc.user.homehotel.AdditionalComponents.DialogWindows.ReviewDialog.ReviewEditListener
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +12,7 @@ import android.view.ViewGroup
 import VBllc.user.homehotel.R
 import VBllc.user.homehotel.Tools.DateFormatter
 import android.view.View.inflate
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import kotlin.math.roundToInt
@@ -24,6 +27,8 @@ class FullHotelFragment : Fragment() {
     private lateinit var orgName: TextView
     private lateinit var ratingHotel: TextView
     private lateinit var reviewLayout: LinearLayout
+    private lateinit var editReviewButton: Button
+    private lateinit var editReviewDialog: ReviewEditDialog
 
     private fun initViews(root: View){
         name = root.findViewById(R.id.hotelName)
@@ -32,6 +37,18 @@ class FullHotelFragment : Fragment() {
         orgName = root.findViewById(R.id.orgName)
         ratingHotel = root.findViewById(R.id.ratingHotel)
         reviewLayout = root.findViewById(R.id.reviewLayout)
+        editReviewButton = root.findViewById(R.id.editReviewButton)
+
+        editReviewDialog = ReviewEditDialog(requireActivity().supportFragmentManager)
+        editReviewDialog.listener = object : ReviewEditListener{
+            override fun reviewMade(rating: Int, review: String?) {
+                println("rating: $rating, review: $review")
+                editReviewDialog.closeNow()
+            }
+
+        }
+
+        editReviewButton.setOnClickListener { editReviewDialog.showEditorNow() }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
