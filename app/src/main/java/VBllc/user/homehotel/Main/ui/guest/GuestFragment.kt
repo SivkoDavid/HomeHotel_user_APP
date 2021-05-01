@@ -20,9 +20,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class GuestFragment : Fragment(), GuestView {
-    init {
-        println("kkkk")
-    }
 
     private lateinit var settlementLayout: View
     private lateinit var notSettlementLayout: View
@@ -136,10 +133,13 @@ class GuestFragment : Fragment(), GuestView {
         notSettlementLayout.visibility = View.VISIBLE
     }
 
-    override fun showSettlement(data: SettleResponse.SettleData) {
+    override fun showSettlement(data: SettleResponse.SettleData, showDialog: Boolean) {
         CoroutineScope(Dispatchers.Main).launch {
             this@GuestFragment.whenStarted {
-                infoDialog.showResultNow(message = "Успешно", isError = false)
+                if(showDialog)
+                    infoDialog.showResultNow(message = "Успешно", isError = false)
+                else
+                    infoDialog.closeNow()
                 openGuestMode()
                 printSettleInfo(data)
             }
@@ -149,8 +149,15 @@ class GuestFragment : Fragment(), GuestView {
     override fun showNoGuestMode() {
         CoroutineScope(Dispatchers.Main).launch {
             this@GuestFragment.whenStarted {
-                infoDialog.closeNow()
                 closeGuestMode()
+            }
+        }
+    }
+
+    override fun infoDialodHide() {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@GuestFragment.whenStarted {
+                infoDialog.closeNow()
             }
         }
     }
