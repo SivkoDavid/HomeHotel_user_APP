@@ -9,19 +9,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import VBllc.user.homehotel.R
 import VBllc.user.homehotel.Tools.DateFormatter
 import VBllc.user.homehotel.Views.GuestView
 import android.widget.Button
-import androidx.fragment.app.FragmentContainer
+import androidx.lifecycle.whenStarted
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class GuestFragment : Fragment(), GuestView {
+    init {
+        println("kkkk")
+    }
 
     private lateinit var settlementLayout: View
     private lateinit var notSettlementLayout: View
@@ -41,6 +42,7 @@ class GuestFragment : Fragment(), GuestView {
     private lateinit var otherServicesMenu: Button
     private lateinit var partServicesMenu: Button
     private lateinit var messagerMenu: Button
+    private lateinit var outButton: Button
 
     private lateinit var presenter: GuestPresenter
 
@@ -62,11 +64,12 @@ class GuestFragment : Fragment(), GuestView {
         otherServicesMenu = root.findViewById(R.id.otherServicesMenu)
         partServicesMenu = root.findViewById(R.id.partServicesMenu)
         messagerMenu = root.findViewById(R.id.messagerMenu)
+        outButton = root.findViewById(R.id.outButton)
 
         sendCodeBtn.setOnClickListener { sendCodeBtnClick() }
         cleaningMenu.setOnClickListener { presenter.goToCleaningMenu() }
+        outButton.setOnClickListener { presenter.outOfTheSettle() }
 
-        showNoGuestMode()
     }
 
     private lateinit var cleaningFragment: OrderCleaningFragment
@@ -109,7 +112,7 @@ class GuestFragment : Fragment(), GuestView {
         initViews(root)
         initFragments()
         presenter = GuestPresenter(this)
-        infoDialog = InfoDialog(requireActivity().supportFragmentManager, "guest")
+        infoDialog = InfoDialog(requireActivity().supportFragmentManager, "guest123")
         return root
     }
 
@@ -135,50 +138,65 @@ class GuestFragment : Fragment(), GuestView {
 
     override fun showSettlement(data: SettleResponse.SettleData) {
         CoroutineScope(Dispatchers.Main).launch {
-            infoDialog.showResultNow("Успешно", false)
-            openGuestMode()
-            printSettleInfo(data)
+            this@GuestFragment.whenStarted {
+                infoDialog.showResultNow(message = "Успешно", isError = false)
+                openGuestMode()
+                printSettleInfo(data)
+            }
         }
     }
 
     override fun showNoGuestMode() {
         CoroutineScope(Dispatchers.Main).launch {
-            closeGuestMode()
+            this@GuestFragment.whenStarted {
+                infoDialog.closeNow()
+                closeGuestMode()
+            }
         }
     }
 
     override fun showCleaningFragment() {
-        openFragment(cleaningFragment)
+        CoroutineScope(Dispatchers.Main).launch {
+            this@GuestFragment.whenStarted {
+                openFragment(cleaningFragment)
+            }
+        }
     }
 
     override fun showError(errorMessage: String, errorCode: Int) {
         CoroutineScope(Dispatchers.Main).launch {
-            infoDialog.showResultNow(errorMessage, true)
+            this@GuestFragment.whenStarted {
+                infoDialog.showResultNow(errorMessage, true)
+            }
         }
     }
 
     override fun showLoading() {
         CoroutineScope(Dispatchers.Main).launch {
-            infoDialog.showLoadingNow("Проверка кода")
+            this@GuestFragment.whenStarted {
+                infoDialog.showLoadingNow("Проверка кода")
+            }
         }
     }
 
     override fun showNoNetwork() {
         CoroutineScope(Dispatchers.Main).launch {
-            infoDialog.showResultNow("Нет подключения к интернету", true)
+            this@GuestFragment.whenStarted {
+                infoDialog.showResultNow("Нет подключения к интернету", true)
+            }
         }
     }
 
     private val fragments = mutableListOf<Fragment>()
 
-    private fun openFragment(fragment: Fragment){
-        if(!fragments.contains(fragment)) {
-            fragments.add(fragment)
+    private fun openFragment(mFragment: Fragment){
+        if(!fragments.contains(mFragment)) {
+            fragments.add(mFragment)
         }
         val tran = childFragmentManager.beginTransaction()
 
         fragments.forEach{
-            if(it != fragment){
+            if(it != mFragment){
                 tran.hide(it)
             }
             else

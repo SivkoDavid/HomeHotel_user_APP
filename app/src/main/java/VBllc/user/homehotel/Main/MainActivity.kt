@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var guestFragment: GuestFragment
     lateinit var hotelsFragment: HotelsFragment
     lateinit var profileFragment: ProfileFragment
-    lateinit var fragmentManger: FragmentManager
+    lateinit var mFragmentManger: FragmentManager
     lateinit var navView: BottomNavigationView
 
 
@@ -38,13 +38,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_profile to profileFragment
         )
 
-        fragmentManger = supportFragmentManager
+        mFragmentManger = supportFragmentManager
 
 
-        fragmentManger.beginTransaction().add(R.id.nav_host_fragment, hotelsFragment).commit()
-        fragmentManger.beginTransaction().add(R.id.nav_host_fragment, profileFragment).commit()
-        fragmentManger.beginTransaction().add(R.id.nav_host_fragment, guestFragment).commit()
-        fragmentManger.beginTransaction().show(guestFragment).commit()
+        mFragmentManger.beginTransaction().add(R.id.nav_host_fragment, hotelsFragment).commit()
+        mFragmentManger.beginTransaction().add(R.id.nav_host_fragment, profileFragment).commit()
+        mFragmentManger.beginTransaction().add(R.id.nav_host_fragment, guestFragment).commit()
 
         navView.setOnNavigationItemSelectedListener{
             when (it.itemId) {
@@ -67,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 
 
     fun showFragment(itemMenu: Int){
-        val transaction = fragmentManger.beginTransaction()
+        val transaction = mFragmentManger.beginTransaction()
         for(item in navMap){
             if(item.key != itemMenu)
                 transaction.hide(item.value)

@@ -2,11 +2,21 @@ package VBllc.user.homehotel.DataLayer.Repositories
 
 import VBllc.user.homehotel.API.API
 import VBllc.user.homehotel.API.ApiFactory
+import VBllc.user.homehotel.DataLayer.Preferences.SettlementPreference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 
 class GuestRepository(val listener: GuestRepositoryListener) {
+
+    fun checkConservedSettle(code: Int){
+        val settleCode = SettlementPreference.getSettleCode()
+        if(settleCode.isNotEmpty()){
+            sendSettleCode(settleCode, code)
+        }
+    }
+
 
     fun sendSettleCode(setteleCode: String, code: Int){
         listener.startRequest("sendSettleCode", code)
@@ -22,6 +32,7 @@ class GuestRepository(val listener: GuestRepositoryListener) {
 
                 if (response.isSuccessful()) {
                     if(response.body()!!.success) {
+                        SettlementPreference.saveSettleCode(setteleCode)
                         listener.onSetteleResponse(response.body()!!, code)
                     }
                     else {
@@ -30,6 +41,7 @@ class GuestRepository(val listener: GuestRepositoryListener) {
                             errors.add(it)
                         }
                         listener.onErrors(errors, 200,  code)
+                        getOutOfTheSettle()
                     }
                 } else { //Ошибка сервера
                     listener.onErrors(listOf("Ошибка "+response.code()), response.code(), code)
@@ -40,4 +52,11 @@ class GuestRepository(val listener: GuestRepositoryListener) {
             }
         }
     }
+
+    fun getOutOfTheSettle(){
+        SettlementPreference.removeSettleCode()
+        listener.onExitSettle()
+    }
+
+
 }

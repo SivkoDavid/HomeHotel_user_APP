@@ -5,5 +5,6 @@ interface BaseView {
 
     fun showLoading()
 
+
     fun showNoNetwork()
 }
