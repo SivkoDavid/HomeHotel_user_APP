@@ -41,7 +41,7 @@ class GuestRepository(val listener: GuestRepositoryListener) {
                             errors.add(it)
                         }
                         listener.onErrors(errors, 200,  code)
-                        getOutOfTheSettle()
+                        getOutOfTheSettle(code)
                     }
                 } else { //Ошибка сервера
                     listener.onErrors(listOf("Ошибка "+response.code()), response.code(), code)
@@ -53,9 +53,9 @@ class GuestRepository(val listener: GuestRepositoryListener) {
         }
     }
 
-    fun getOutOfTheSettle(){
+    fun getOutOfTheSettle(code: Int){
         SettlementPreference.removeSettleCode()
-        listener.onExitSettle()
+        listener.onExitSettle(code)
     }
 
 
