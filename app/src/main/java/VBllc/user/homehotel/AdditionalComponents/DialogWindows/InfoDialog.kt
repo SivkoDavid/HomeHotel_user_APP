@@ -37,7 +37,6 @@ class InfoDialog(
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         lastInstant = savedInstanceState
-        isShowing = savedInstanceState?.getBoolean("dialogIsShow", false) == true
         printResult = savedInstanceState?.getBoolean("printResult", false) == true
         return activity?.let {
             thisOrient = activity?.requestedOrientation!!
@@ -115,7 +114,7 @@ class InfoDialog(
     fun closeNow(){
         if (isShowing) {
             isShowing = false
-            dialog?.hide()
+            dismiss()
         }
 
     }
