@@ -11,6 +11,8 @@ class GuestPresenter(private val view: GuestView) {
     private val OUT_SETTLE_CODE = 2
     private val CHECK_CONSERVED_SETTLE_CODE = 3
 
+    private var data: SettleResponse.SettleData? = null
+
 
     private val repository: GuestRepository = GuestRepository(RepositoryListener())
 
@@ -23,7 +25,13 @@ class GuestPresenter(private val view: GuestView) {
     }
 
     fun goToCleaningMenu(){
-        view.showCleaningFragment()
+        if(data != null)
+            view.showCleaningFragment(data!!)
+    }
+
+    fun goToHotelServicesMenu(){
+        if(data != null)
+            view.showHotelServicesFragment(data!!)
     }
 
     fun outOfTheSettle(){
@@ -35,7 +43,7 @@ class GuestPresenter(private val view: GuestView) {
         override fun onSetteleResponse(settle: SettleResponse, code: Int) {
             if(settle.data != null) {
                 view.showSettlement(settle.data, code == SEND_SETTLECODE_CODE)
-
+                data = settle.data
             }
         }
 

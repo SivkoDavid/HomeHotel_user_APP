@@ -9,5 +9,6 @@ interface GuestView: BaseView {
 
     fun infoDialodHide()
 
-    fun showCleaningFragment()
+    fun showCleaningFragment(data: SettleResponse.SettleData)
+    fun showHotelServicesFragment(data: SettleResponse.SettleData)
 }

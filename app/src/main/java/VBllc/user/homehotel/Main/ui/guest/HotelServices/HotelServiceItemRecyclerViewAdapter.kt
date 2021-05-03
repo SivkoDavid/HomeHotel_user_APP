@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import VBllc.user.homehotel.R
+import android.widget.ImageView
+import android.widget.LinearLayout
+import com.squareup.picasso.Picasso
 
 class HotelServiceItemRecyclerViewAdapter(
         private val values: List<HotelServiceData>)
@@ -20,14 +23,28 @@ class HotelServiceItemRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        //holder.idView.text = item.id.toString()
-        //holder.contentView.text = item.name
+        holder.nameView.text = item.name
+        var desc = item.description
+        if(desc.length > 150)
+            desc = item.description.substring(0, 150).substringBeforeLast(' ') + "..."
+        holder.descView.text = desc
+        holder.priceView.text = "${item.price} ${item.priceType}"
+        Picasso.get()
+                .load(item.imgUrl)
+                .placeholder(R.drawable.servise_standsrt_img)
+                .error(R.drawable.servise_standsrt_img)
+                .into(holder.imageView);
+        holder.nameView.text = item.name
+        holder.cardView.setOnClickListener {  }
     }
 
     override fun getItemCount(): Int = values.size
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        //val idView: TextView = view.findViewById(R.id.item_number)
-        //val contentView: TextView = view.findViewById(R.id.content)
+        val imageView: ImageView = view.findViewById(R.id.image)
+        val nameView: TextView = view.findViewById(R.id.name)
+        val descView: TextView = view.findViewById(R.id.desc)
+        val priceView: TextView = view.findViewById(R.id.price)
+        val cardView: View = view.findViewById(R.id.card)
     }
 }

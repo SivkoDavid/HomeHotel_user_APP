@@ -3,6 +3,7 @@ package VBllc.user.homehotel.Main.ui.guest
 import VBllc.user.homehotel.API.DataResponse.SettleResponse
 import VBllc.user.homehotel.AdditionalComponents.DialogWindows.InfoDialog
 import VBllc.user.homehotel.Main.ui.guest.Cleaning.OrderCleaningFragment
+import VBllc.user.homehotel.Main.ui.guest.HotelServices.HotelServiceItemFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -65,19 +66,14 @@ class GuestFragment : Fragment(), GuestView {
 
         sendCodeBtn.setOnClickListener { sendCodeBtnClick() }
         cleaningMenu.setOnClickListener { presenter.goToCleaningMenu() }
+        otherServicesMenu.setOnClickListener { presenter.goToHotelServicesMenu() }
         outButton.setOnClickListener { presenter.outOfTheSettle() }
 
     }
 
-    private lateinit var cleaningFragment: OrderCleaningFragment
 
     private fun initFragments(){
-        cleaningFragment = OrderCleaningFragment()
 
-        childFragmentManager.beginTransaction()
-            .add(R.id.fragmentContainer, cleaningFragment)
-            .hide(cleaningFragment)
-            .commit()
     }
 
     private fun printSettleInfo(data: SettleResponse.SettleData){
@@ -162,10 +158,21 @@ class GuestFragment : Fragment(), GuestView {
         }
     }
 
-    override fun showCleaningFragment() {
+    override fun showCleaningFragment(data: SettleResponse.SettleData) {
         CoroutineScope(Dispatchers.Main).launch {
             this@GuestFragment.whenStarted {
+                val cleaningFragment = OrderCleaningFragment.newInstance(data)
                 openFragment(cleaningFragment)
+            }
+        }
+    }
+
+
+    override fun showHotelServicesFragment(data: SettleResponse.SettleData) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@GuestFragment.whenStarted {
+                val serFragment = HotelServiceItemFragment.newInstance(data)
+                openFragment(serFragment)
             }
         }
     }
@@ -194,22 +201,10 @@ class GuestFragment : Fragment(), GuestView {
         }
     }
 
-    private val fragments = mutableListOf<Fragment>()
-
     private fun openFragment(mFragment: Fragment){
-        if(!fragments.contains(mFragment)) {
-            fragments.add(mFragment)
-        }
-        val tran = childFragmentManager.beginTransaction()
-
-        fragments.forEach{
-            if(it != mFragment){
-                tran.hide(it)
-            }
-            else
-                tran.show(it)
-        }
-
-        tran.addToBackStack(null).commit()
+        childFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, mFragment).show(mFragment)
+            .addToBackStack(null).commit()
     }
+
 }

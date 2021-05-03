@@ -1,5 +1,7 @@
 package VBllc.user.homehotel.Main.ui.guest.Cleaning
 
+import VBllc.user.homehotel.API.DataResponse.SettleResponse
+import VBllc.user.homehotel.Main.ui.guest.HotelServices.HotelServiceItemFragment
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -36,6 +38,17 @@ class OrderCleaningFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_order_cleaning, container, false)
         initViews(root)
         return root
+    }
+
+    companion object {
+        fun newInstance(data: SettleResponse.SettleData): Fragment{
+            val args = Bundle()
+
+            val fragment = OrderCleaningFragment()
+
+            return fragment
+        }
+
     }
 
 }
