@@ -2,6 +2,8 @@ package VBllc.user.homehotel.Main.ui.guest.HotelServices
 
 import VBllc.user.homehotel.API.DataResponse.HotelServicesResponse.HotelServiceData
 import VBllc.user.homehotel.API.DataResponse.SettleResponse
+import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragment
+import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragmentListener
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,6 +15,7 @@ import android.view.ViewGroup
 import VBllc.user.homehotel.R
 import VBllc.user.homehotel.Views.HotelServicesView
 import android.widget.Toast
+import androidx.fragment.app.FragmentContainer
 import androidx.lifecycle.whenStarted
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,11 +28,23 @@ class HotelServiceItemFragment : Fragment(), HotelServicesView {
 
     private var recucler: RecyclerView? = null
     var settle: SettleResponse.SettleData? = null
+    lateinit private var loadingFragment : ProgressFragment
     private val presenter = HotelServicesPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter.settle = settle
+    }
+
+    private fun initViews(root: View){
+        loadingFragment = ProgressFragment(parentFragmentManager)
+        parentFragmentManager.beginTransaction().add(R.id.fragmentContainer_hotelServices, loadingFragment).commit()
+        loadingFragment.listener = object : ProgressFragmentListener{
+            override fun buttonReloadClick() {
+                presenter.refresh(settle)
+            }
+
+        }
     }
 
     var servicesList: MutableList<HotelServiceData> = mutableListOf()
@@ -41,17 +56,17 @@ class HotelServiceItemFragment : Fragment(), HotelServicesView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_h_service_item_list, container, false)
-
+        val root = inflater.inflate(R.layout.fragment_h_service_item_list, container, false)
+        recucler = root.findViewById(R.id.list)
+        initViews(root)
         // Set the adapter
-        if (view is RecyclerView) {
-            recucler = view
-            with(view) {
+        if (recucler != null) {
+            with(recucler!!) {
                 layoutManager = LinearLayoutManager(context)
                 adapter = HotelServiceItemRecyclerViewAdapter(servicesList)
             }
         }
-        return view
+        return root
     }
 
     override fun onStart() {
@@ -72,6 +87,7 @@ class HotelServiceItemFragment : Fragment(), HotelServicesView {
     override fun showServices(data: List<HotelServiceData>) {
         CoroutineScope(Dispatchers.Main).launch {
             this@HotelServiceItemFragment.whenStarted {
+                loadingFragment.hide()
                 servicesList = data.toMutableList()
             }
         }
@@ -80,7 +96,7 @@ class HotelServiceItemFragment : Fragment(), HotelServicesView {
     override fun showError(errorMessage: String, errorCode: Int) {
         CoroutineScope(Dispatchers.Main).launch {
             this@HotelServiceItemFragment.whenStarted {
-                Toast.makeText(requireContext(), "Ошибка", Toast.LENGTH_LONG).show()
+                loadingFragment.showStatus(errorMessage, ProgressFragment.ERROR_IMAGE)
             }
         }
     }
@@ -88,7 +104,7 @@ class HotelServiceItemFragment : Fragment(), HotelServicesView {
     override fun showLoading() {
         CoroutineScope(Dispatchers.Main).launch {
             this@HotelServiceItemFragment.whenStarted {
-                Toast.makeText(requireContext(), "Загрузка", Toast.LENGTH_LONG).show()
+                loadingFragment.showLoading()
             }
         }
     }
@@ -96,7 +112,7 @@ class HotelServiceItemFragment : Fragment(), HotelServicesView {
     override fun showNoNetwork() {
         CoroutineScope(Dispatchers.Main).launch {
             this@HotelServiceItemFragment.whenStarted {
-                Toast.makeText(requireContext(), "Нет интернета", Toast.LENGTH_LONG).show()
+                loadingFragment.showStatus("Отсутствует подключение к интернету", ProgressFragment.ERROR_IMAGE)
             }
         }
     }

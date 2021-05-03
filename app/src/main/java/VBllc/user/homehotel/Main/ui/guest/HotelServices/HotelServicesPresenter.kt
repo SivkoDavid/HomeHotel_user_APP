@@ -19,6 +19,10 @@ class HotelServicesPresenter(val view: HotelServicesView){
                 repository.getHotelServices(field?.apartament?.id!!, GET_SERVICES_CODE)
         }
 
+    fun refresh(settle: SettleResponse.SettleData?){
+        this.settle = settle
+    }
+
 
     inner class RepositoryListener: HotelServicesRepositoryListener{
         override fun onServicesResponse(response: HotelServicesResponse, code: Int) {
