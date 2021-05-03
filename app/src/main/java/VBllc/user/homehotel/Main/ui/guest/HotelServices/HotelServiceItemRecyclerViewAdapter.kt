@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import VBllc.user.homehotel.R
 import android.widget.ImageView
-import android.widget.LinearLayout
 import com.squareup.picasso.Picasso
 
 class HotelServiceItemRecyclerViewAdapter(
@@ -24,13 +23,13 @@ class HotelServiceItemRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         holder.nameView.text = item.name
-        var desc = item.description
+        var desc = item.description?:""
         if(desc.length > 150)
-            desc = item.description.substring(0, 150).substringBeforeLast(' ') + "..."
+            desc = desc.substring(0, 150).substringBeforeLast(' ') + "..."
         holder.descView.text = desc
-        holder.priceView.text = "${item.price} ${item.priceType}"
+        holder.priceView.text = "${item.price} ${item.price_type}"
         Picasso.get()
-                .load(item.imgUrl)
+                .load(item.picture)
                 .placeholder(R.drawable.servise_standsrt_img)
                 .error(R.drawable.servise_standsrt_img)
                 .into(holder.imageView);

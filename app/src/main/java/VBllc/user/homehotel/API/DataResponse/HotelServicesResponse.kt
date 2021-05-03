@@ -6,12 +6,14 @@ data class HotelServicesResponse(
     val errors: List<String>? = null
 ){
     data class HotelServiceData(
-        val id: Int,
-        val name: String = "",
-        val price: Double = 0.0,
-        val priceType: String = "",
-        val description: String = "",
-        val category: String = "",
-        val imgUrl: String = ""
+            val id: Int,
+            val name: String? = null,
+            val price: Double? = null,
+            val price_type: String? = null,
+            val description: String? = null,
+            val category: String? = null,
+            val subcategory: String? = null,
+            val picture: String? = null
     )
+
 }

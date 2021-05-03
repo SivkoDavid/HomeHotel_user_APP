@@ -50,4 +50,9 @@ interface API {
         @Field("text") text: String,
         @Field("rating") rating: Int
     ): Response<SendReviewResponse>
+
+    @GET("services/get_service_for_room")
+    suspend fun getHotelServices(
+        @Query("room_id") room_id: Int
+    ): Response<HotelServicesResponse>
 }
