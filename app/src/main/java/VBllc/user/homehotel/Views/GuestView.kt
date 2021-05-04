@@ -12,4 +12,5 @@ interface GuestView: BaseView {
     fun showCleaningFragment(data: SettleResponse.SettleData)
     fun showHotelServicesFragment(data: SettleResponse.SettleData)
     fun showPartnersServicesFragment(data: SettleResponse.SettleData)
+    fun showHygieneFragment(data: SettleResponse.SettleData)
 }

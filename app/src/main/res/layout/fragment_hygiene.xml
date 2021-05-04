@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:background="@color/white"
+    tools:context=".Main.ui.guest.Hygiene.HygieneFragment">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="64dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Заявка на замену гигиенических средств"
+        android:textAlignment="center"
+        android:textColor="@color/gray_1"
+        android:textSize="27sp" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="14dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Выберите удобное время."
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+    <TimePicker
+        android:id="@+id/timeInput"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/white_round"
+        android:elevation="2dp"
+        android:timePickerMode="spinner" />
+
+    <Button
+        android:id="@+id/orderButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="16dp"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:textAllCaps="false"
+        android:layout_gravity="bottom"
+        android:text="Отправить" />
+</LinearLayout>

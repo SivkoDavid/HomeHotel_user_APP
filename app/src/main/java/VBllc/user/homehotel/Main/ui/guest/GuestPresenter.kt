@@ -39,6 +39,13 @@ class GuestPresenter(private val view: GuestView) {
             view.showPartnersServicesFragment(data!!)
     }
 
+    fun goToPartnersHygieneMenu(){
+        if(data != null)
+            view.showHygieneFragment(data!!)
+    }
+
+
+
     fun outOfTheSettle(){
         repository.getOutOfTheSettle(OUT_SETTLE_CODE)
     }

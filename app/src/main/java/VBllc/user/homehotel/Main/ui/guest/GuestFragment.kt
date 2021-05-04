@@ -4,6 +4,7 @@ import VBllc.user.homehotel.API.DataResponse.SettleResponse
 import VBllc.user.homehotel.AdditionalComponents.DialogWindows.InfoDialog
 import VBllc.user.homehotel.Main.ui.guest.Cleaning.OrderCleaningFragment
 import VBllc.user.homehotel.Main.ui.guest.HotelServices.HotelServiceItemFragment
+import VBllc.user.homehotel.Main.ui.guest.Hygiene.HygieneFragment
 import VBllc.user.homehotel.Main.ui.guest.PartnerServices.PartnerServiceFragment
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -69,6 +70,7 @@ class GuestFragment : Fragment(), GuestView {
         cleaningMenu.setOnClickListener { presenter.goToCleaningMenu() }
         otherServicesMenu.setOnClickListener { presenter.goToHotelServicesMenu() }
         partServicesMenu.setOnClickListener { presenter.goToPartnersServicesMenu() }
+        hygieneMenu.setOnClickListener { presenter.goToPartnersHygieneMenu() }
         outButton.setOnClickListener { presenter.outOfTheSettle() }
 
     }
@@ -184,6 +186,15 @@ class GuestFragment : Fragment(), GuestView {
             this@GuestFragment.whenStarted {
                 val serFragment = PartnerServiceFragment.newInstance(data)
                 openFragment(serFragment)
+            }
+        }
+    }
+
+    override fun showHygieneFragment(data: SettleResponse.SettleData) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@GuestFragment.whenStarted {
+                val fragment = HygieneFragment.newInstance(data)
+                openFragment(fragment)
             }
         }
     }
