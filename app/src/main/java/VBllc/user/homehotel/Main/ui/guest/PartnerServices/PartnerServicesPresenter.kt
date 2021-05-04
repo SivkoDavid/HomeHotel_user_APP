@@ -1,23 +1,22 @@
-package VBllc.user.homehotel.Main.ui.guest.HotelServices
+package VBllc.user.homehotel.Main.ui.guest.PartnerServices
 
 import VBllc.user.homehotel.API.DataResponse.HotelServicesResponse
 import VBllc.user.homehotel.API.DataResponse.PartnersServicesResponse
 import VBllc.user.homehotel.API.DataResponse.SettleResponse
 import VBllc.user.homehotel.DataLayer.Repositories.HotelServicesRepository
 import VBllc.user.homehotel.DataLayer.Repositories.HotelServicesRepositoryListener
-import VBllc.user.homehotel.Views.HotelServicesView
+import VBllc.user.homehotel.Views.PartnerServicesView
 
-class HotelServicesPresenter(val view: HotelServicesView){
-
+class PartnerServicesPresenter(val view: PartnerServicesView) {
     private val repository = HotelServicesRepository(RepositoryListener())
 
-    private val GET_SERVICES_CODE = 29
+    private val GET_PARTNER_SERVICES_CODE = 12
 
     var settle: SettleResponse.SettleData? = null
         set(value) {
             field = value
             if(field?.apartament?.id != null)
-                repository.getHotelServices(field?.apartament?.id!!, GET_SERVICES_CODE)
+                repository.getPartnerServices(field?.filial?.id!!, GET_PARTNER_SERVICES_CODE)
         }
 
     fun refresh(settle: SettleResponse.SettleData?){
@@ -25,12 +24,11 @@ class HotelServicesPresenter(val view: HotelServicesView){
     }
 
 
-    inner class RepositoryListener: HotelServicesRepositoryListener{
-        override fun onServicesResponse(response: HotelServicesResponse, code: Int) {
-            view.showServices(response.services?: listOf())
+    inner class RepositoryListener: HotelServicesRepositoryListener {
+        override fun onServicesResponse(response: HotelServicesResponse, code: Int) {}
+        override fun onPartnerServicesResponse(response: PartnersServicesResponse, code: Int) {
+            view.showServices(response.partner_services?: listOf())
         }
-
-        override fun onPartnerServicesResponse(response: PartnersServicesResponse, code: Int) { }
 
         override fun startRequest(name: String, code: Int) {
             view.showLoading()

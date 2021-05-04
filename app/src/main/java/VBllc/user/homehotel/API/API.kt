@@ -55,4 +55,9 @@ interface API {
     suspend fun getHotelServices(
         @Query("room_id") room_id: Int
     ): Response<HotelServicesResponse>
+
+    @GET("services/get_partner_service")
+    suspend fun getPrtnerServices(
+            @Query("filial_id") filial_id: Int
+    ): Response<PartnersServicesResponse>
 }

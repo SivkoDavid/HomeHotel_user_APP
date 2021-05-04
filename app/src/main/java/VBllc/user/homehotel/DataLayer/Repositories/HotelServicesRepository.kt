@@ -41,4 +41,37 @@ class HotelServicesRepository(val listener: HotelServicesRepositoryListener) {
             }
         }
     }
+
+    fun getPartnerServices(filialId: Int, code: Int){
+        listener.startRequest("sendSettleCode", code)
+        //Запускаем карутину
+        CoroutineScope(Dispatchers.Unconfined).async{
+            val apiFactory = ApiFactory()
+            //Подготовка интерфейса API
+            val postReq: API = apiFactory.createAPIwithCoroutines()
+
+            try { //Если есть интерент соединение
+
+                val response = postReq.getPrtnerServices(filialId)
+
+                if (response.isSuccessful()) {
+                    if(response.body()!!.success) {
+                        listener.onPartnerServicesResponse(response.body()!!, code)
+                    }
+                    else {
+                        val errors = mutableListOf<String>()
+                        response.body()!!.errors?.forEach{
+                            errors.add(it)
+                        }
+                        listener.onErrors(errors, 200,  code)
+                    }
+                } else { //Ошибка сервера
+                    listener.onErrors(listOf("Ошибка "+response.code()), response.code(), code)
+                }
+
+            } catch (e: Exception) { //Отсутствие интернета
+                listener.noInternet()
+            }
+        }
+    }
 }
