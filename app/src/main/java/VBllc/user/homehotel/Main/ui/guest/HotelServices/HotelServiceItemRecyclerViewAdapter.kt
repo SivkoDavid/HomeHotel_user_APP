@@ -32,8 +32,7 @@ class HotelServiceItemRecyclerViewAdapter(
                 .load(item.picture)
                 .placeholder(R.drawable.servise_standsrt_img)
                 .error(R.drawable.servise_standsrt_img)
-                .into(holder.imageView);
-        holder.nameView.text = item.name
+                .into(holder.imageView)
         holder.categoryLabel.text = item.category + " • " + item.subcategory
         holder.cardView.setOnClickListener { listener?.onServiceClick(item) }
     }

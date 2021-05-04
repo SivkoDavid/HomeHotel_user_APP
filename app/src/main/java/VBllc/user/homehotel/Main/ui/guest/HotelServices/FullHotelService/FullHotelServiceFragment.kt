@@ -8,10 +8,24 @@ import android.view.View
 import android.view.ViewGroup
 import VBllc.user.homehotel.R
 import android.widget.*
+import androidx.lifecycle.whenStarted
 import com.google.android.material.textfield.TextInputLayout
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class FullHotelServiceFragment : Fragment() {
     var data: HotelServicesResponse.HotelServiceData? = null
+        set(value) {
+            field = value
+            CoroutineScope(Dispatchers.Main).launch {
+                this@FullHotelServiceFragment.whenStarted {
+                    if(field != null)
+                        printInfo(field!!)
+                }
+            }
+        }
 
     private lateinit var name: TextView
     private lateinit var price: TextView
@@ -52,6 +66,21 @@ class FullHotelServiceFragment : Fragment() {
             fields.visibility = View.VISIBLE
             showFieldsBtn.visibility = View.GONE
         }
+    }
+
+    private fun printInfo(data: HotelServicesResponse.HotelServiceData){
+        name.text = data.name
+        var descStr = data.description?:""
+        if(descStr.length > 150)
+            descStr = descStr.substring(0, 150).substringBeforeLast(' ') + "..."
+        desc.text = descStr
+        price.text = "${data.price?:""} ${data.price_type?:""}"
+        Picasso.get()
+            .load(data.picture)
+            .placeholder(R.drawable.servise_standsrt_img)
+            .error(R.drawable.servise_standsrt_img)
+            .into(imageView)
+        categoryLabel.text = data.category + " • " + data.subcategory
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
