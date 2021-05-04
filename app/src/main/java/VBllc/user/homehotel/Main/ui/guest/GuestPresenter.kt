@@ -39,9 +39,14 @@ class GuestPresenter(private val view: GuestView) {
             view.showPartnersServicesFragment(data!!)
     }
 
-    fun goToPartnersHygieneMenu(){
+    fun goToHygieneMenu(){
         if(data != null)
             view.showHygieneFragment(data!!)
+    }
+
+    fun goToGastronomyMenu(){
+        if(data != null)
+            view.showGastronomyFragment(data!!)
     }
 
 

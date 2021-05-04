@@ -3,6 +3,7 @@ package VBllc.user.homehotel.Main.ui.guest
 import VBllc.user.homehotel.API.DataResponse.SettleResponse
 import VBllc.user.homehotel.AdditionalComponents.DialogWindows.InfoDialog
 import VBllc.user.homehotel.Main.ui.guest.Cleaning.OrderCleaningFragment
+import VBllc.user.homehotel.Main.ui.guest.Gastronomy.GastronomyFragment
 import VBllc.user.homehotel.Main.ui.guest.HotelServices.HotelServiceItemFragment
 import VBllc.user.homehotel.Main.ui.guest.Hygiene.HygieneFragment
 import VBllc.user.homehotel.Main.ui.guest.PartnerServices.PartnerServiceFragment
@@ -70,7 +71,8 @@ class GuestFragment : Fragment(), GuestView {
         cleaningMenu.setOnClickListener { presenter.goToCleaningMenu() }
         otherServicesMenu.setOnClickListener { presenter.goToHotelServicesMenu() }
         partServicesMenu.setOnClickListener { presenter.goToPartnersServicesMenu() }
-        hygieneMenu.setOnClickListener { presenter.goToPartnersHygieneMenu() }
+        hygieneMenu.setOnClickListener { presenter.goToHygieneMenu() }
+        foodMenu.setOnClickListener { presenter.goToGastronomyMenu() }
         outButton.setOnClickListener { presenter.outOfTheSettle() }
 
     }
@@ -194,6 +196,15 @@ class GuestFragment : Fragment(), GuestView {
         CoroutineScope(Dispatchers.Main).launch {
             this@GuestFragment.whenStarted {
                 val fragment = HygieneFragment.newInstance(data)
+                openFragment(fragment)
+            }
+        }
+    }
+
+    override fun showGastronomyFragment(data: SettleResponse.SettleData) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@GuestFragment.whenStarted {
+                val fragment = GastronomyFragment.newInstance(data)
                 openFragment(fragment)
             }
         }
