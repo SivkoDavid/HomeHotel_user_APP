@@ -4,6 +4,7 @@ import VBllc.user.homehotel.API.DataResponse.HotelServicesResponse.HotelServiceD
 import VBllc.user.homehotel.API.DataResponse.SettleResponse
 import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragment
 import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragmentListener
+import VBllc.user.homehotel.Main.ui.guest.HotelServices.FullHotelService.FullHotelServiceFragment
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -63,7 +64,13 @@ class HotelServiceItemFragment : Fragment(), HotelServicesView {
         if (recucler != null) {
             with(recucler!!) {
                 layoutManager = LinearLayoutManager(context)
-                adapter = HotelServiceItemRecyclerViewAdapter(servicesList)
+                val adap = HotelServiceItemRecyclerViewAdapter(servicesList)
+                adapter = adap
+                adap.listener = object : HotelServiceItemRecyclerViewAdapter.HotelServiceItemRecyclerListener{
+                    override fun onServiceClick(service: HotelServiceData) {
+                           openService(service)
+                    }
+                }
             }
         }
         return root
@@ -82,6 +89,14 @@ class HotelServiceItemFragment : Fragment(), HotelServicesView {
             return fragment
         }
 
+    }
+
+    fun openService(service: HotelServiceData){
+        val frag = FullHotelServiceFragment.newInstance(service)
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer_hotelServices, frag)
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun showServices(data: List<HotelServiceData>) {

@@ -35,8 +35,10 @@ class HotelServiceItemRecyclerViewAdapter(
                 .into(holder.imageView);
         holder.nameView.text = item.name
         holder.categoryLabel.text = item.category + " • " + item.subcategory
-        holder.cardView.setOnClickListener {  }
+        holder.cardView.setOnClickListener { listener?.onServiceClick(item) }
     }
+
+    var listener: HotelServiceItemRecyclerListener? = null
 
     override fun getItemCount(): Int = values.size
 
@@ -47,5 +49,9 @@ class HotelServiceItemRecyclerViewAdapter(
         val priceView: TextView = view.findViewById(R.id.price)
         val cardView: View = view.findViewById(R.id.card)
         val categoryLabel: TextView = view.findViewById(R.id.categoryLabel)
+    }
+
+    interface HotelServiceItemRecyclerListener{
+        fun onServiceClick(service: HotelServiceData)
     }
 }
