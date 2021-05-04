@@ -66,7 +66,7 @@ class PartnerServiceFragment : Fragment(), PartnerServicesView {
         if (recucler != null) {
             with(recucler!!) {
                 layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
-                adapter = PartnerServiceRecyclerViewAdapter(servicesList)
+                adapter = PartnerServiceRecyclerViewAdapter(servicesList, requireContext())
             }
         }
         return root

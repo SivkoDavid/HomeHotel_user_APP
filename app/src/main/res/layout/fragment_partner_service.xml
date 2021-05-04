@@ -19,12 +19,29 @@
         android:elevation="5dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/image"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/servise_standsrt_img" />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:foreground="#63000000"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/servise_standsrt_img" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="20dp"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp"
+                android:text="Подробнее об услуге"
+                android:textAllCaps="false" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/name"
@@ -33,22 +50,13 @@
             android:layout_marginTop="12dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:fontFamily="sans-serif"
+            android:layout_marginBottom="22dp"
+            android:fontFamily="sans-serif-medium"
             android:textColor="@color/gray_2"
             android:textSize="20dp"
             android:text="Назваение услуги" />
-        <TextView
-            android:id="@+id/desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="sans-serif"
-            android:textColor="@color/gray_1"
-            android:textSize="18dp"
-            android:text="@string/lorem_1" />
 
 
     </LinearLayout>
+
 </FrameLayout>
