@@ -34,6 +34,7 @@ class HotelServiceItemRecyclerViewAdapter(
                 .error(R.drawable.servise_standsrt_img)
                 .into(holder.imageView);
         holder.nameView.text = item.name
+        holder.categoryLabel.text = item.category + " • " + item.subcategory
         holder.cardView.setOnClickListener {  }
     }
 
@@ -45,5 +46,6 @@ class HotelServiceItemRecyclerViewAdapter(
         val descView: TextView = view.findViewById(R.id.desc)
         val priceView: TextView = view.findViewById(R.id.price)
         val cardView: View = view.findViewById(R.id.card)
+        val categoryLabel: TextView = view.findViewById(R.id.categoryLabel)
     }
 }

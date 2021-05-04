@@ -62,5 +62,20 @@
             android:textSize="22dp"
             android:text="330 руб/час"
             android:layout_marginBottom="16dp"/>
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/categoryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Категория • Подкатегория"
+        android:layout_margin="16dp"
+        android:background="@drawable/white_round"
+        android:paddingTop="4dp"
+        android:fontFamily="sans-serif-medium"
+        android:paddingBottom="4dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="22dp"
+        android:elevation="7dp"/>
 </FrameLayout>
