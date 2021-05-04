@@ -27,7 +27,7 @@ class HotelServiceItemRecyclerViewAdapter(
         if(desc.length > 150)
             desc = desc.substring(0, 150).substringBeforeLast(' ') + "..."
         holder.descView.text = desc
-        holder.priceView.text = "${item.price} ${item.price_type}"
+        holder.priceView.text = "${item.price?:""} ${item.price_type?:""}"
         Picasso.get()
                 .load(item.picture)
                 .placeholder(R.drawable.servise_standsrt_img)
