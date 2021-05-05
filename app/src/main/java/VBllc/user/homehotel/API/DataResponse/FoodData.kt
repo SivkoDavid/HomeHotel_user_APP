@@ -7,5 +7,6 @@ data class FoodData(
     val name: String? = null,
     val description: String? = null,
     val imageLink: String? = null,
-    val price: Float? = null
+    val price: Float? = null,
+    val category: String? = null
 )

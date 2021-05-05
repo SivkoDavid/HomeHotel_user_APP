@@ -119,4 +119,14 @@
         </LinearLayout>
     </ScrollView>
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainer_gastronomy"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="20dp"
+        grid:layout_constraintBottom_toBottomOf="parent"
+        grid:layout_constraintEnd_toEndOf="parent"
+        grid:layout_constraintStart_toStartOf="parent"
+        grid:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
