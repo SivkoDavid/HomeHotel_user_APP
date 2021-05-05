@@ -8,27 +8,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import VBllc.user.homehotel.R
+import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
 import android.widget.LinearLayout
+import android.widget.Spinner
 import androidx.cardview.widget.CardView
 
 class GastronomyFragment : Fragment() {
 
     var settle: SettleResponse.SettleData? = null
     private lateinit var grid: LinearLayout
+    private lateinit var typeSelector: Spinner
 
-    val testList = mutableListOf<FoodData>(
-        FoodData(1),
-        FoodData(1),
-        FoodData(1),
-        FoodData(1),
-        FoodData(1),
-        FoodData(1),
-        FoodData(1)
-    )
+    var types = arrayOf(
+        "Холодные напитки",
+        "Горячие напитки",
+        "Алкоголь",
+        "Первые блюда",
+        "Вторые блюда",
+        "Десерты")
 
-    fun initViews(root: View, layoutInflater: LayoutInflater){
+    fun initViews(root: View){
         grid = root.findViewById(R.id.foodList)
+        typeSelector = root.findViewById(R.id.type_selector)
         grid.removeAllViewsInLayout()
         grid.addView(LayoutInflater.from(requireContext()).inflate(R.layout.food_card, null))
         grid.addView(LayoutInflater.from(requireContext()).inflate(R.layout.food_card, null))
@@ -36,7 +38,9 @@ class GastronomyFragment : Fragment() {
         grid.addView(LayoutInflater.from(requireContext()).inflate(R.layout.food_card, null))
         grid.addView(LayoutInflater.from(requireContext()).inflate(R.layout.food_card, null))
         grid.addView(LayoutInflater.from(requireContext()).inflate(R.layout.food_card, null))
-        val param = grid.layoutParams
+
+
+        typeSelector.adapter = ArrayAdapter<String>(requireContext(), R.layout.spinner_layout, R.id.text, types)
     }
 
     override fun onCreateView(
@@ -44,7 +48,7 @@ class GastronomyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_gastronomy, container, false)
-        initViews(root, inflater)
+        initViews(root)
         return root
     }
 
