@@ -98,7 +98,7 @@ class GastronomyPresenter(val view: GastronomyView) {
 
         fun addFood(food: FoodData){
             foodList.forEach {
-                if(it.food.id == food.id){
+                if(it.food == food){
                     it.count ++
                     return
                 }
