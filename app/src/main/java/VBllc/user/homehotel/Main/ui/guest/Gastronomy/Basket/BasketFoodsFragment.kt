@@ -33,8 +33,15 @@ class BasketFoodsFragment : Fragment() {
     var gastronomyPresenter: GastronomyPresenter? = null
 
     private lateinit var foodsList: LinearLayout
+    private lateinit var noFoodsLabel: TextView
+    private lateinit var priceBasket: TextView
+    private lateinit var sendBusketBtn: Button
+
     private fun initViews(root: View){
         foodsList = root.findViewById(R.id.foods)
+        noFoodsLabel = root.findViewById(R.id.noFoodsLabel)
+        priceBasket = root.findViewById(R.id.priceBasket)
+        sendBusketBtn = root.findViewById(R.id.sendBusketBtn)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +53,16 @@ class BasketFoodsFragment : Fragment() {
 
     fun printInfo(info: FoodBasketData){
         printList(info.foodList)
+        if(info.count() > 0) {
+            noFoodsLabel.visibility = View.GONE
+            sendBusketBtn.isEnabled = true
+        }
+        else {
+            noFoodsLabel.visibility = View.VISIBLE
+            sendBusketBtn.isEnabled = false
+        }
+
+        priceBasket.text = info.getPriceSumm().toString() + " р."
     }
 
     fun printList(foods: List<FoodBasketData.FoodInBid>){

@@ -10,10 +10,12 @@
     <ImageView
         android:id="@+id/imageView9"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
         android:foreground="#A9000000"
         android:scaleType="centerCrop"
+        android:clickable="true"
         android:src="@drawable/servise_standsrt_img"
+        grid:layout_constraintBottom_toTopOf="@+id/scrollView2"
         grid:layout_constraintEnd_toEndOf="parent"
         grid:layout_constraintStart_toStartOf="parent"
         grid:layout_constraintTop_toTopOf="parent" />

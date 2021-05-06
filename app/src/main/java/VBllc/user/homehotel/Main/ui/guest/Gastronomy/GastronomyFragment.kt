@@ -1,13 +1,11 @@
 package VBllc.user.homehotel.Main.ui.guest.Gastronomy
 
 import VBllc.user.homehotel.API.DataResponse.FoodData
-import VBllc.user.homehotel.API.DataResponse.HotelServicesResponse
 import VBllc.user.homehotel.API.DataResponse.SettleResponse
 import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragment
 import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragmentListener
 import VBllc.user.homehotel.Main.ui.guest.Gastronomy.Basket.BasketFoodsFragment
 import VBllc.user.homehotel.Main.ui.guest.Gastronomy.Basket.FoodBasketData
-import VBllc.user.homehotel.Main.ui.guest.HotelServices.FullHotelService.FullHotelServiceFragment
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,7 +14,6 @@ import android.view.ViewGroup
 import VBllc.user.homehotel.R
 import VBllc.user.homehotel.Views.GastronomyView
 import android.widget.*
-import androidx.cardview.widget.CardView
 import androidx.lifecycle.whenStarted
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +27,7 @@ class GastronomyFragment : Fragment(), GastronomyView{
     private lateinit var foodCount: TextView
     private lateinit var priceSumm: TextView
     private lateinit var sendBtn: Button
+    private lateinit var upBarBack: ImageView
     lateinit private var loadingFragment : ProgressFragment
     lateinit private var basketFragment : BasketFoodsFragment
     private val presenter = GastronomyPresenter(this)
@@ -47,6 +45,7 @@ class GastronomyFragment : Fragment(), GastronomyView{
         foodCount = root.findViewById(R.id.foodCount)
         priceSumm = root.findViewById(R.id.priceSumm)
         sendBtn = root.findViewById(R.id.sendBtn)
+        upBarBack = root.findViewById(R.id.imageView9)
         basketFragment = BasketFoodsFragment()
         basketFragment.gastronomyPresenter = presenter
         loadingFragment = ProgressFragment(parentFragmentManager)
@@ -57,6 +56,7 @@ class GastronomyFragment : Fragment(), GastronomyView{
             }
         }
         sendBtn.setOnClickListener { presenter.bascketClick() }
+        upBarBack.setOnClickListener { presenter.bascketClick() }
     }
 
     override fun onCreateView(
