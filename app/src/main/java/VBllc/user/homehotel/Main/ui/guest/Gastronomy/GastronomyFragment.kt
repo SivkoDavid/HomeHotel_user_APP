@@ -1,9 +1,13 @@
 package VBllc.user.homehotel.Main.ui.guest.Gastronomy
 
 import VBllc.user.homehotel.API.DataResponse.FoodData
+import VBllc.user.homehotel.API.DataResponse.HotelServicesResponse
 import VBllc.user.homehotel.API.DataResponse.SettleResponse
 import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragment
 import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragmentListener
+import VBllc.user.homehotel.Main.ui.guest.Gastronomy.Basket.BasketFoodsFragment
+import VBllc.user.homehotel.Main.ui.guest.Gastronomy.Basket.FoodBasketData
+import VBllc.user.homehotel.Main.ui.guest.HotelServices.FullHotelService.FullHotelServiceFragment
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -27,6 +31,7 @@ class GastronomyFragment : Fragment(), GastronomyView{
     private lateinit var priceSumm: TextView
     private lateinit var sendBtn: Button
     lateinit private var loadingFragment : ProgressFragment
+    lateinit private var basketFragment : BasketFoodsFragment
     private val presenter = GastronomyPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +47,7 @@ class GastronomyFragment : Fragment(), GastronomyView{
         foodCount = root.findViewById(R.id.foodCount)
         priceSumm = root.findViewById(R.id.priceSumm)
         sendBtn = root.findViewById(R.id.sendBtn)
+        basketFragment = BasketFoodsFragment()
         loadingFragment = ProgressFragment(parentFragmentManager)
         parentFragmentManager.beginTransaction().add(R.id.fragmentContainer_gastronomy, loadingFragment).commit()
         loadingFragment.listener = object : ProgressFragmentListener {
@@ -49,6 +55,7 @@ class GastronomyFragment : Fragment(), GastronomyView{
                 presenter.refresh(settle)
             }
         }
+        sendBtn.setOnClickListener { presenter.bascketClick() }
     }
 
     override fun onCreateView(
@@ -91,6 +98,13 @@ class GastronomyFragment : Fragment(), GastronomyView{
         this.priceSumm.setText(priceSumm.toString()+" р.")
     }
 
+    fun showBascket(basketData: FoodBasketData){
+        basketFragment.basked = basketData
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer_gastronomy, basketFragment)
+            .addToBackStack(null)
+            .commit()
+    }
 
     override fun updateFoodCategories(categories: Array<String>) {
         CoroutineScope(Dispatchers.Main).launch {
@@ -114,6 +128,22 @@ class GastronomyFragment : Fragment(), GastronomyView{
             this@GastronomyFragment.whenStarted {
                 loadingFragment.hide()
                 printFoodList(menu)
+            }
+        }
+    }
+
+    override fun updateBasket(basketData: FoodBasketData) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@GastronomyFragment.whenStarted {
+                basketFragment.basked = basketData
+            }
+        }
+    }
+
+    override fun openBasket(basketData: FoodBasketData) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@GastronomyFragment.whenStarted {
+                showBascket(basketData)
             }
         }
     }
