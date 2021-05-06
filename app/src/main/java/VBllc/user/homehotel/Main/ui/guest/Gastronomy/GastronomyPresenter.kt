@@ -54,10 +54,17 @@ class GastronomyPresenter(val view: GastronomyView) {
 
     fun addFoodInBid(food: FoodData){
         foodBid.addFood(food)
+        view.showToast("${food?.name?:"Блюдо"} добавлено в корзину")
     }
 
     fun minusFoodFromBid(food: FoodData){
         foodBid.minusFoodFromBasket(food)
+        view.showToast("${food?.name?:"Блюдо"} убрано из корзины")
+    }
+
+    fun deleteFoodFromBid(food: FoodBasketData.FoodInBid){
+        foodBid.deleteFoodFromBid(food)
+        view.showToast("${food.food?.name?:"Блюдо"} удфалено из корзины")
     }
 
     inner class RepositoryListener: HotelServicesRepositoryListener {

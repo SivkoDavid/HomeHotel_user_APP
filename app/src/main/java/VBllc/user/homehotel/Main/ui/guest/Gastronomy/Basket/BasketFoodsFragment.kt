@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import VBllc.user.homehotel.R
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.whenStarted
 import kotlinx.coroutines.CoroutineScope
@@ -29,8 +32,9 @@ class BasketFoodsFragment : Fragment() {
 
     var gastronomyPresenter: GastronomyPresenter? = null
 
+    private lateinit var foodsList: LinearLayout
     private fun initViews(root: View){
-
+        foodsList = root.findViewById(R.id.foods)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +45,14 @@ class BasketFoodsFragment : Fragment() {
     }
 
     fun printInfo(info: FoodBasketData){
-        requireView().findViewById<TextView>(R.id.text).text = info?.foodList.toString()
+        printList(info.foodList)
+    }
+
+    fun printList(foods: List<FoodBasketData.FoodInBid>){
+        foodsList.removeAllViewsInLayout()
+        foods.forEach {
+            foodsList.addView(getFoodCard(it))
+        }
     }
 
 
@@ -52,5 +63,16 @@ class BasketFoodsFragment : Fragment() {
                 BasketFoodsFragment().apply {
                     basked = data
                 }
+    }
+
+    private fun getFoodCard(food: FoodBasketData.FoodInBid): View{
+        val view = LayoutInflater.from(requireContext()).inflate(R.layout.food_in_basket_card, null)
+        view.findViewById<TextView>(R.id.name).text = food.food.name?:""
+        view.findViewById<TextView>(R.id.count).text = food.count.toString()
+        view.findViewById<TextView>(R.id.price).text = ((food.food.price?:0f) * food.count).toString() + " руб."
+        view.findViewById<Button>(R.id.plusBtn).setOnClickListener { gastronomyPresenter?.addFoodInBid(food.food) }
+        view.findViewById<Button>(R.id.minusBtn).setOnClickListener { gastronomyPresenter?.minusFoodFromBid(food.food) }
+        view.findViewById<ImageButton>(R.id.deleteBtn).setOnClickListener { gastronomyPresenter?.deleteFoodFromBid(food) }
+        return view
     }
 }

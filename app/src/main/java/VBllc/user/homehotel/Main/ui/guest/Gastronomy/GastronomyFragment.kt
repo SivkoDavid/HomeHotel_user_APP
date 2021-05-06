@@ -48,6 +48,7 @@ class GastronomyFragment : Fragment(), GastronomyView{
         priceSumm = root.findViewById(R.id.priceSumm)
         sendBtn = root.findViewById(R.id.sendBtn)
         basketFragment = BasketFoodsFragment()
+        basketFragment.gastronomyPresenter = presenter
         loadingFragment = ProgressFragment(parentFragmentManager)
         parentFragmentManager.beginTransaction().add(R.id.fragmentContainer_gastronomy, loadingFragment).commit()
         loadingFragment.listener = object : ProgressFragmentListener {

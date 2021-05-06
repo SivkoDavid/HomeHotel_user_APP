@@ -36,8 +36,13 @@ class FoodBasketData(
         if(foob.count > 1)
             foob.count--
         else{
-            foodList.minus(foob)
+            foodList.remove(foob)
         }
+        listener?.onBascketDataChanget(this)
+    }
+
+    fun deleteFoodFromBid(foob: FoodInBid){
+        foodList.remove(foob)
         listener?.onBascketDataChanget(this)
     }
 
@@ -48,12 +53,7 @@ class FoodBasketData(
                 foodInBid = it
         }
         if(foodInBid != null) {
-            if (foodInBid!!.count > 1)
-                foodInBid!!.count--
-            else {
-                foodList.minus(foob)
-            }
-            listener?.onBascketDataChanget(this)
+            minusFoodFromBasket(foodInBid!!)
         }
     }
 

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:orientation="vertical"
+    app:layout_columnWeight="1">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:elevation="5dp"
+        android:background="@drawable/white_round">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/servise_standsrt_img" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="105dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/gray_2"
+            android:textSize="20dp"
+            android:singleLine="true"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/weigth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="105dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/gray_2"
+            android:textSize="18dp"
+            android:singleLine="true"
+            android:text="150 гр." />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="105dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="sans-serif"
+            android:singleLine="true"
+            android:text="200 р."
+            android:textColor="@color/gray_2"
+            android:textSize="24sp" />
+
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="12dp"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/deleteBtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/white_round"
+                android:scaleType="centerCrop"
+                android:tint="#FF0A0A"
+                app:srcCompat="@drawable/ic_baseline_delete_outline_24" />
+
+            <Button
+                android:id="@+id/minusBtn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="centerCrop"
+                android:padding="0dp"
+                android:tint="#FFFFFF"
+                android:foreground="@drawable/ic_baseline_remove_24"
+                android:foregroundTint="@color/white"
+                android:background="@drawable/white_round" />
+
+            <TextView
+                android:id="@+id/count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="24dp"
+                android:layout_margin="4dp"/>
+
+            <Button
+                android:id="@+id/plusBtn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="centerCrop"
+                android:padding="0dp"
+                android:tint="#FFFFFF"
+                android:foreground="@drawable/ic_baseline_add_24"
+                android:foregroundTint="@color/white"
+                android:background="@drawable/white_round" />
+
+        </TableRow>
+
+    </FrameLayout>
+
+</FrameLayout>
