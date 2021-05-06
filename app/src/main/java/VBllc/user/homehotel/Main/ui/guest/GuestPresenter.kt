@@ -49,6 +49,11 @@ class GuestPresenter(private val view: GuestView) {
             view.showGastronomyFragment(data!!)
     }
 
+    fun goToChatMenu(){
+        if(data != null)
+            view.showChatFragment(data!!)
+    }
+
 
 
     fun outOfTheSettle(){

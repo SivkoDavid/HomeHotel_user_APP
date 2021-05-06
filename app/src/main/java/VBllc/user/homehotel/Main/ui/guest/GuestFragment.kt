@@ -2,6 +2,7 @@ package VBllc.user.homehotel.Main.ui.guest
 
 import VBllc.user.homehotel.API.DataResponse.SettleResponse
 import VBllc.user.homehotel.AdditionalComponents.DialogWindows.InfoDialog
+import VBllc.user.homehotel.Chat.ChatActivity
 import VBllc.user.homehotel.Main.ui.guest.Cleaning.OrderCleaningFragment
 import VBllc.user.homehotel.Main.ui.guest.Gastronomy.GastronomyFragment
 import VBllc.user.homehotel.Main.ui.guest.HotelServices.HotelServiceItemFragment
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment
 import VBllc.user.homehotel.R
 import VBllc.user.homehotel.Tools.DateFormatter
 import VBllc.user.homehotel.Views.GuestView
+import android.content.Intent
 import android.widget.Button
 import androidx.lifecycle.whenStarted
 import com.google.android.material.textfield.TextInputLayout
@@ -73,6 +75,7 @@ class GuestFragment : Fragment(), GuestView {
         partServicesMenu.setOnClickListener { presenter.goToPartnersServicesMenu() }
         hygieneMenu.setOnClickListener { presenter.goToHygieneMenu() }
         foodMenu.setOnClickListener { presenter.goToGastronomyMenu() }
+        messagerMenu.setOnClickListener { presenter.goToChatMenu() }
         outButton.setOnClickListener { presenter.outOfTheSettle() }
 
     }
@@ -206,6 +209,15 @@ class GuestFragment : Fragment(), GuestView {
             this@GuestFragment.whenStarted {
                 val fragment = GastronomyFragment.newInstance(data)
                 openFragment(fragment)
+            }
+        }
+    }
+
+    override fun showChatFragment(data: SettleResponse.SettleData) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@GuestFragment.whenStarted {
+                val intent = Intent(requireContext(), ChatActivity::class.java)
+                requireContext().startActivity(intent)
             }
         }
     }

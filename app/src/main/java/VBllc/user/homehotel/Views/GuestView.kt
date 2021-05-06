@@ -14,4 +14,5 @@ interface GuestView: BaseView {
     fun showPartnersServicesFragment(data: SettleResponse.SettleData)
     fun showHygieneFragment(data: SettleResponse.SettleData)
     fun showGastronomyFragment(data: SettleResponse.SettleData)
+    fun showChatFragment(data: SettleResponse.SettleData)
 }
