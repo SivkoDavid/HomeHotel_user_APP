@@ -15,6 +15,10 @@ class ChatPresenter(val view: ChatView) {
         repository.getChat(REQUEST_ALL_CHAT_CODE)
     }
 
+    fun refresh(){
+        repository.getChat(REQUEST_ALL_CHAT_CODE)
+    }
+
     fun sendMessege(message: String){
         repository.sendMessage(message, SEND_MESSAGE_CODE)
     }
@@ -38,15 +42,20 @@ class ChatPresenter(val view: ChatView) {
         }
 
         override fun startRequest(name: String, code: Int) {
-
+            view.showLoading()
         }
 
         override fun noInternet(code: Int?) {
-
+            view.showNoNetwork()
         }
 
         override fun onErrors(errorMessages: List<String>, errorCode: Int, code: Int) {
-
+            var mess = ""
+            errorMessages.forEach{
+                mess += it+"\n"
+            }
+            mess = mess.substringBeforeLast('\n')
+            view.showError(mess, errorCode)
         }
     }
 }

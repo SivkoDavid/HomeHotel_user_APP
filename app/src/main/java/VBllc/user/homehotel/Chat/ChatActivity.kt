@@ -1,6 +1,8 @@
 package VBllc.user.homehotel.Chat
 
 import VBllc.user.homehotel.API.DataResponse.ChatResponse
+import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragment
+import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragmentListener
 import VBllc.user.homehotel.R
 import VBllc.user.homehotel.Views.ChatView
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import androidx.fragment.app.FragmentContainer
 import androidx.lifecycle.whenStarted
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,9 +25,10 @@ class ChatActivity : AppCompatActivity(), ChatView {
 
     private val presenter = ChatPresenter(this)
     private lateinit var messagesList: RecyclerView
-    lateinit var messageInput: EditText
-    lateinit var messageSendBtn: ImageButton
+    private lateinit var messageInput: EditText
+    private lateinit var messageSendBtn: ImageButton
     private lateinit var recuclerMessAdapter: MessagesRecuclerAdapter
+    private lateinit var loadingFragment: ProgressFragment
 
     var chatData: ChatResponse.ChatData? = null
         set(value) {
@@ -54,10 +58,20 @@ class ChatActivity : AppCompatActivity(), ChatView {
 
         messageSendBtn.setOnClickListener {
             val mess = messageInput.text.toString()
-            messageInput.setText("")
-            presenter.sendMessege(mess)
-        }
 
+            if(mess.isNotEmpty()) {
+                messageInput.setText("")
+                presenter.sendMessege(mess)
+            }
+        }
+        loadingFragment = ProgressFragment(supportFragmentManager)
+        supportFragmentManager.beginTransaction()
+                .add(R.id.fragmentContainer_chat, loadingFragment).commit()
+        loadingFragment.listener = object : ProgressFragmentListener{
+            override fun buttonReloadClick() {
+                presenter.refresh()
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,6 +88,7 @@ class ChatActivity : AppCompatActivity(), ChatView {
         CoroutineScope(Dispatchers.Main).launch {
             this@ChatActivity.whenStarted {
                 chatData = chat
+                loadingFragment.hide()
             }
         }
     }
@@ -123,7 +138,7 @@ class ChatActivity : AppCompatActivity(), ChatView {
     override fun showError(errorMessage: String, errorCode: Int) {
         CoroutineScope(Dispatchers.Main).launch {
             this@ChatActivity.whenStarted {
-
+                loadingFragment.showStatus(errorMessage, ProgressFragment.ERROR_IMAGE)
             }
         }
     }
@@ -131,7 +146,7 @@ class ChatActivity : AppCompatActivity(), ChatView {
     override fun showLoading() {
         CoroutineScope(Dispatchers.Main).launch {
             this@ChatActivity.whenStarted {
-
+                loadingFragment.showLoading()
             }
         }
     }
@@ -139,7 +154,7 @@ class ChatActivity : AppCompatActivity(), ChatView {
     override fun showNoNetwork() {
         CoroutineScope(Dispatchers.Main).launch {
             this@ChatActivity.whenStarted {
-
+                loadingFragment.showStatus("Отсутствует подключение к интернету", ProgressFragment.ERROR_IMAGE)
             }
         }
     }

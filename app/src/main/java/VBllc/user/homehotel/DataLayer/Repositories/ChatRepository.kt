@@ -68,7 +68,12 @@ class ChatRepository(val listener: ChatRepositoryListener) {
                             ChatResponse.ChatData.MessageData.Statuses.SENDED))
                 }
                 messages = sortMessIntoMyAndNoMy(messages)
-                listener.onChatResponse(ChatResponse(true, ChatResponse.ChatData(messages)), code)
+                if((0..1).random() == 1)
+                    listener.onChatResponse(ChatResponse(true, ChatResponse.ChatData(messages)), code)
+                else if((0..1).random() == 1)
+                    listener.noInternet()
+                else
+                    listener.onErrors(listOf("ошибка"), 343, 0)
 
             } catch (e: Exception) { //Отсутствие интернета
                 listener.noInternet()
