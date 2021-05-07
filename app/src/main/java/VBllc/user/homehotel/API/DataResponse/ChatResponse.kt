@@ -13,7 +13,8 @@ data class ChatResponse(
             val userName: String? = null,
             val userId: Int? = null,
             val time: String? = null,
-            val status: Statuses = Statuses.ERROR
+            val status: Statuses = Statuses.SENDED,
+            var isMyMessge: Boolean = false
         ){
             enum class Statuses {
                 SENDED, ERROR, SEND_PROCESS

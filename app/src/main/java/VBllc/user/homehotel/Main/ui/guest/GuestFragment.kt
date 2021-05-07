@@ -47,7 +47,7 @@ class GuestFragment : Fragment(), GuestView {
     private lateinit var messagerMenu: Button
     private lateinit var outButton: Button
 
-    private lateinit var presenter: GuestPresenter
+    private val  presenter = GuestPresenter(this)
 
     fun initViews(root: View){
         settlementLayout = root.findViewById(R.id.guest_layout)
@@ -113,7 +113,6 @@ class GuestFragment : Fragment(), GuestView {
         val root = inflater.inflate(R.layout.fragment_guest, container, false)
         initViews(root)
         initFragments()
-        presenter = GuestPresenter(this)
         infoDialog = InfoDialog(requireActivity().supportFragmentManager, "guest123")
         return root
     }

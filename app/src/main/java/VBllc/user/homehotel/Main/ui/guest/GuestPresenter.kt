@@ -67,6 +67,8 @@ class GuestPresenter(private val view: GuestView) {
                 view.showSettlement(settle.data, code == SEND_SETTLECODE_CODE)
                 data = settle.data
             }
+            else
+                onErrors(listOf("Ошибка"), 500, SEND_SETTLECODE_CODE)
         }
 
         override fun onExitSettle(code: Int) {

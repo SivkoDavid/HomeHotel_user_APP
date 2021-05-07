@@ -6,6 +6,7 @@ import VBllc.user.homehotel.Views.ChatView
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.whenStarted
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,10 +18,26 @@ class ChatActivity : AppCompatActivity(), ChatView {
     private lateinit var messagesList: RecyclerView
 
     var chatData: ChatResponse.ChatData? = null
+        set(value) {
+            if(field == null && value != null) {
+                field = value
+                messagesList.adapter = MessagesRecuclerAdapter(chatData?.messages!!)
+                //messagesList.layoutManager?.scrollToPosition(chatData?.messages!!.size-1)
+            }
+            else
+            {
+                field?.messages?.clear()
+                field?.messages?.addAll(field?.messages?: mutableListOf())
+
+            }
+            messagesList.adapter?.notifyDataSetChanged()
+        }
 
     fun initViews(){
         messagesList = findViewById(R.id.rec_maesslist)
-        messagesList.adapter = MessagesRecuclerAdapter(chatData?.messages)
+        val lManager = GridLayoutManager(this, 1)
+        lManager.reverseLayout = true
+        messagesList.layoutManager = lManager
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +53,7 @@ class ChatActivity : AppCompatActivity(), ChatView {
     override fun showChat(chat: ChatResponse.ChatData) {
         CoroutineScope(Dispatchers.Main).launch {
             this@ChatActivity.whenStarted {
-
+                chatData = chat
             }
         }
     }

@@ -10,8 +10,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class MessagesRecuclerAdapter(var items: MutableList<ChatResponse.ChatData.MessageData>?, val callback: Callback? = null) : RecyclerView.Adapter<MessagesRecuclerAdapter.MainHolder>() {
+class MessagesRecuclerAdapter(var items: MutableList<ChatResponse.ChatData.MessageData>, val callback: Callback? = null) : RecyclerView.Adapter<MessagesRecuclerAdapter.MainHolder>() {
 
+    init {
+        items.reverse()
+    }
     private val MY_MESSAGE_TYPE = 1
     private val OTHER_MESSAGE_TYPE = 2
 
@@ -28,12 +31,9 @@ class MessagesRecuclerAdapter(var items: MutableList<ChatResponse.ChatData.Messa
         }
     }
 
-
-
-    override fun getItemCount() = items?.size?:0
+    override fun getItemCount() = items.size
     override fun onBindViewHolder(holder: MessagesRecuclerAdapter.MainHolder, position: Int) {
-        if(items!=null && items!!.count() > position)
-            holder.bind(items!![position])
+        holder.bind(items[position])
     }
 
     inner class MainHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -69,8 +69,8 @@ class MessagesRecuclerAdapter(var items: MutableList<ChatResponse.ChatData.Messa
     }
 
     override fun getItemViewType(position: Int): Int {
-        val it = items?.get(position)
-        if(it?.userId == UserInfoPreference.userInfo.getInfo()?.id)
+        val it = items.get(position)
+        if(it.isMyMessge)
             return MY_MESSAGE_TYPE
         else
             return OTHER_MESSAGE_TYPE
