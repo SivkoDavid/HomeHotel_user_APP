@@ -12,6 +12,35 @@ import kotlin.random.Random
 
 class ChatRepository(val listener: ChatRepositoryListener) {
 
+    fun sendMessage(message: String, code: Int){
+        listener.startRequest("getChat", code)
+        //Запускаем карутину
+        CoroutineScope(Dispatchers.Unconfined).async{
+            val apiFactory = ApiFactory()
+            //Подготовка интерфейса API
+            val postReq: API = apiFactory.createAPIwithCoroutines()
+
+            try { //Если есть интерент соединение
+                val messData =
+                        ChatResponse.ChatData.MessageData(
+                                437,
+                                message,
+                                "DS",
+                                1,
+                                "",
+                                ChatResponse.ChatData.MessageData.Statuses.SEND_PROCESS,
+                        true)
+                listener.messageStartedSending(messData, code)
+                delay(1000)
+                messData.status = ChatResponse.ChatData.MessageData.Statuses.ERROR
+                listener.messageNotDelivered(messData, code)
+
+            } catch (e: Exception) { //Отсутствие интернета
+                listener.noInternet()
+            }
+        }
+    }
+
     fun getChat(code: Int){
         listener.startRequest("getChat", code)
         //Запускаем карутину
@@ -24,7 +53,7 @@ class ChatRepository(val listener: ChatRepositoryListener) {
 
                 delay(1500)
                 var messages = mutableListOf<ChatResponse.ChatData.MessageData>()
-                for (i in 1 .. 30){
+                for (i in 1 .. 3){
                     val usId = (0..1).random()
                     var mess = ""
                     for(j in 1..(0..20).random()){

@@ -5,8 +5,14 @@ import VBllc.user.homehotel.R
 import VBllc.user.homehotel.Views.ChatView
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.AttributeSet
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
 import androidx.lifecycle.whenStarted
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,13 +22,17 @@ class ChatActivity : AppCompatActivity(), ChatView {
 
     private val presenter = ChatPresenter(this)
     private lateinit var messagesList: RecyclerView
+    lateinit var messageInput: EditText
+    lateinit var messageSendBtn: ImageButton
+    private lateinit var recuclerMessAdapter: MessagesRecuclerAdapter
 
     var chatData: ChatResponse.ChatData? = null
         set(value) {
             if(field == null && value != null) {
                 field = value
-                messagesList.adapter = MessagesRecuclerAdapter(chatData?.messages!!)
-                //messagesList.layoutManager?.scrollToPosition(chatData?.messages!!.size-1)
+                recuclerMessAdapter = MessagesRecuclerAdapter(chatData?.messages!!)
+                messagesList.adapter = recuclerMessAdapter
+                messagesList.layoutManager?.scrollToPosition(chatData?.messages?.lastIndex?:0)
             }
             else
             {
@@ -33,11 +43,21 @@ class ChatActivity : AppCompatActivity(), ChatView {
             messagesList.adapter?.notifyDataSetChanged()
         }
 
+
     fun initViews(){
         messagesList = findViewById(R.id.rec_maesslist)
-        val lManager = GridLayoutManager(this, 1)
-        lManager.reverseLayout = true
+        messageInput = findViewById(R.id.messege_input)
+        messageSendBtn = findViewById(R.id.sendBtn)
+        val lManager = LinearLayoutManager(this)
+        lManager.stackFromEnd = true
         messagesList.layoutManager = lManager
+
+        messageSendBtn.setOnClickListener {
+            val mess = messageInput.text.toString()
+            messageInput.setText("")
+            presenter.sendMessege(mess)
+        }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,7 +97,9 @@ class ChatActivity : AppCompatActivity(), ChatView {
     override fun addMessage(message: ChatResponse.ChatData.MessageData) {
         CoroutineScope(Dispatchers.Main).launch {
             this@ChatActivity.whenStarted {
-
+                chatData?.messages?.add(message)
+                recuclerMessAdapter.notifyItemChanged(chatData?.messages?.lastIndex?:1)
+                messagesList.layoutManager?.scrollToPosition(chatData?.messages?.lastIndex?:0)
             }
         }
     }
@@ -93,7 +115,7 @@ class ChatActivity : AppCompatActivity(), ChatView {
     override fun updateMessage(message: ChatResponse.ChatData.MessageData) {
         CoroutineScope(Dispatchers.Main).launch {
             this@ChatActivity.whenStarted {
-
+                recuclerMessAdapter.notifyDataSetChanged()
             }
         }
     }

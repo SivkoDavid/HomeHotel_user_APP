@@ -49,7 +49,7 @@
         android:ems="10"
         android:fontFamily="sans-serif"
         android:gravity="left|center_vertical"
-        android:hint="Напищите сообщение..."
+        android:hint="Сообщение..."
         android:inputType="textMultiLine"
         android:maxHeight="100dp"
         android:minHeight="40dp"
@@ -59,11 +59,11 @@
         android:paddingEnd="14sp"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton"
+        app:layout_constraintEnd_toStartOf="@+id/sendBtn"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/sendBtn"
         android:layout_width="34dp"
         android:layout_height="39dp"
         android:layout_marginEnd="16dp"

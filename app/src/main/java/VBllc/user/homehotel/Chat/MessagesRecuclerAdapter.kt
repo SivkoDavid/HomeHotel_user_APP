@@ -12,9 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 
 class MessagesRecuclerAdapter(var items: MutableList<ChatResponse.ChatData.MessageData>, val callback: Callback? = null) : RecyclerView.Adapter<MessagesRecuclerAdapter.MainHolder>() {
 
-    init {
-        items.reverse()
-    }
     private val MY_MESSAGE_TYPE = 1
     private val OTHER_MESSAGE_TYPE = 2
 
@@ -41,20 +38,17 @@ class MessagesRecuclerAdapter(var items: MutableList<ChatResponse.ChatData.Messa
         private val state_mess = itemView.findViewById<ImageView>(R.id.mess_state)
         fun bind(item: ChatResponse.ChatData.MessageData) {
             textmes.text = item.text
-
+            textmes.invalidate()
             if(state_mess != null) {
                 when (item.status) {
                     (ChatResponse.ChatData.MessageData.Statuses.SEND_PROCESS) -> {
-                        state_mess.setImageDrawable(itemView.context.resources.getDrawable(R.drawable.ic_success))
+                        state_mess.setImageResource(R.drawable.ic_baseline_access_time_24)
                     }
                     (ChatResponse.ChatData.MessageData.Statuses.ERROR) -> {
-                        state_mess.setImageDrawable(itemView.context.resources.getDrawable(R.drawable.ic_alert))
+                        state_mess.setImageResource(R.drawable.ic_alert_red)
                     }
                     (ChatResponse.ChatData.MessageData.Statuses.SENDED) -> {
-                        state_mess.setImageDrawable(itemView.context.resources.getDrawable(R.drawable.ic_success))
-                    }
-                    else -> {
-                        state_mess.visibility = View.INVISIBLE
+                        state_mess.setImageResource(R.drawable.ic_success)
                     }
                 }
             }
