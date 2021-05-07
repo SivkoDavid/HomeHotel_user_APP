@@ -42,7 +42,8 @@ class ChatPresenter(val view: ChatView) {
         }
 
         override fun startRequest(name: String, code: Int) {
-            view.showLoading()
+            if(code != SEND_MESSAGE_CODE)
+                view.showLoading()
         }
 
         override fun noInternet(code: Int?) {
