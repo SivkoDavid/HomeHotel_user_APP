@@ -1,6 +1,7 @@
 package VBllc.user.homehotel.Main.ui.guest.Gastronomy
 
 import VBllc.user.homehotel.API.DataResponse.*
+import VBllc.user.homehotel.DataLayer.Preferences.SettlementPreference
 import VBllc.user.homehotel.DataLayer.Repositories.HotelServicesRepository
 import VBllc.user.homehotel.DataLayer.Repositories.HotelServicesRepositoryListener
 import VBllc.user.homehotel.Main.ui.guest.Gastronomy.Basket.FoodBasketData
@@ -25,8 +26,8 @@ class GastronomyPresenter(val view: GastronomyView) {
     var settle: SettleResponse.SettleData? = null
         set(value) {
             field = value
-            if(field?.filial?.id != null){
-                repository.getFoodMenu(field?.filial?.id!!, GET_FOOD_MENU_CODE)
+            if(SettlementPreference.getSettleCode().isNotEmpty()){
+                repository.getFoodMenu(SettlementPreference.getSettleCode(), GET_FOOD_MENU_CODE)
             }
         }
 

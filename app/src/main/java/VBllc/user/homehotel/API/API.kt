@@ -60,4 +60,9 @@ interface API {
     suspend fun getPrtnerServices(
             @Query("filial_id") filial_id: Int
     ): Response<PartnersServicesResponse>
+
+    @GET("services/get_products")
+    suspend fun getProducts(
+            @Query("settlement_uid") settlement_uid: String
+    ): Response<FoodMenuResponse>
 }
