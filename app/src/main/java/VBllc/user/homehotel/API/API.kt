@@ -29,11 +29,40 @@ interface API {
     ): Response<UserInfoResponse>
 
     @GET("hotels")
-    suspend fun getHotels(): Response<HotelsPesponse>
+    suspend fun getHotels(): Response<HotelsResponse>
+
+    @GET("hotel")
+    suspend fun getHotel(
+            @Query("filial_id") hotel_id: Int
+    ): Response<HotelResponse>
 
     @POST("settlement")
     @FormUrlEncoded
     suspend fun getSettle(
             @Field("uid") code: String
     ): Response<SettleResponse>
+
+    @POST("reviews/filial/store")
+    @FormUrlEncoded
+    suspend fun sendHotelReview(
+        @Field("token") token: String,
+        @Field("filial_id") filial_id: Int,
+        @Field("text") text: String,
+        @Field("rating") rating: Int
+    ): Response<SendReviewResponse>
+
+    @GET("services/get_service_for_room")
+    suspend fun getHotelServices(
+        @Query("room_id") room_id: Int
+    ): Response<HotelServicesResponse>
+
+    @GET("services/get_partner_service")
+    suspend fun getPrtnerServices(
+            @Query("filial_id") filial_id: Int
+    ): Response<PartnersServicesResponse>
+
+    @GET("services/get_products")
+    suspend fun getProducts(
+            @Query("settlement_uid") settlement_uid: String
+    ): Response<FoodMenuResponse>
 }

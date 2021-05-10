@@ -11,4 +11,9 @@
     <style name="Dialog" parent="Theme.AppCompat.Dialog.Alert">
         <item name="android:windowBackground">#00000000</item>
     </style>
+
+    <style name="StarBar" parent="Widget.AppCompat.RatingBar">
+        <item name="colorControlNormal">@color/gray_0</item>
+        <item name="colorControlActivated">@color/yellow</item>
+    </style>
 </resources>

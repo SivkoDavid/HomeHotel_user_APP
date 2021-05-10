@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/white_round"
+        android:elevation="5dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/servise_standsrt_img" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/gray_2"
+            android:textSize="20dp"
+            android:text="Назваение услуги" />
+        <TextView
+            android:id="@+id/desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/gray_1"
+            android:textSize="18dp"
+            android:text="@string/lorem_1" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="sans-serif-light"
+            android:textAlignment="textEnd"
+            android:textColor="@color/gray_2"
+            android:textSize="22dp"
+            android:text="330 руб/час"
+            android:layout_marginBottom="16dp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/categoryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Категория • Подкатегория"
+        android:layout_margin="16dp"
+        android:background="@drawable/white_round"
+        android:paddingTop="4dp"
+        android:fontFamily="sans-serif-medium"
+        android:paddingBottom="4dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="22dp"
+        android:elevation="7dp"/>
+</FrameLayout>

@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var guestFragment: GuestFragment
     lateinit var hotelsFragment: HotelsFragment
     lateinit var profileFragment: ProfileFragment
-    lateinit var fragmentManger: FragmentManager
+    lateinit var mFragmentManger: FragmentManager
     lateinit var navView: BottomNavigationView
 
 
@@ -38,13 +38,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_profile to profileFragment
         )
 
-        fragmentManger = supportFragmentManager
+        mFragmentManger = supportFragmentManager
 
 
-        fragmentManger.beginTransaction().add(R.id.nav_host_fragment, hotelsFragment).commit()
-        fragmentManger.beginTransaction().add(R.id.nav_host_fragment, profileFragment).commit()
-        fragmentManger.beginTransaction().add(R.id.nav_host_fragment, guestFragment).commit()
-        fragmentManger.beginTransaction().show(guestFragment).commit()
+        mFragmentManger.beginTransaction().add(R.id.nav_host_fragment, hotelsFragment).commit()
+        mFragmentManger.beginTransaction().add(R.id.nav_host_fragment, profileFragment).commit()
+        mFragmentManger.beginTransaction().add(R.id.nav_host_fragment, guestFragment).commit()
 
         navView.setOnNavigationItemSelectedListener{
             when (it.itemId) {
@@ -67,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 
 
     fun showFragment(itemMenu: Int){
-        val transaction = fragmentManger.beginTransaction()
+        val transaction = mFragmentManger.beginTransaction()
         for(item in navMap){
             if(item.key != itemMenu)
                 transaction.hide(item.value)
@@ -90,13 +89,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if(getShowedMenuItemId() == R.id.navigation_guest){
-            val startMain = Intent(Intent.ACTION_MAIN)
-            startMain.addCategory(Intent.CATEGORY_HOME)
-            startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(startMain)
+            if(guestFragment.childFragmentManager.backStackEntryCount > 0)
+                guestFragment.childFragmentManager.popBackStack()
+            else {
+                val startMain = Intent(Intent.ACTION_MAIN)
+                startMain.addCategory(Intent.CATEGORY_HOME)
+                startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(startMain)
+            }
         }
         else {
-            if(hotelsFragment.childFragmentManager.backStackEntryCount > 0)
+            if(getShowedMenuItemId() == R.id.navigation_hotels
+                && hotelsFragment.childFragmentManager.backStackEntryCount > 0)
                 hotelsFragment.childFragmentManager.popBackStack()
             else
                 navView.selectedItemId = R.id.navigation_guest

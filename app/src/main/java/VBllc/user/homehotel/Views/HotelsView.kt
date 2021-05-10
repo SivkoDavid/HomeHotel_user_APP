@@ -1,9 +1,10 @@
 package VBllc.user.homehotel.Views
 
-import VBllc.user.homehotel.API.DataResponse.HotelsPesponse
+import VBllc.user.homehotel.API.DataResponse.HotelResponse
+import VBllc.user.homehotel.API.DataResponse.HotelsResponse
 
 interface HotelsView : BaseView{
-    fun showHotelsList(hotels: List<HotelsPesponse.HotelData>)
+    fun showHotelsList(hotels: List<HotelsResponse.HotelData>)
 
-    fun openHotel(hotel: HotelsPesponse.HotelData)
+    fun openHotel(hotel: HotelResponse.HotelData)
 }

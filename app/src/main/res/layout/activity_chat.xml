@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:background="@color/white"
+    tools:context=".Chat.ChatActivity">
+
+
+    <ImageView
+        android:id="@+id/chat_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:tint="@color/gray_0"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_chatmenuicon"
+        tools:ignore="UseAppTint" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rec_maesslist"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:drawingCacheQuality="auto"
+        android:fitsSystemWindows="false"
+        android:forceDarkAllowed="false"
+        android:keepScreenOn="false"
+        app:layout_constraintBottom_toTopOf="@+id/messege_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chat_icon" />
+
+    <EditText
+        android:id="@+id/messege_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/border_round"
+        android:ems="10"
+        android:fontFamily="sans-serif"
+        android:gravity="left|center_vertical"
+        android:hint="Сообщение..."
+        android:inputType="textMultiLine"
+        android:maxHeight="100dp"
+        android:minHeight="40dp"
+        android:padding="7sp"
+        android:paddingStart="14sp"
+        android:paddingTop="4sp"
+        android:paddingEnd="14sp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/sendBtn"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/sendBtn"
+        android:layout_width="34dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="16dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_baseline_send_24"
+        android:tint="@color/purple_500"
+        app:layout_constraintBottom_toBottomOf="@+id/messege_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/messege_input" />
+
+    <TextView
+        android:id="@+id/chat_name_in_full"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:maxLines="1"
+        android:text="Администрация"
+        android:textColor="@color/gray_2"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/chat_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/chat_icon"
+        app:layout_constraintTop_toTopOf="@+id/chat_icon" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainer_chat"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

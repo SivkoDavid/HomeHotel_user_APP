@@ -20,6 +20,7 @@ class InfoDialog(
         var message: String = "Идет обработка запроса"
 ) : DialogFragment() {
 
+
     var thisOrient:Int = 0;
     val errorImg  = R.drawable.ic_alert
     val okImg = R.drawable.ic_success
@@ -36,7 +37,6 @@ class InfoDialog(
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         lastInstant = savedInstanceState
-        isShowing = savedInstanceState?.getBoolean("dialogIsShow", false) == true
         printResult = savedInstanceState?.getBoolean("printResult", false) == true
         return activity?.let {
             thisOrient = activity?.requestedOrientation!!
@@ -87,7 +87,7 @@ class InfoDialog(
     override fun onResume() {
         super.onResume()
         if(!isShowing){
-            dialog?.hide()
+            closeNow()
         }
     }
 
@@ -98,21 +98,23 @@ class InfoDialog(
     }
 
     fun openNow(){
-        if(!isAdded){
-            this.show(_fragmentManager, "")
+        if(!isShowing) {
+            isShowing = true
+            if (!this.isAdded) {
+                this.showNow(_fragmentManager, null)
+            } else {
+                dialog?.show()
+            }
         }
-        else
-            dialog?.show()
-        isShowing = true
     }
 
 
 
+
     fun closeNow(){
-        if (dialog?.isShowing?:false) {
+        if (isShowing) {
             isShowing = false
-            dialog!!.hide()
-            activity?.setRequestedOrientation(thisOrient)
+            dismiss()
         }
 
     }

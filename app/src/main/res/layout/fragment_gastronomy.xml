@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:grid="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Main.ui.guest.Gastronomy.GastronomyFragment">
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:foreground="#A9000000"
+        android:scaleType="centerCrop"
+        android:clickable="true"
+        android:src="@drawable/servise_standsrt_img"
+        grid:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        grid:layout_constraintEnd_toEndOf="parent"
+        grid:layout_constraintStart_toStartOf="parent"
+        grid:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_foodmenuicon"
+        grid:layout_constraintBottom_toBottomOf="@+id/sendBtn"
+        grid:layout_constraintStart_toStartOf="parent"
+        grid:layout_constraintTop_toTopOf="@+id/sendBtn"
+        grid:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/foodCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/white_round"
+        android:backgroundTint="@color/error"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-black"
+        android:text="2"
+        android:paddingVertical="3dp"
+        android:paddingHorizontal="8dp"
+        grid:layout_constraintEnd_toEndOf="@+id/imageView8"
+        grid:layout_constraintStart_toEndOf="@+id/imageView8"
+        grid:layout_constraintTop_toTopOf="@+id/imageView8" />
+
+    <Button
+        android:id="@+id/sendBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="@color/purple_700"
+        android:scaleType="centerCrop"
+        android:text="Заказать"
+        android:textAllCaps="false"
+        grid:layout_constraintEnd_toEndOf="parent"
+        grid:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/priceSumm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="4000 руб."
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        grid:layout_constraintBottom_toBottomOf="@+id/sendBtn"
+        grid:layout_constraintEnd_toStartOf="@+id/sendBtn"
+        grid:layout_constraintTop_toTopOf="@+id/sendBtn"
+        grid:layout_constraintVertical_bias="0.551" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        grid:layout_constraintBottom_toBottomOf="parent"
+        grid:layout_constraintEnd_toEndOf="parent"
+        grid:layout_constraintStart_toStartOf="parent"
+        grid:layout_constraintTop_toBottomOf="@+id/sendBtn">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="24dp"
+                android:foreground="@drawable/border_round">
+
+                <Spinner
+                    android:id="@+id/type_selector"
+                    style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="2dp" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/foodList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:numColumns="2"
+                android:orientation="vertical"
+                tools:listitem="@layout/food_card" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainer_gastronomy"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="20dp"
+        grid:layout_constraintBottom_toBottomOf="parent"
+        grid:layout_constraintEnd_toEndOf="parent"
+        grid:layout_constraintStart_toStartOf="parent"
+        grid:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

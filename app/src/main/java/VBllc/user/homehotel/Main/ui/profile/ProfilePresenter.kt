@@ -38,7 +38,7 @@ class ProfilePresenter(val view: ProfileView) {
 
         }
 
-        override fun noInternet() {
+        override fun noInternet(code: Int?) {
 
         }
 

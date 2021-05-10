@@ -11,7 +11,7 @@ data class SettleResponse(
             val settlement_start: String,
             val settlement_end: String,
             val uid: String,
-            val hotel: HotelsPesponse.HotelData,
+            val hotel: HotelsResponse.HotelData,
             val filial: FilialData,
             val apartament: ApartamentData,
             val buyer: UserInfoResponse.UserInfoData

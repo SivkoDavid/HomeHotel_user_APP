@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#52000000"
+    tools:context=".Main.ui.guest.Gastronomy.Basket.BasketFoodsFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="16dp"
+        android:paddingHorizontal="8dp"
+        android:scrollbars="none"
+        android:background="@drawable/white_round_only_top">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Корзина"
+                android:textAlignment="center"
+                android:textSize="24dp"
+                android:fontFamily="sans-serif-medium"
+                android:layout_margin="8dp"/>
+
+            <TextView
+                android:id="@+id/noFoodsLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_1"
+                android:textSize="24sp"
+                android:textAlignment="center"
+                android:fontFamily="sans-serif-light"
+                android:padding="24dp"
+                android:text="В корзине нет выбранных\nблюд." />
+
+            <LinearLayout
+                android:id="@+id/foods"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Сумма:"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/gray_2"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/priceBasket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif"
+                    android:text="1356 руб."
+                    android:textColor="@color/gray_2"
+                    android:textSize="24sp" />
+
+                <Button
+                    android:id="@+id/sendBusketBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="40dp"
+                    android:layout_marginEnd="8dp"
+                    android:textAllCaps="false"
+                    android:text="Заказать" />
+            </TableRow>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
