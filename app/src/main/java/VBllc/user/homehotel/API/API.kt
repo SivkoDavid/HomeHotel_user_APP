@@ -76,4 +76,22 @@ interface API {
             @Field("products") products: List<Int>?
     ): Response<SendOrderResponse>
 
+    @POST("services/send_cleaning_order")
+    @FormUrlEncoded
+    suspend fun sendCleaningOrder(
+            @Field("settlement_uid") settlement_uid: String,
+            @Field("preferred_time") preferred_time: String?,
+            @Field("token") token: String,
+            @Field("products") products: List<Int>?
+    ): Response<SendOrderResponse>
+
+    @POST("services/send_hygiene_order")
+    @FormUrlEncoded
+    suspend fun sendHugieneOrder(
+            @Field("settlement_uid") settlement_uid: String,
+            @Field("preferred_time") preferred_time: String?,
+            @Field("token") token: String,
+            @Field("products") products: List<Int>?
+    ): Response<SendOrderResponse>
+
 }

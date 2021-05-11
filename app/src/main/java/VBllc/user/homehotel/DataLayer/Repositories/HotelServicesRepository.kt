@@ -149,4 +149,84 @@ class HotelServicesRepository(val listener: HotelServicesRepositoryListener) {
         }
     }
 
+    fun sendCleaningOrder(settleCode: String, time: String?, productIdList: List<Int>?, code: Int){
+        listener.startRequest("sendOrder", code)
+        //Запускаем карутину
+        CoroutineScope(Dispatchers.Unconfined).async{
+            val apiFactory = ApiFactory()
+            //Подготовка интерфейса API
+            val postReq: API = apiFactory.createAPIwithCoroutines()
+
+            try { //Если есть интерент соединение
+
+                val response = postReq.sendCleaningOrder(
+                        settleCode,
+                        time,
+                        UserInfoPreference.token.toString(),
+                        productIdList
+                )
+
+                if (response.isSuccessful()) {
+                    if(response.body()!!.success) {
+                        listener.onSendOrderResponse(response.body()!!, code)
+                    }
+                    else {
+                        val errors = mutableListOf<String>()
+                        response.body()!!.errors?.forEach{
+                            it.value.forEach {
+                                errors.add(it)
+                            }
+                        }
+                        listener.onErrors(errors, 200,  code)
+                    }
+                } else { //Ошибка сервера
+                    listener.onErrors(listOf("Ошибка "+response.code()), response.code(), code)
+                }
+
+            } catch (e: Exception) { //Отсутствие интернета
+                listener.noInternet()
+            }
+        }
+    }
+
+    fun sendHugieneOrder(settleCode: String, time: String?, productIdList: List<Int>?, code: Int){
+        listener.startRequest("sendOrder", code)
+        //Запускаем карутину
+        CoroutineScope(Dispatchers.Unconfined).async{
+            val apiFactory = ApiFactory()
+            //Подготовка интерфейса API
+            val postReq: API = apiFactory.createAPIwithCoroutines()
+
+            try { //Если есть интерент соединение
+
+                val response = postReq.sendHugieneOrder(
+                        settleCode,
+                        time,
+                        UserInfoPreference.token.toString(),
+                        productIdList
+                )
+
+                if (response.isSuccessful()) {
+                    if(response.body()!!.success) {
+                        listener.onSendOrderResponse(response.body()!!, code)
+                    }
+                    else {
+                        val errors = mutableListOf<String>()
+                        response.body()!!.errors?.forEach{
+                            it.value.forEach {
+                                errors.add(it)
+                            }
+                        }
+                        listener.onErrors(errors, 200,  code)
+                    }
+                } else { //Ошибка сервера
+                    listener.onErrors(listOf("Ошибка "+response.code()), response.code(), code)
+                }
+
+            } catch (e: Exception) { //Отсутствие интернета
+                listener.noInternet()
+            }
+        }
+    }
+
 }
