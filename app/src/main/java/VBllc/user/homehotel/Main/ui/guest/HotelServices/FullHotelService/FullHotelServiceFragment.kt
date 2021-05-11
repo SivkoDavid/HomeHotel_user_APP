@@ -1,6 +1,7 @@
 package VBllc.user.homehotel.Main.ui.guest.HotelServices.FullHotelService
 
 import VBllc.user.homehotel.API.DataResponse.HotelServicesResponse
+import VBllc.user.homehotel.API.DataResponse.SettleResponse
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 class FullHotelServiceFragment : Fragment() {
     var data: HotelServicesResponse.HotelServiceData? = null
@@ -44,6 +46,7 @@ class FullHotelServiceFragment : Fragment() {
     private lateinit var fields: View
 
     var listener: FullHotelServiceFragmentListener? = null
+    var settle: SettleResponse.SettleData? = null
 
     private fun initViews(root: View){
         name = root.findViewById(R.id.name)
@@ -52,12 +55,10 @@ class FullHotelServiceFragment : Fragment() {
         categoryLabel = root.findViewById(R.id.categoryLabel)
         labelData = root.findViewById(R.id.labelData)
         labelTime = root.findViewById(R.id.labelTime)
-        labelCount = root.findViewById(R.id.labelCount)
-        labelCount2 = root.findViewById(R.id.labelCount2)
         imageView = root.findViewById(R.id.imageView)
         dateInput = root.findViewById(R.id.dateInput)
         timeInput = root.findViewById(R.id.timeInput)
-        countInput = root.findViewById(R.id.countInput)
+        timeInput.setIs24HourView(true)
         showFieldsBtn = root.findViewById(R.id.showFieldsBtn)
         sendBtn = root.findViewById(R.id.sendBtn)
         fields = root.findViewById(R.id.fields)
@@ -65,6 +66,12 @@ class FullHotelServiceFragment : Fragment() {
         showFieldsBtn.setOnClickListener {
             fields.visibility = View.VISIBLE
             showFieldsBtn.visibility = View.GONE
+        }
+        sendBtn.setOnClickListener {
+            val date =
+                    "${dateInput.year}-${dateInput.month}-${dateInput.dayOfMonth} " +
+                    "${timeInput.hour}:${timeInput.minute}"
+            listener?.onBidCompiled(data?.id?:-1, date)
         }
     }
 
@@ -92,8 +99,9 @@ class FullHotelServiceFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(service: HotelServicesResponse.HotelServiceData) =
+        fun newInstance(service: HotelServicesResponse.HotelServiceData, settleData: SettleResponse.SettleData?) =
                 FullHotelServiceFragment().apply {
+                    settle = settleData
                     data = service
                 }
     }

@@ -1,12 +1,10 @@
 package VBllc.user.homehotel.DataLayer.Repositories
 
-import VBllc.user.homehotel.API.DataResponse.FoodData
-import VBllc.user.homehotel.API.DataResponse.FoodMenuResponse
-import VBllc.user.homehotel.API.DataResponse.HotelServicesResponse
-import VBllc.user.homehotel.API.DataResponse.PartnersServicesResponse
+import VBllc.user.homehotel.API.DataResponse.*
 
 interface HotelServicesRepositoryListener:BaseRepositoryListener {
     fun onServicesResponse(response: HotelServicesResponse, code: Int)
     fun onPartnerServicesResponse(response: PartnersServicesResponse, code: Int)
     fun onFoodMenuResponse(response: FoodMenuResponse, code: Int){}
+    fun onSendOrderResponse(response: SendOrderResponse, code: Int){}
 }

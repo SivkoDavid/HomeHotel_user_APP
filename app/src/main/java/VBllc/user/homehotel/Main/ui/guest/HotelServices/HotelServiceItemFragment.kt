@@ -4,7 +4,9 @@ import VBllc.user.homehotel.API.DataResponse.HotelServicesResponse.HotelServiceD
 import VBllc.user.homehotel.API.DataResponse.SettleResponse
 import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragment
 import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragmentListener
+import VBllc.user.homehotel.App.HomeHotelApp
 import VBllc.user.homehotel.Main.ui.guest.HotelServices.FullHotelService.FullHotelServiceFragment
+import VBllc.user.homehotel.Main.ui.guest.HotelServices.FullHotelService.FullHotelServiceFragmentListener
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -92,11 +94,16 @@ class HotelServiceItemFragment : Fragment(), HotelServicesView {
     }
 
     fun openService(service: HotelServiceData){
-        val frag = FullHotelServiceFragment.newInstance(service)
+        val frag = FullHotelServiceFragment.newInstance(service, settle)
         parentFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer_hotelServices, frag)
             .addToBackStack(null)
             .commit()
+        frag.listener = object : FullHotelServiceFragmentListener{
+            override fun onBidCompiled(serviseId: Int, datetime: String) {
+                presenter.sendOrder(serviseId, datetime, null)
+            }
+        }
     }
 
     override fun showServices(data: List<HotelServiceData>) {
@@ -104,6 +111,14 @@ class HotelServiceItemFragment : Fragment(), HotelServicesView {
             this@HotelServiceItemFragment.whenStarted {
                 loadingFragment.hide()
                 servicesList = data.toMutableList()
+            }
+        }
+    }
+
+    override fun closeFull() {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@HotelServiceItemFragment.whenStarted {
+                parentFragmentManager.popBackStackImmediate()
             }
         }
     }
@@ -128,6 +143,14 @@ class HotelServiceItemFragment : Fragment(), HotelServicesView {
         CoroutineScope(Dispatchers.Main).launch {
             this@HotelServiceItemFragment.whenStarted {
                 loadingFragment.showStatus("Отсутствует подключение к интернету", ProgressFragment.ERROR_IMAGE)
+            }
+        }
+    }
+
+    override fun showToast(text: String, length: Int) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@HotelServiceItemFragment.whenStarted {
+                Toast.makeText(requireContext(), text, length).show()
             }
         }
     }

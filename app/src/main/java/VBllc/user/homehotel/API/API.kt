@@ -65,4 +65,15 @@ interface API {
     suspend fun getProducts(
             @Query("settlement_uid") settlement_uid: String
     ): Response<FoodMenuResponse>
+
+    @POST("services/send_order")
+    @FormUrlEncoded
+    suspend fun sendOrder(
+            @Field("settlement_uid") settlement_uid: String,
+            @Field("preferred_time") preferred_time: String?,
+            @Field("service_id") service_id: Int?,
+            @Field("token") token: String,
+            @Field("products") products: List<Int>?
+    ): Response<SendOrderResponse>
+
 }
