@@ -73,7 +73,7 @@ interface API {
             @Field("preferred_time") preferred_time: String?,
             @Field("service_id") service_id: Int?,
             @Field("token") token: String,
-            @Field("products") products: List<Int>?
+            @Field("products[]") products: List<Int>?
     ): Response<SendOrderResponse>
 
     @POST("services/send_cleaning_order")

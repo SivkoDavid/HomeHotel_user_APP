@@ -203,7 +203,7 @@ class HotelServicesRepository(val listener: HotelServicesRepositoryListener) {
                         settleCode,
                         time,
                         UserInfoPreference.token.toString(),
-                        productIdList
+                        null
                 )
 
                 if (response.isSuccessful()) {

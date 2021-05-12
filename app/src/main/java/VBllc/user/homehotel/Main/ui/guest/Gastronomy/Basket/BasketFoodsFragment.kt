@@ -79,7 +79,7 @@ class BasketFoodsFragment : Fragment() {
             for(i in 1..it.count)
                 foodIdList.plus(it.food.id)
         }
-        gastronomyPresenter?.sendFoodsBid(foodIdList)
+        gastronomyPresenter?.sendFoodsBid()
     }
 
 

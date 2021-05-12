@@ -70,7 +70,12 @@ class GastronomyPresenter(val view: GastronomyView) {
         view.showToast("${food.food?.name?:"Блюдо"} удфалено из корзины")
     }
 
-    fun sendFoodsBid(foodIdList: List<Int>){
+    fun sendFoodsBid(){
+        val foodIdList = mutableListOf<Int>()
+        foodBid.foodList.forEach {
+            for(i in 1..it.count)
+                foodIdList.add(it.food.id)
+        }
         repository.sendOrder(settle?.uid?:"", null, null, foodIdList, SEND_FOOD_BID_CODE)
     }
 
