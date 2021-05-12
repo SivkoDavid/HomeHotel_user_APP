@@ -4,15 +4,29 @@ import VBllc.user.homehotel.API.DataResponse.ChatResponse
 import VBllc.user.homehotel.DataLayer.Repositories.ChatRepository
 import VBllc.user.homehotel.DataLayer.Repositories.ChatRepositoryListener
 import VBllc.user.homehotel.Views.ChatView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 
 class ChatPresenter(val view: ChatView) {
     val repository = ChatRepository(RepositoryListener())
 
     private val REQUEST_ALL_CHAT_CODE = 23
+    private val LOOP_REQUEST_ALL_CHAT_CODE = 12
     private val SEND_MESSAGE_CODE = 43
+
+    private var chatData: ChatResponse.ChatData? = null
 
     init {
         repository.getChat(REQUEST_ALL_CHAT_CODE)
+
+        CoroutineScope(Dispatchers.IO).async {
+            while(true){
+                delay(2000)
+                repository.getChat(LOOP_REQUEST_ALL_CHAT_CODE)
+            }
+        }
     }
 
     fun refresh(){
@@ -20,13 +34,15 @@ class ChatPresenter(val view: ChatView) {
     }
 
     fun sendMessege(message: String){
-        repository.sendMessage(message, SEND_MESSAGE_CODE)
+        repository.sendMessage(chatData?.id?:-1, message, SEND_MESSAGE_CODE)
     }
 
     inner class RepositoryListener: ChatRepositoryListener{
         override fun onChatResponse(response: ChatResponse, code: Int) {
-            if(response.chatData != null)
+            if(response.chatData != null) {
+                chatData = response.chatData
                 view.showChat(response.chatData)
+            }
         }
 
         override fun messageDelivered(messageData: ChatResponse.ChatData.MessageData, code: Int) {
@@ -42,7 +58,7 @@ class ChatPresenter(val view: ChatView) {
         }
 
         override fun startRequest(name: String, code: Int) {
-            if(code != SEND_MESSAGE_CODE)
+            if(code != SEND_MESSAGE_CODE && code != LOOP_REQUEST_ALL_CHAT_CODE)
                 view.showLoading()
         }
 

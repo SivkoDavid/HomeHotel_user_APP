@@ -94,4 +94,22 @@ interface API {
             @Field("products") products: List<Int>?
     ): Response<SendOrderResponse>
 
+
+    @POST("chat/get_chat")
+    @FormUrlEncoded
+    suspend fun getChat(
+            @Field("settlement_uid") settlement_uid: String,
+            @Field("token") token: String
+    ): Response<ChatResponse>
+
+    @POST("chat/send_message")
+    @FormUrlEncoded
+    suspend fun sendMessageInChat(
+            @Field("settlement_uid") settlement_uid: String,
+            @Field("token") token: String,
+            @Field("chat_id") chat_id: Int,
+            @Field("message") message: String
+    ): Response<MessageResponse>
+
+
 }

@@ -41,7 +41,7 @@ class ChatActivity : AppCompatActivity(), ChatView {
             else
             {
                 field?.messages?.clear()
-                field?.messages?.addAll(field?.messages?: mutableListOf())
+                field?.messages?.addAll(value?.messages?: mutableListOf())
 
             }
             messagesList.adapter?.notifyDataSetChanged()
