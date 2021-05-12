@@ -6,12 +6,14 @@ import VBllc.user.homehotel.DataLayer.Repositories.HotelServicesRepository
 import VBllc.user.homehotel.DataLayer.Repositories.HotelServicesRepositoryListener
 import VBllc.user.homehotel.Main.ui.guest.Gastronomy.Basket.FoodBasketData
 import VBllc.user.homehotel.Views.GastronomyView
+import android.widget.Toast
 
 class GastronomyPresenter(val view: GastronomyView) {
 
     private val repository = HotelServicesRepository(RepositoryListener())
 
     private val GET_FOOD_MENU_CODE = 62
+    private val SEND_FOOD_BID_CODE = 63
 
     private val foodBid = FoodBasketData()
     private var lastMenu: List<FoodData> = listOf()
@@ -68,9 +70,18 @@ class GastronomyPresenter(val view: GastronomyView) {
         view.showToast("${food.food?.name?:"Блюдо"} удфалено из корзины")
     }
 
+    fun sendFoodsBid(foodIdList: List<Int>){
+        repository.sendOrder(settle?.uid?:"", null, null, foodIdList, SEND_FOOD_BID_CODE)
+    }
+
     inner class RepositoryListener: HotelServicesRepositoryListener {
         override fun onServicesResponse(response: HotelServicesResponse, code: Int) { }
         override fun onPartnerServicesResponse(response: PartnersServicesResponse, code: Int) { }
+        override fun onSendOrderResponse(response: SendOrderResponse, code: Int) {
+            foodBid.clear()
+            view.showToast("Еда заказана", Toast.LENGTH_LONG)
+        }
+
         override fun onFoodMenuResponse(response: FoodMenuResponse, code: Int) {
             lastMenu = response.data?: listOf()
             val categories = getCategories(response.data?: listOf())
@@ -81,7 +92,8 @@ class GastronomyPresenter(val view: GastronomyView) {
         }
 
         override fun startRequest(name: String, code: Int) {
-            view.showLoading()
+            if(code != SEND_FOOD_BID_CODE)
+                view.showLoading()
         }
 
         override fun noInternet(code: Int?) {

@@ -173,6 +173,14 @@ class GastronomyFragment : Fragment(), GastronomyView{
         }
     }
 
+    override fun showToast(text: String, length: Int) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@GastronomyFragment.whenStarted {
+                Toast.makeText(requireContext(), text, length).show()
+            }
+        }
+    }
+
     companion object {
         @JvmStatic
         fun newInstance(settle: SettleResponse.SettleData) =

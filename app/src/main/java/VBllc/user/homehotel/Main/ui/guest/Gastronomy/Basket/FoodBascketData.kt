@@ -32,6 +32,11 @@ class FoodBasketData(
         listener?.onBascketDataChanget(this)
     }
 
+    fun clear(){
+        foodList = mutableListOf()
+        listener?.onBascketDataChanget(this)
+    }
+
     fun minusFoodFromBasket(foob: FoodInBid){
         if(foob.count > 1)
             foob.count--

@@ -108,7 +108,7 @@ class HotelServicesRepository(val listener: HotelServicesRepositoryListener) {
         }
     }
 
-    fun sendOrder(settleCode: String, serviceId: Int, time: String?, productIdList: List<Int>?, code: Int){
+    fun sendOrder(settleCode: String, serviceId: Int?, time: String?, productIdList: List<Int>?, code: Int){
         listener.startRequest("sendOrder", code)
         //Запускаем карутину
         CoroutineScope(Dispatchers.Unconfined).async{

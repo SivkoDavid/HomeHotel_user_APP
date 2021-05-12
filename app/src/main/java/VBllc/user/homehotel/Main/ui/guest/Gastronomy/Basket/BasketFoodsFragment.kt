@@ -42,6 +42,7 @@ class BasketFoodsFragment : Fragment() {
         noFoodsLabel = root.findViewById(R.id.noFoodsLabel)
         priceBasket = root.findViewById(R.id.priceBasket)
         sendBusketBtn = root.findViewById(R.id.sendBusketBtn)
+        sendBusketBtn.setOnClickListener { sendBusket() }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -72,6 +73,14 @@ class BasketFoodsFragment : Fragment() {
         }
     }
 
+    private fun sendBusket(){
+        val foodIdList = mutableListOf<Int>()
+        basked?.foodList?.forEach {
+            for(i in 1..it.count)
+                foodIdList.plus(it.food.id)
+        }
+        gastronomyPresenter?.sendFoodsBid(foodIdList)
+    }
 
 
     companion object {
