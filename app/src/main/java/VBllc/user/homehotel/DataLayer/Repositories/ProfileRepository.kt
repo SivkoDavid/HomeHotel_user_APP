@@ -2,6 +2,7 @@ package VBllc.user.homehotel.DataLayer.Repositories
 
 import VBllc.user.homehotel.API.API
 import VBllc.user.homehotel.API.ApiFactory
+import VBllc.user.homehotel.DataLayer.Preferences.SettlementPreference
 import VBllc.user.homehotel.DataLayer.Preferences.UserInfoPreference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +16,7 @@ class ProfileRepository(val listener: ProfileRepositoryListener) {
     fun logout(){
         UserInfoPreference.token.removeToken()
         UserInfoPreference.userInfo.clearUserInfo()
+        SettlementPreference.removeSettleCode()
         listener?.onLogout(true)
     }
     

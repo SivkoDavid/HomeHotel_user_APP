@@ -14,23 +14,41 @@ class SettlementPreference {
             editor?.apply()
             //Сохраняем токен в глобальной переменной
             MY_SOVETNIK_SETTLE_CODE = code
+            sendEventOnSettleChange(MY_SOVETNIK_SETTLE_CODE)
         }
 
         fun removeSettleCode() {
             //Сохраняем пустой токен в преференсе
             val editor = HomeHotelPreference.get()?.edit()
-            val _token = ""
-            editor?.putString(SETTLE_CODE_FIELD_IN_PREF, _token)
+            val _code = ""
+            editor?.putString(SETTLE_CODE_FIELD_IN_PREF, _code)
             editor?.apply()
             //Сохраняем пустой токен в глобальной переменной
             MY_SOVETNIK_SETTLE_CODE = ""
+            sendEventOnSettleChange(MY_SOVETNIK_SETTLE_CODE)
         }
 
         fun getSettleCode(): String {
-            val token = HomeHotelPreference.get()?.getString(SETTLE_CODE_FIELD_IN_PREF, "").toString()
+            val code = HomeHotelPreference.get()?.getString(SETTLE_CODE_FIELD_IN_PREF, "").toString()
 
-            MY_SOVETNIK_SETTLE_CODE = token
-            return token
+            MY_SOVETNIK_SETTLE_CODE = code
+            return code
         }
+
+        private val listeners = mutableListOf<OnSettleChangeListener>()
+
+        fun addOnSettleChangeListener(listener: OnSettleChangeListener){
+            listeners.add(listener)
+        }
+
+        private fun sendEventOnSettleChange(code: String){
+            listeners.forEach {
+                it.savingSettleChanget(code)
+            }
+        }
+    }
+
+    interface OnSettleChangeListener{
+        fun savingSettleChanget(code: String)
     }
 }

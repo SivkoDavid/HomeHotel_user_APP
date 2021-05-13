@@ -11,6 +11,15 @@ import kotlinx.coroutines.delay
 
 class GuestRepository(val listener: GuestRepositoryListener) {
 
+    init {
+        SettlementPreference.addOnSettleChangeListener(object : SettlementPreference.OnSettleChangeListener{
+            override fun savingSettleChanget(code: String) {
+                if(code.isEmpty())
+                    listener.onExitSettle(-1)
+            }
+        })
+    }
+
     fun checkConservedSettle(code: Int){
         val settleCode = SettlementPreference.getSettleCode()
         if(settleCode.isNotEmpty()){
