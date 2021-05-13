@@ -50,13 +50,15 @@
         android:text="Оценка: "
         android:textColor="@color/gray_2" />
 
-    <TextView
-        android:id="@+id/raingReview"
+    <RatingBar
+        android:id="@+id/raingReviewInCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:theme="@style/StarBar"
+        style="@style/Widget.AppCompat.RatingBar.Small"
         android:layout_gravity="bottom"
         android:layout_marginStart="60dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="18dp"
         android:text="4"
         android:textColor="@color/gray_2" />
 </FrameLayout>

@@ -247,7 +247,7 @@
             android:drawableLeft="@drawable/ic_chatmenuicon"
             android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
             android:gravity="start|center_vertical"
-            android:text="Чат"
+            android:text="Связь с отелем"
             android:textAllCaps="false"
             android:textColor="@color/gray_1"
             android:textSize="18sp"

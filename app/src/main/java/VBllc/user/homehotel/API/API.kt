@@ -1,6 +1,7 @@
 package VBllc.user.homehotel.API
 
 import VBllc.user.homehotel.API.DataResponse.*
+import VBllc.user.homehotel.DataLayer.Preferences.UserInfoPreference
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -39,7 +40,8 @@ interface API {
     @POST("settlement")
     @FormUrlEncoded
     suspend fun getSettle(
-            @Field("uid") code: String
+            @Field("uid") code: String,
+            @Field("token") token: String = UserInfoPreference.token.getToken()
     ): Response<SettleResponse>
 
     @POST("reviews/filial/store")

@@ -16,6 +16,7 @@ import VBllc.user.homehotel.Views.FullHotelView
 import android.view.View.inflate
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.lifecycle.whenStarted
 import kotlinx.coroutines.CoroutineScope
@@ -33,6 +34,7 @@ class FullHotelFragment : Fragment(), FullHotelView {
     private lateinit var reviewLayout: LinearLayout
     private lateinit var editReviewButton: Button
     private lateinit var editReviewDialog: ReviewEditDialog
+    private lateinit var ratingBarFullHotel: RatingBar
 
     private val presenter = FullHotelPresenter(this)
 
@@ -44,6 +46,7 @@ class FullHotelFragment : Fragment(), FullHotelView {
         ratingHotel = root.findViewById(R.id.ratingHotel)
         reviewLayout = root.findViewById(R.id.reviewLayout)
         editReviewButton = root.findViewById(R.id.editReviewButton)
+        ratingBarFullHotel = root.findViewById(R.id.ratingBarFullHotel)
 
         editReviewDialog = ReviewEditDialog(requireActivity().supportFragmentManager)
         editReviewDialog.listener = object : ReviewEditListener{
@@ -81,26 +84,30 @@ class FullHotelFragment : Fragment(), FullHotelView {
 
     fun fillReviews(reviews: List<HotelResponse.ReviewsData>){
         reviewLayout.removeAllViewsInLayout()
+        ratingBarFullHotel.rating = 0f
         var ratingSum = 0
         reviews.forEach{
             val card = layoutInflater.inflate(R.layout.review_card, null)
             val userName = card.findViewById<TextView>(R.id.userName)
             val textReview = card.findViewById<TextView>(R.id.textReview)
             val dateTime = card.findViewById<TextView>(R.id.dateTime)
-            val raingReview = card.findViewById<TextView>(R.id.raingReview)
+            val raingReview = card.findViewById<RatingBar>(R.id.raingReviewInCard)
             userName.text = it.user_name
             if(it.text?.isEmpty()?:true)
                 textReview.visibility = View.GONE
             textReview.text = it.text
-            raingReview.text = it.rating.toString()
+            raingReview.rating = it.rating.toFloat()
             val date = DateFormatter.formattedDateTime(it.created_at?:"")
             dateTime.text = date
             ratingSum += it.rating
             reviewLayout.addView(card)
         }
 
-        if(reviews.count() > 0)
-            ratingHotel.text = "Рейтинг:" + (((ratingSum.toFloat()/reviews.count())*100).roundToInt().toFloat()/100).toString()
+        if(reviews.count() > 0) {
+            val rat = (((ratingSum.toFloat() / reviews.count()) * 100).roundToInt().toFloat() / 100)
+            ratingBarFullHotel.rating = rat
+            ratingHotel.text = "Рейтинг:" + rat.toString()
+        }
         else
             ratingHotel.text = "Нет отзывов"
     }
