@@ -20,9 +20,9 @@
             android:layout_marginEnd="24dp"
             android:text="Покинуть комнату"
             android:textAllCaps="false"
-            app:layout_constraintBottom_toBottomOf="@+id/hotelName"
+            android:textColor="@color/error"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/hotelName" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/dateEnd"
@@ -54,14 +54,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="24dp"
             android:layout_weight="1"
             android:text="Имя отеля"
             android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/outButton" />
 
         <TextView
             android:id="@+id/addressFilial"

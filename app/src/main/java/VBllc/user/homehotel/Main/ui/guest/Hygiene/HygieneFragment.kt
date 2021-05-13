@@ -30,6 +30,7 @@ class HygieneFragment : Fragment(), OrderCleaningView {
 
     fun initViews(root: View){
         timeInput = root.findViewById(R.id.timeInput)
+        timeInput.setIs24HourView(true)
         sendBtn = root.findViewById(R.id.orderButton)
         sendBtn.setOnClickListener {
             val dateNow = Calendar.getInstance().time
