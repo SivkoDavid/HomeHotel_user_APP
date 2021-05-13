@@ -18,6 +18,7 @@ import androidx.lifecycle.whenStarted
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,20 +31,23 @@ class ChatActivity : AppCompatActivity(), ChatView {
     private lateinit var messageSendBtn: ImageButton
     private lateinit var recuclerMessAdapter: MessagesRecuclerAdapter
     private lateinit var loadingFragment: ProgressFragment
+    private var lManager: LinearLayoutManager? = null
 
     var chatData: ChatResponse.ChatData? = null
         set(value) {
+            val diff = (value?.messages?.size?:0) - (field?.messages?.size?:0)
             if(field == null && value != null) {
                 field = value
                 recuclerMessAdapter = MessagesRecuclerAdapter(chatData?.messages!!)
                 messagesList.adapter = recuclerMessAdapter
                 messagesList.layoutManager?.scrollToPosition(chatData?.messages?.lastIndex?:0)
             }
-            else
-            {
+            else{
                 field?.messages?.clear()
                 field?.messages?.addAll(value?.messages?: mutableListOf())
-
+                if(diff>0 && (field?.messages?.size?:0)- (lManager?.findLastVisibleItemPosition()?:0) < 3){
+                    messagesList.layoutManager?.scrollToPosition(chatData?.messages?.lastIndex?:0)
+                }
             }
             messagesList.adapter?.notifyDataSetChanged()
         }
@@ -53,8 +57,8 @@ class ChatActivity : AppCompatActivity(), ChatView {
         messagesList = findViewById(R.id.rec_maesslist)
         messageInput = findViewById(R.id.messege_input)
         messageSendBtn = findViewById(R.id.sendBtn)
-        val lManager = LinearLayoutManager(this)
-        lManager.stackFromEnd = true
+        lManager = LinearLayoutManager(this)
+        lManager?.stackFromEnd = true
         messagesList.layoutManager = lManager
 
         messageSendBtn.setOnClickListener {
