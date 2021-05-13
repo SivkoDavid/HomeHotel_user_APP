@@ -42,6 +42,11 @@ class MessagesRecuclerAdapter(var items: MutableList<ChatResponse.ChatData.Messa
         fun bind(item: ChatResponse.ChatData.MessageData) {
             textmes.text = item.text
             if(state_mess != null) {
+                if(item.status == ChatResponse.ChatData.MessageData.Statuses.OLD_MESSAGE)
+                    state_mess.visibility = View.INVISIBLE
+                else
+                    state_mess.visibility = View.VISIBLE
+
                 when (item.status) {
                     (ChatResponse.ChatData.MessageData.Statuses.SEND_PROCESS) -> {
                         state_mess.setImageResource(R.drawable.ic_baseline_access_time_24)
@@ -58,7 +63,7 @@ class MessagesRecuclerAdapter(var items: MutableList<ChatResponse.ChatData.Messa
                 userName.text = item.userName
             }
 
-            val time = DateFormatter.formattedDateTime(item.time?:"", DateFormatter.DT_FORMAT_SIMPLE_T)
+            val time = DateFormatter.formattedDateTime(item.time?:"", DateFormatter.DT_FORMAT_SIMPLE)
             time_mess.text = time
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) callback?.onItemClicked(items?.get(adapterPosition))

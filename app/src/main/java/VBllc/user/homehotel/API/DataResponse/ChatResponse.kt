@@ -14,14 +14,14 @@ data class ChatResponse(
         data class MessageData(
                 var id: Int,
                 var text: String? = null,
-                val userName: String? = null,
+                @Json(name="user_name") val userName: String? = null,
                 @Json(name="user_id") var userId: Int? = null,
                 @Json(name="created_at") val time: String? = null,
-                var status: Statuses = Statuses.SENDED,
+                var status: Statuses = Statuses.OLD_MESSAGE,
                 var isMyMessge: Boolean = false
         ){
             enum class Statuses {
-                SENDED, ERROR, SEND_PROCESS
+                SENDED, ERROR, SEND_PROCESS, OLD_MESSAGE
             }
         }
     }
