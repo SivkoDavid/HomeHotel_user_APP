@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.fragment.app.FragmentContainer
 import androidx.lifecycle.whenStarted
 import androidx.recyclerview.widget.GridLayoutManager
@@ -157,5 +158,18 @@ class ChatActivity : AppCompatActivity(), ChatView {
                 loadingFragment.showStatus("Отсутствует подключение к интернету", ProgressFragment.ERROR_IMAGE)
             }
         }
+    }
+
+    override fun showToast(text: String, length: Int) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@ChatActivity.whenStarted {
+                Toast.makeText(this@ChatActivity.applicationContext, text, length)
+            }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        presenter.closeLooper()
     }
 }

@@ -4,10 +4,7 @@ import VBllc.user.homehotel.API.DataResponse.ChatResponse
 import VBllc.user.homehotel.DataLayer.Repositories.ChatRepository
 import VBllc.user.homehotel.DataLayer.Repositories.ChatRepositoryListener
 import VBllc.user.homehotel.Views.ChatView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 
 class ChatPresenter(val view: ChatView) {
     val repository = ChatRepository(RepositoryListener())
@@ -21,12 +18,7 @@ class ChatPresenter(val view: ChatView) {
     init {
         repository.getChat(REQUEST_ALL_CHAT_CODE)
 
-        CoroutineScope(Dispatchers.IO).async {
-            while(true){
-                delay(2000)
-                repository.getChat(LOOP_REQUEST_ALL_CHAT_CODE)
-            }
-        }
+        startLooper()
     }
 
     fun refresh(){
@@ -35,6 +27,22 @@ class ChatPresenter(val view: ChatView) {
 
     fun sendMessege(message: String){
         repository.sendMessage(chatData?.id?:-1, message, SEND_MESSAGE_CODE)
+    }
+
+    private var looper: CoroutineScope?  = null
+
+    fun startLooper(){
+        looper = CoroutineScope(Dispatchers.IO)
+        looper?.async {
+            while (true) {
+                delay(2000)
+                repository.getChat(LOOP_REQUEST_ALL_CHAT_CODE)
+            }
+        }
+    }
+
+    fun closeLooper(){
+        looper?.cancel()
     }
 
     inner class RepositoryListener: ChatRepositoryListener{
@@ -64,6 +72,14 @@ class ChatPresenter(val view: ChatView) {
 
         override fun noInternet(code: Int?) {
             view.showNoNetwork()
+            when(code){
+                SEND_MESSAGE_CODE -> {
+                    view.showToast("Нет подключения к интернету")
+                }
+                else -> {
+                    view.showNoNetwork()
+                }
+            }
         }
 
         override fun onErrors(errorMessages: List<String>, errorCode: Int, code: Int) {
@@ -72,7 +88,18 @@ class ChatPresenter(val view: ChatView) {
                 mess += it+"\n"
             }
             mess = mess.substringBeforeLast('\n')
-            view.showError(mess, errorCode)
+
+            when(code){
+                LOOP_REQUEST_ALL_CHAT_CODE -> {
+                    view.showToast("$mess - $errorCode")
+                }
+                SEND_MESSAGE_CODE -> {
+                    view.showToast("$mess - $errorCode")
+                }
+                else -> {
+                    view.showError(mess, errorCode)
+                }
+            }
         }
     }
 }
