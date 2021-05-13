@@ -12,6 +12,7 @@ class DateFormatter {
          * yyyy-MM-dd HH:mm:ss
          */
         val DT_FORMAT_SIMPLE = "yyyy-MM-dd HH:mm:ss"
+        val DT_FORMAT_SIMPLE_T = "yyyy-MM-dd'T'HH:mm:ss"
 
         /**
          * yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ
@@ -33,19 +34,19 @@ class DateFormatter {
 
 
         fun formattedDateTime(date:String, format:String = DT_FORMAT_SIMPLE):String{
-
+            var res = date
+            if(res.count() > 19)
+                res = res.substring(0, 19)
             try {
                 val parser = SimpleDateFormat(format)
                 val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm")
-                var _date = date
 
-
-                val activatedDate = parser.parse(_date)
+                val activatedDate = parser.parse(res)
                 val formattedDate = formatter.format(activatedDate)
                 return formattedDate
             }
             catch (e : ParseException){
-                return date
+                return res
             }
 
         }

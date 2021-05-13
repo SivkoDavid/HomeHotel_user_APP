@@ -3,6 +3,7 @@ package VBllc.user.homehotel.Chat
 import VBllc.user.homehotel.API.DataResponse.ChatResponse
 import VBllc.user.homehotel.DataLayer.Preferences.UserInfoPreference
 import VBllc.user.homehotel.R
+import VBllc.user.homehotel.Tools.DateFormatter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,9 +37,10 @@ class MessagesRecuclerAdapter(var items: MutableList<ChatResponse.ChatData.Messa
     inner class MainHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textmes = itemView.findViewById<TextView>(R.id.messege_field)
         private val state_mess = itemView.findViewById<ImageView>(R.id.mess_state)
+        private val time_mess = itemView.findViewById<TextView>(R.id.time_mess)
+        private val userName = itemView.findViewById<TextView>(R.id.userName)
         fun bind(item: ChatResponse.ChatData.MessageData) {
             textmes.text = item.text
-            textmes.invalidate()
             if(state_mess != null) {
                 when (item.status) {
                     (ChatResponse.ChatData.MessageData.Statuses.SEND_PROCESS) -> {
@@ -52,7 +54,12 @@ class MessagesRecuclerAdapter(var items: MutableList<ChatResponse.ChatData.Messa
                     }
                 }
             }
+            if(userName != null){
+                userName.text = item.userName
+            }
 
+            val time = DateFormatter.formattedDateTime(item.time?:"", DateFormatter.DT_FORMAT_SIMPLE_T)
+            time_mess.text = time
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) callback?.onItemClicked(items?.get(adapterPosition))
             }
