@@ -8,41 +8,40 @@
 
     <ImageView
         android:id="@+id/avatar"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_marginStart="24dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/avatar" />
 
     <Button
         android:id="@+id/buttonLogout"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="32dp"
         android:text="Выйти"
-        android:textColor="@color/error"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="16dp"
+        android:textAllCaps="false"
+        android:paddingHorizontal="24dp"
+        android:backgroundTint="@color/error"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/email"
+        app:layout_constraintStart_toStartOf="@+id/email"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="sans-serif-black"
         android:text="User Name Field"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/avatar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/avatar"
-        app:layout_constraintTop_toTopOf="@+id/avatar"
-        app:layout_constraintVertical_bias="0.13999999" />
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="@+id/avatar"
+        app:layout_constraintStart_toStartOf="@+id/avatar"
+        app:layout_constraintTop_toBottomOf="@+id/avatar" />
 
     <TextView
         android:id="@+id/email"
@@ -50,71 +49,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="mail@field.com"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="@+id/name"
         app:layout_constraintStart_toStartOf="@+id/name"
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
-    <Button
-        android:id="@+id/buttonMenu1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:backgroundTint="#FFFFFF"
-        android:text="menu2"
-        android:textAlignment="textStart"
-        android:textAllCaps="false"
-        android:textColor="@color/gray_1"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/name"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/avatar"
-        app:layout_constraintTop_toBottomOf="@+id/buttonMenu" />
-
-    <Button
-        android:id="@+id/buttonMenu"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="32dp"
-        android:backgroundTint="#FFFFFF"
-        android:text="menu1"
-        android:textAlignment="textStart"
-        android:textAllCaps="false"
-        android:textColor="@color/gray_1"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/name"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/avatar"
-        app:layout_constraintTop_toBottomOf="@+id/avatar" />
-
-    <Button
-        android:id="@+id/buttonMenu2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:backgroundTint="#FFFFFF"
-        android:text="menu3"
-        android:textAlignment="textStart"
-        android:textAllCaps="false"
-        android:textColor="@color/gray_1"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/name"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/avatar"
-        app:layout_constraintTop_toBottomOf="@+id/buttonMenu1" />
-
-    <Button
-        android:id="@+id/buttonMenu3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:backgroundTint="#FFFFFF"
-        android:text="menu4"
-        android:textAlignment="textStart"
-        android:textAllCaps="false"
-        android:textColor="@color/gray_1"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/name"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/avatar"
-        app:layout_constraintTop_toBottomOf="@+id/buttonMenu2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

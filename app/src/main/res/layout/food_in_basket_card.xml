@@ -37,27 +37,14 @@
             android:singleLine="true"
             android:text="TextView" />
 
-        <TextView
-            android:id="@+id/weigth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="sans-serif-light"
-            android:singleLine="true"
-            android:text="150 гр."
-            android:textColor="@color/gray_2"
-            android:textSize="14sp" />
-
 
         <TextView
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="12dp"
+            android:layout_marginStart="105dp"
             android:fontFamily="sans-serif"
             android:singleLine="true"
             android:text="200 р."
