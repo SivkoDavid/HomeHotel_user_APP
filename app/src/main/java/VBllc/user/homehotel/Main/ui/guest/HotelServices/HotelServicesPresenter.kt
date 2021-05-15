@@ -14,7 +14,7 @@ class HotelServicesPresenter(val view: HotelServicesView){
     private val repository = HotelServicesRepository(RepositoryListener())
 
     private val GET_SERVICES_CODE = 29
-    private val SEND_ORDER_CODE = 29
+    private val SEND_ORDER_CODE = 43
 
     var settle: SettleResponse.SettleData? = null
         set(value) {
@@ -44,15 +44,21 @@ class HotelServicesPresenter(val view: HotelServicesView){
         override fun onSendOrderResponse(response: SendOrderResponse, code: Int) {
             view.closeFull()
             view.showToast("Заявка на услугу отправлена и вскоре будет обработана", Toast.LENGTH_LONG)
+            view.showOrderOk("Заявка  на услугу отправлена и вскоре будет обработана")
         }
 
         override fun startRequest(name: String, code: Int) {
-            if(code != SEND_ORDER_CODE)
-                view.showLoading()
+            when(code){
+                SEND_ORDER_CODE -> view.showOrderLoading()
+                else -> view.showLoading()
+            }
         }
 
         override fun noInternet(code: Int?) {
-            view.showNoNetwork()
+            when(code){
+                SEND_ORDER_CODE -> view.showOrderError("Отсутствует подключение к интернету")
+                else -> view.showNoNetwork()
+            }
         }
 
         override fun onErrors(errorMessages: List<String>, errorCode: Int, code: Int) {
@@ -61,7 +67,11 @@ class HotelServicesPresenter(val view: HotelServicesView){
                 mess += it+"\n"
             }
             mess = mess.substringBeforeLast('\n')
-            view.showError(mess, errorCode)
+            when(code){
+                SEND_ORDER_CODE -> view.showOrderError(mess)
+                else -> view.showError(mess, errorCode)
+            }
+
         }
     }
 }

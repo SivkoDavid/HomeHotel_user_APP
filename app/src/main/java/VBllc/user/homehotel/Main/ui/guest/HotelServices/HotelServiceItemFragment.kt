@@ -2,6 +2,7 @@ package VBllc.user.homehotel.Main.ui.guest.HotelServices
 
 import VBllc.user.homehotel.API.DataResponse.HotelServicesResponse.HotelServiceData
 import VBllc.user.homehotel.API.DataResponse.SettleResponse
+import VBllc.user.homehotel.AdditionalComponents.DialogWindows.InfoDialog
 import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragment
 import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragmentListener
 import VBllc.user.homehotel.App.HomeHotelApp
@@ -32,6 +33,7 @@ class HotelServiceItemFragment : Fragment(), HotelServicesView {
     private var recucler: RecyclerView? = null
     var settle: SettleResponse.SettleData? = null
     lateinit private var loadingFragment : ProgressFragment
+    lateinit private var loadingDialog : InfoDialog
     private val presenter = HotelServicesPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,8 +48,9 @@ class HotelServiceItemFragment : Fragment(), HotelServicesView {
             override fun buttonReloadClick() {
                 presenter.refresh(settle)
             }
-
         }
+        loadingDialog = InfoDialog(parentFragmentManager)
+        loadingDialog.closeNow()
     }
 
     var servicesList: MutableList<HotelServiceData> = mutableListOf()
@@ -111,6 +114,30 @@ class HotelServiceItemFragment : Fragment(), HotelServicesView {
             this@HotelServiceItemFragment.whenStarted {
                 loadingFragment.hide()
                 servicesList = data.toMutableList()
+            }
+        }
+    }
+
+    override fun showOrderLoading() {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@HotelServiceItemFragment.whenStarted {
+                loadingDialog.showLoadingNow("Заявка отправляется")
+            }
+        }
+    }
+
+    override fun showOrderError(message: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@HotelServiceItemFragment.whenStarted {
+                loadingDialog.showResultNow(message, true)
+            }
+        }
+    }
+
+    override fun showOrderOk(message: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@HotelServiceItemFragment.whenStarted {
+                loadingDialog.showResultNow(message, false)
             }
         }
     }
