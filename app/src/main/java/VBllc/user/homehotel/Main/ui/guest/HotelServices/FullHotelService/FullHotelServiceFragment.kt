@@ -69,7 +69,7 @@ class FullHotelServiceFragment : Fragment() {
         }
         sendBtn.setOnClickListener {
             val date =
-                    "${dateInput.year}-${dateInput.month}-${dateInput.dayOfMonth} " +
+                    "${dateInput.year}-${dateInput.month+1}-${dateInput.dayOfMonth} " +
                     "${timeInput.hour}:${timeInput.minute}"
             listener?.onBidCompiled(data?.id?:-1, date)
         }
@@ -81,7 +81,10 @@ class FullHotelServiceFragment : Fragment() {
         if(descStr.length > 150)
             descStr = descStr.substring(0, 150).substringBeforeLast(' ') + "..."
         desc.text = descStr
-        price.text = "${data.price?:""} ${data.price_type?:""}"
+        if(data.price != null){
+            price.text = "${data.price} ${data.price_type?:""}"
+        }
+        else price.text = "бесплатно"
         Picasso.get()
             .load(data.picture)
             .placeholder(R.drawable.servise_standsrt_img)

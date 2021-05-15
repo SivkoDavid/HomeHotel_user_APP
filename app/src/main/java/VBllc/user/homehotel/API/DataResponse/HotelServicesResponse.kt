@@ -8,7 +8,7 @@ data class HotelServicesResponse(
     data class HotelServiceData(
             val id: Int,
             val name: String? = null,
-            val price: Double? = null,
+            val price: Double? = 0.0,
             val price_type: String? = null,
             val description: String? = null,
             val category: String? = null,

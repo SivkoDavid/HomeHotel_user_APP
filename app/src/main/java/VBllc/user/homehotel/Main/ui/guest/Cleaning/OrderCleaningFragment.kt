@@ -35,7 +35,7 @@ class OrderCleaningFragment : Fragment(), OrderCleaningView {
         timeInput.setIs24HourView(true)
         orderBtn.setOnClickListener {
             val date =
-                    "${dateInput.year}-${dateInput.month}-${dateInput.dayOfMonth} " +
+                    "${dateInput.year}-${dateInput.month+1}-${dateInput.dayOfMonth} " +
                             "${timeInput.hour}:${timeInput.minute}"
             presenter.sendCleaningOrder(date)
         }

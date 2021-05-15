@@ -35,7 +35,7 @@ class HygieneFragment : Fragment(), OrderCleaningView {
         sendBtn.setOnClickListener {
             val dateNow = Calendar.getInstance().time
             val date =
-                    "${dateNow.year}-${dateNow.month}-${dateNow.day} " +
+                    "${dateNow.year}-${dateNow.month+1}-${dateNow.day} " +
                             "${timeInput.hour}:${timeInput.minute}"
             presenter.sendCleaningOrder(date)
         }
