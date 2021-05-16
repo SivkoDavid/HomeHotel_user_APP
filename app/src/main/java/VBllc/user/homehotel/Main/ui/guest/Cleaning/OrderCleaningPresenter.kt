@@ -29,14 +29,18 @@ class OrderCleaningPresenter(val view: OrderCleaningView) {
 
         override fun onSendOrderResponse(response: SendOrderResponse, code: Int) {
             view.showToast("Заявка на услугу отправлена и вскоре будет обработана", Toast.LENGTH_LONG)
+            view.showOkDialog("Заявка на уборку отправлена и вскоре будет обработана")
             view.backToMenu()
         }
 
         override fun startRequest(name: String, code: Int) {
+            when(code){
+                SEND_ORDER_CODE -> view.showLoadingDialog("")
+            }
         }
 
         override fun noInternet(code: Int?) {
-            view.showNoNetwork()
+            view.showErrorDialog("Нет подключения к интернету")
         }
 
         override fun onErrors(errorMessages: List<String>, errorCode: Int, code: Int) {
@@ -45,7 +49,10 @@ class OrderCleaningPresenter(val view: OrderCleaningView) {
                 mess += it+"\n"
             }
             mess = mess.substringBeforeLast('\n')
-            view.showError(mess, errorCode)
+            when(code){
+                SEND_ORDER_CODE -> view.showErrorDialog(mess)
+                else -> view.showError(mess, errorCode)
+            }
         }
     }
 }

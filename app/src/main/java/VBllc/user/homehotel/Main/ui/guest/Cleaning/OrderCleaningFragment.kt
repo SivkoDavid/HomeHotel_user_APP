@@ -1,6 +1,7 @@
 package VBllc.user.homehotel.Main.ui.guest.Cleaning
 
 import VBllc.user.homehotel.API.DataResponse.SettleResponse
+import VBllc.user.homehotel.AdditionalComponents.DialogWindows.InfoDialog
 import VBllc.user.homehotel.Main.ui.guest.HotelServices.HotelServiceItemFragment
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -24,6 +25,7 @@ class OrderCleaningFragment : Fragment(), OrderCleaningView {
     private lateinit var dateInput: DatePicker
     private lateinit var timeInput: TimePicker
     private lateinit var orderBtn: Button
+    private lateinit var loadingDialog: InfoDialog
     private var presenter: OrderCleaningPresenter = OrderCleaningPresenter(this)
 
 
@@ -31,7 +33,7 @@ class OrderCleaningFragment : Fragment(), OrderCleaningView {
         dateInput = root.findViewById(R.id.dateInput)
         timeInput = root.findViewById(R.id.timeInput)
         orderBtn = root.findViewById(R.id.orderButton)
-
+        loadingDialog = InfoDialog(parentFragmentManager)
         timeInput.setIs24HourView(true)
         orderBtn.setOnClickListener {
             val date =
@@ -69,6 +71,30 @@ class OrderCleaningFragment : Fragment(), OrderCleaningView {
         CoroutineScope(Dispatchers.Main).launch {
             this@OrderCleaningFragment.whenStarted {
                 fragmentManager?.popBackStack()
+            }
+        }
+    }
+
+    override fun showLoadingDialog(message: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@OrderCleaningFragment.whenStarted {
+                loadingDialog.showLoadingNow("Заявка отправляется")
+            }
+        }
+    }
+
+    override fun showOkDialog(message: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@OrderCleaningFragment.whenStarted {
+                loadingDialog.showResultNow(message, false)
+            }
+        }
+    }
+
+    override fun showErrorDialog(message: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@OrderCleaningFragment.whenStarted {
+                loadingDialog.showResultNow(message, true)
             }
         }
     }

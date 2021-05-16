@@ -1,6 +1,7 @@
 package VBllc.user.homehotel.Main.ui.guest.Hygiene
 
 import VBllc.user.homehotel.API.DataResponse.SettleResponse
+import VBllc.user.homehotel.AdditionalComponents.DialogWindows.InfoDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -26,11 +27,13 @@ class HygieneFragment : Fragment(), OrderCleaningView {
 
     private lateinit var timeInput: TimePicker
     private lateinit var sendBtn: Button
+    private lateinit var loadingDialog: InfoDialog
     private val presenter = OrderHyegenePresenter(this)
 
     fun initViews(root: View){
         timeInput = root.findViewById(R.id.timeInput)
         timeInput.setIs24HourView(true)
+        loadingDialog = InfoDialog(parentFragmentManager)
         sendBtn = root.findViewById(R.id.orderButton)
         sendBtn.setOnClickListener {
             val dateNow = Calendar.getInstance().time
@@ -62,6 +65,30 @@ class HygieneFragment : Fragment(), OrderCleaningView {
         CoroutineScope(Dispatchers.Main).launch {
             this@HygieneFragment.whenStarted {
                 fragmentManager?.popBackStack()
+            }
+        }
+    }
+
+    override fun showLoadingDialog(message: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@HygieneFragment.whenStarted {
+                loadingDialog.showLoadingNow("Заявка отправляется")
+            }
+        }
+    }
+
+    override fun showOkDialog(message: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@HygieneFragment.whenStarted {
+                loadingDialog.showResultNow(message, false)
+            }
+        }
+    }
+
+    override fun showErrorDialog(message: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@HygieneFragment.whenStarted {
+                loadingDialog.showResultNow(message, true)
             }
         }
     }
