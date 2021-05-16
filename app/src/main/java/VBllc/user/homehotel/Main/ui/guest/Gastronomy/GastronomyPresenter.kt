@@ -84,6 +84,7 @@ class GastronomyPresenter(val view: GastronomyView) {
         override fun onPartnerServicesResponse(response: PartnersServicesResponse, code: Int) { }
         override fun onSendOrderResponse(response: SendOrderResponse, code: Int) {
             foodBid.clear()
+            view.showOkDialog("Еда заказана")
             view.showToast("Еда заказана", Toast.LENGTH_LONG)
         }
 
@@ -97,12 +98,17 @@ class GastronomyPresenter(val view: GastronomyView) {
         }
 
         override fun startRequest(name: String, code: Int) {
-            if(code != SEND_FOOD_BID_CODE)
-                view.showLoading()
+            when(code){
+                SEND_FOOD_BID_CODE -> view.showLoadingDialog()
+                else -> view.showLoading()
+            }
         }
 
         override fun noInternet(code: Int?) {
-            view.showNoNetwork()
+            when(code){
+                SEND_FOOD_BID_CODE -> view.showErrorDialog("Нет подключения к интернету")
+                else -> view.showNoNetwork()
+            }
         }
 
         override fun onErrors(errorMessages: List<String>, errorCode: Int, code: Int) {
@@ -111,7 +117,10 @@ class GastronomyPresenter(val view: GastronomyView) {
                 mess += it+"\n"
             }
             mess = mess.substringBeforeLast('\n')
-            view.showError(mess, errorCode)
+            when(code){
+                SEND_FOOD_BID_CODE -> view.showErrorDialog(mess)
+                else -> view.showError(mess, errorCode)
+            }
         }
     }
 

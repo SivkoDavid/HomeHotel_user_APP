@@ -37,7 +37,7 @@ class HotelServicesRepository(val listener: HotelServicesRepositoryListener) {
                 }
 
             } catch (e: Exception) { //Отсутствие интернета
-                listener.noInternet()
+                listener.noInternet(code)
             }
         }
     }
@@ -70,7 +70,7 @@ class HotelServicesRepository(val listener: HotelServicesRepositoryListener) {
                 }
 
             } catch (e: Exception) { //Отсутствие интернета
-                listener.noInternet()
+                listener.noInternet(code)
             }
         }
     }
@@ -103,7 +103,7 @@ class HotelServicesRepository(val listener: HotelServicesRepositoryListener) {
                 }
 
             } catch (e: Exception) { //Отсутствие интернета
-                listener.noInternet()
+                listener.noInternet(code)
             }
         }
     }
@@ -144,7 +144,7 @@ class HotelServicesRepository(val listener: HotelServicesRepositoryListener) {
                 }
 
             } catch (e: Exception) { //Отсутствие интернета
-                listener.noInternet()
+                listener.noInternet(code)
             }
         }
     }
@@ -184,7 +184,7 @@ class HotelServicesRepository(val listener: HotelServicesRepositoryListener) {
                 }
 
             } catch (e: Exception) { //Отсутствие интернета
-                listener.noInternet()
+                listener.noInternet(code)
             }
         }
     }
@@ -224,7 +224,7 @@ class HotelServicesRepository(val listener: HotelServicesRepositoryListener) {
                 }
 
             } catch (e: Exception) { //Отсутствие интернета
-                listener.noInternet()
+                listener.noInternet(code)
             }
         }
     }

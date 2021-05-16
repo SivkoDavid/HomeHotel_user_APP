@@ -9,4 +9,7 @@ interface GastronomyView:BaseView {
     fun showFoodMenu(menu: List<FoodData>)
     fun openBasket(basketData: FoodBasketData)
     fun updateBasket(basketData: FoodBasketData)
+    fun showLoadingDialog()
+    fun showOkDialog(message: String)
+    fun showErrorDialog(message: String)
 }

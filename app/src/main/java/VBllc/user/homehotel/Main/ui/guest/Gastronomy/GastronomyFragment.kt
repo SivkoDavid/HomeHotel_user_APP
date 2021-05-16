@@ -2,6 +2,7 @@ package VBllc.user.homehotel.Main.ui.guest.Gastronomy
 
 import VBllc.user.homehotel.API.DataResponse.FoodData
 import VBllc.user.homehotel.API.DataResponse.SettleResponse
+import VBllc.user.homehotel.AdditionalComponents.DialogWindows.InfoDialog
 import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragment
 import VBllc.user.homehotel.AdditionalComponents.ProgressFragment.ProgressFragmentListener
 import VBllc.user.homehotel.Main.ui.guest.Gastronomy.Basket.BasketFoodsFragment
@@ -29,6 +30,7 @@ class GastronomyFragment : Fragment(), GastronomyView{
     private lateinit var sendBtn: Button
     private lateinit var upBarBack: ImageView
     lateinit private var loadingFragment : ProgressFragment
+    lateinit private var loadingDialog : InfoDialog
     lateinit private var basketFragment : BasketFoodsFragment
     private val presenter = GastronomyPresenter(this)
 
@@ -49,6 +51,7 @@ class GastronomyFragment : Fragment(), GastronomyView{
         basketFragment = BasketFoodsFragment()
         basketFragment.gastronomyPresenter = presenter
         loadingFragment = ProgressFragment(parentFragmentManager)
+        loadingDialog = InfoDialog(parentFragmentManager)
         parentFragmentManager.beginTransaction().add(R.id.fragmentContainer_gastronomy, loadingFragment).commit()
         loadingFragment.listener = object : ProgressFragmentListener {
             override fun buttonReloadClick() {
@@ -137,6 +140,30 @@ class GastronomyFragment : Fragment(), GastronomyView{
         CoroutineScope(Dispatchers.Main).launch {
             this@GastronomyFragment.whenStarted {
                 basketFragment.basked = basketData
+            }
+        }
+    }
+
+    override fun showLoadingDialog() {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@GastronomyFragment.whenStarted {
+                loadingDialog.showLoadingNow("Заявка отправляется")
+            }
+        }
+    }
+
+    override fun showOkDialog(message: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@GastronomyFragment.whenStarted {
+                loadingDialog.showResultNow(message, false)
+            }
+        }
+    }
+
+    override fun showErrorDialog(message: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@GastronomyFragment.whenStarted {
+                loadingDialog.showResultNow(message, true)
             }
         }
     }
