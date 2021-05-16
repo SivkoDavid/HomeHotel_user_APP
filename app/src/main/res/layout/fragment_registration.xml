@@ -112,11 +112,17 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Я согласен на обработку персональных данных." />
+
     <Button
         android:id="@+id/regNextBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Далее"
-        android:textAllCaps="false"/>
+        android:text="Регистрация"
+        android:textAllCaps="false" />
 
 </LinearLayout>

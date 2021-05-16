@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import VBllc.user.homehotel.R
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.TextView
 import com.google.android.material.textfield.TextInputLayout
 
@@ -21,6 +22,7 @@ class RegistrationFragment : Fragment() {
     private lateinit var secondPassInput: TextInputLayout
     private lateinit var nextButton: Button
     private lateinit var errorLabel: TextView
+    private lateinit var checkBox: CheckBox
 
     fun initViews(mainView: View){
         nameInput = mainView.findViewById(R.id.nameInput)
@@ -30,8 +32,13 @@ class RegistrationFragment : Fragment() {
         secondPassInput = mainView.findViewById(R.id.repeatPassInput)
         nextButton = mainView.findViewById(R.id.regNextBtn)
         errorLabel = mainView.findViewById(R.id.errorLabel)
-
+        checkBox = mainView.findViewById(R.id.checkBox)
         nextButton.setOnClickListener { nextButtonClick() }
+        checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
+            nextButton.isEnabled = isChecked
+        }
+        nextButton.isEnabled = false
+        checkBox.isChecked = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
