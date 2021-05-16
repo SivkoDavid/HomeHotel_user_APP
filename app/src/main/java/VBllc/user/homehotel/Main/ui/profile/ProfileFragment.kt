@@ -2,17 +2,20 @@ package VBllc.user.homehotel.Main.ui.profile
 
 import VBllc.user.homehotel.API.DataResponse.UserInfoResponse
 import VBllc.user.homehotel.Auth.AuthActivity
+import VBllc.user.homehotel.R
+import VBllc.user.homehotel.Views.ProfileView
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import VBllc.user.homehotel.R
-import VBllc.user.homehotel.Views.ProfileView
-import android.content.Intent
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,7 +45,10 @@ class ProfileFragment : Fragment(), ProfileView {
         email = root.findViewById(R.id.email)
 
         loginButton?.setOnClickListener { loginClick() }
-        logoutButton?.setOnClickListener { presenter.logout() }
+        logoutButton?.setOnClickListener {
+            val dialog = onCreateDialog()
+            dialog?.show()
+        }
         regButton?.setOnClickListener { registrationClick() }
     }
 
@@ -105,5 +111,18 @@ class ProfileFragment : Fragment(), ProfileView {
         val intent = Intent(requireContext(), AuthActivity::class.java)
         intent.putExtra(AuthActivity.INTENT_EXTRA_ACTION_FIELD, AuthActivity.INTENT_ACTION_REGISTRATION)
         startActivity(intent)
+    }
+
+    fun onCreateDialog(): Dialog? {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
+        return builder
+                .setTitle("Выход")
+                .setMessage("Вы уверены что хотите выйти?")
+                .setPositiveButton("Выйти", object: DialogInterface.OnClickListener{
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
+                       presenter.logout()
+                    }})
+                .setNegativeButton("Отмена", null)
+                .create()
     }
 }
