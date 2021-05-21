@@ -17,6 +17,10 @@ class GuestPresenter(private val view: GuestView) {
     private val repository: GuestRepository = GuestRepository(RepositoryListener())
 
     init {
+        //repository.checkConservedSettle(CHECK_CONSERVED_SETTLE_CODE)
+    }
+
+    fun checkConservedSettle(){
         repository.checkConservedSettle(CHECK_CONSERVED_SETTLE_CODE)
     }
 
