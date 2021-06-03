@@ -77,7 +77,7 @@ class GuestFragment : Fragment(), GuestView {
         foodMenu.setOnClickListener { presenter.goToGastronomyMenu() }
         messagerMenu.setOnClickListener { presenter.goToChatMenu() }
         outButton.setOnClickListener { presenter.outOfTheSettle() }
-
+        presenter.checkConservedSettle()
     }
 
 
